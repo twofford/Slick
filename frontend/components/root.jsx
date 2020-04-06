@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 
 const Root = () => (
-    <Provider store={store}>
+    <Provider>
         <HashRouter>
             <div>Slick</div>
         </HashRouter>
