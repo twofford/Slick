@@ -4,14 +4,14 @@ class Api::UsersController < ApplicationController
 
     def index
         @users = User.all
-        #redirect
+        #render or redirect once frontend routes are established
     end
 
     def create
         @user = User.new(user_params)
         if @user && @user.save!
             login(@user)
-            #redirect
+            #render or redirect once frontend routes are established
         else
             render json: {errors: @user.errors.full_messages, status: 401}
         end
@@ -19,13 +19,13 @@ class Api::UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
-        #redirect
+        #render or redirect once frontend routes are established
     end
 
     def update
         @user = User.find(params[:id])
         if @user.update(user_params)
-            #redirect
+            #render or redirect once frontend routes are established
         else
             render json: {errors: @user.errors.full_messages, status: 422}
         end
@@ -34,7 +34,7 @@ class Api::UsersController < ApplicationController
     def destroy
         @user = User.find(params[:id])
         @user.destroy
-        #redirect
+        #render or redirect once frontend routes are established
     end
 
     def user_params
