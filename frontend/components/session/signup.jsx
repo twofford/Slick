@@ -24,31 +24,41 @@ class Signup extends React.Component{
 
     render(){
 
-        let formMessage;
-        let formType;
+        // let formMessage;
+        // let formType;
 
-        if (this.props.formType === 'email') {
-            formMessage = 'First, enter your email';
-            formType = 'text';
-        } else {
-            formMessage = 'Next, choose a password';
-            formType = 'password';
-        }
+        // if (this.props.formType === 'email') {
+        //     formMessage = 'First, enter your email';
+        //     formType = 'text';
+        // } else {
+        //     formMessage = 'Next, choose a password';
+        //     formType = 'password';
+        // }
 
 
         return(
             <div>
 
-                <h1>{formMessage}</h1>
+                <h1>First, enter your email and choose a password</h1>
 
                 <form>
 
                 <input
-                    type={formType}
-                    value={this.props.formType}
-                    onChange={this.handleInput(this.props.formType)}/>
+                    type="text"
+                    value=""
+                    onChange={this.handleInput('email')}
+                />
+                
+                <input
+                    type="password"
+                    value=""
+                    onChange={this.handleInput('password')}
+                />
 
-                <button onClick={this.handleSubmit}>Confirm</button>
+                <button 
+                    onClick={this.handleSubmit}>
+                    Confirm
+                </button>
 
                 </form>
 
