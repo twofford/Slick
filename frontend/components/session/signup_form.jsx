@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Signup extends React.Component{
+class SignupForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -11,8 +11,8 @@ class Signup extends React.Component{
     };
 
     handleInput(type){
-        return () => {
-            this.setState({[type]: e.target.value});
+        return (event) => {
+            this.setState({[type]: event.target.value});
         };
     };
 
@@ -45,13 +45,11 @@ class Signup extends React.Component{
 
                 <input
                     type="text"
-                    value=""
                     onChange={this.handleInput('email')}
                 />
                 
                 <input
                     type="password"
-                    value=""
                     onChange={this.handleInput('password')}
                 />
 
@@ -67,4 +65,4 @@ class Signup extends React.Component{
     };
 };
 
-export default Signup;
+export default SignupForm;
