@@ -2,7 +2,7 @@ class User < ApplicationRecord
 
     attr_reader :password
 
-    validates :email, :username, :password_digest, :session_token, null: false
+    validates :email, :password_digest, :session_token, null: false
 
     validates :password, length: { minimum: 8, allow_nil: true }
 

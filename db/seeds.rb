@@ -10,7 +10,6 @@ User.delete_all
 
 u1 = User.create!(
     email: 'bigbossfan@shadowmoses.gov',
-    username: 's_snake',
     password_digest: '123456',
     session_token: '123456',
     created_at: '1/1/2020',
@@ -19,7 +18,6 @@ u1 = User.create!(
 
 u1 = User.create!(
     email: 'tnook@islandmail.com',
-    username: 'tomnook',
     password_digest: '123456',
     session_token: 'abcdef',
     created_at: '1/1/2020',

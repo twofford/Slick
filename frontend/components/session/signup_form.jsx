@@ -42,7 +42,7 @@ class SignupForm extends React.Component{
         return(
             <div className='signup-form-div'>
 
-                <h1>First, enter your email and choose a username and password</h1>
+                <h1>First, enter your email and choose a password</h1>
 
                 <form>
 
@@ -50,12 +50,6 @@ class SignupForm extends React.Component{
                     className="signup-form-input"
                     type="text"
                     onChange={this.handleInput('email')}
-                />
-
-                <input
-                    className="signup-form-input"
-                    type="text"
-                    onChange={this.handleInput('username')}
                 />
                 
                 <input
