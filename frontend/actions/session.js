@@ -4,16 +4,20 @@ export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 
 export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 
-const receiveCurrentUser = (user) => ({
+export const receiveCurrentUser = (user) => {
+    
+    return {
     type: RECEIVE_CURRENT_USER,
     user
-})
+}}
 
-const logoutCurrentUser = () => ({
+export const logoutCurrentUser = () => ({
     type: LOGOUT_CURRENT_USER,
 })
 
-export const createNewUser = (user) => dispatch => postUser(user).then(user => dispatch(receiveCurrentUser(user)));
+export const createNewUser = (user) => dispatch => {
+    
+    return postUser(user).then(user => dispatch(receiveCurrentUser(user)))};
 
 export const login = (user) => dispatch => postSession(user).then(user => dispatch(receiveCurrentUser(user)));
 

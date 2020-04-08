@@ -18,9 +18,12 @@ class SignupForm extends React.Component{
 
     // FIX - ROUTE
     handleSubmit(event){
+        
         event.preventDefault();
-        this.props.createNewUser(this.state).then(() => this.props.history.push('/'));
-    };
+        const user = Object.assign({}, this.state);
+        this.props.createNewUser(user);
+        
+    }
 
     render(){
 
@@ -37,18 +40,26 @@ class SignupForm extends React.Component{
 
 
         return(
-            <div>
+            <div className='signup-form-div'>
 
-                <h1>First, enter your email and choose a password</h1>
+                <h1>First, enter your email and choose a username and password</h1>
 
                 <form>
 
                 <input
+                    className="signup-form-input"
                     type="text"
                     onChange={this.handleInput('email')}
                 />
+
+                <input
+                    className="signup-form-input"
+                    type="text"
+                    onChange={this.handleInput('username')}
+                />
                 
                 <input
+                    className="signup-form-input"
                     type="password"
                     onChange={this.handleInput('password')}
                 />

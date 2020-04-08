@@ -18,11 +18,10 @@ class LoginForm extends React.Component {
 
     // FIX - ROUTE
     handleSubmit(event) {
-        debugger
         event.preventDefault();
         const user = Object.assign({}, this.state);
         this.props.login(user);
-        debugger
+        
     };
 
     render() {
@@ -60,9 +59,7 @@ class LoginForm extends React.Component {
                     />
                     </label>
 
-                    <input
-                    type="submit"
-                    />
+                    <button onClick={this.handleSubmit}>Confirm</button>
 
                 </form>
 

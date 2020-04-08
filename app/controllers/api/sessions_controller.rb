@@ -1,10 +1,16 @@
 class Api::SessionsController < ApplicationController
 
+    #FIX - REMOVE
+    skip_before_action :verify_authenticity_token
+
     def create
-        @user = User.find_by_credentials(params[:user][:email], params[:user][:password])
+        debugger
+        @user = User.find_by_credentials(
+            params[:user][:email],
+            params[:user][:password])
         if @user
             login(@user)
-            #render or redirect once frontend routes are established
+            render 'api/users/show'
         else
             render json: ["Invalid Username or Password"], status: 401
         end
