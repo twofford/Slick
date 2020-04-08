@@ -37,7 +37,6 @@ class LoginForm extends React.Component {
         //     formType = 'password';
         // }
 
-
         return (
             <div>
 

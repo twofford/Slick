@@ -40,9 +40,12 @@ class SignupForm extends React.Component{
 
 
         return(
+
+            <div className='signup-form-container-wrapper'>
             <div className='signup-form-div'>
 
                 <h1>First, enter your email and choose a password</h1>
+                    <p className='description'>No need to check your email &mdash;we'll log you right in.</p>
 
                 <form>
 
@@ -50,21 +53,31 @@ class SignupForm extends React.Component{
                     className="signup-form-input"
                     type="text"
                     onChange={this.handleInput('email')}
+                    placeholder='name@example.com'
                 />
+
+                <br></br>
                 
                 <input
                     className="signup-form-input"
                     type="password"
                     onChange={this.handleInput('password')}
+                    placeholder='password'
                 />
 
-                <button 
+                <button
+                    className="signup-form-button" 
                     onClick={this.handleSubmit}>
                     Confirm
                 </button>
 
                 </form>
 
+                <div className="signup-form-image-wrapper">
+                    <img className='singup-form-image' src={createTeam}></img>
+                </div>
+
+            </div>
             </div>
         );
     };
