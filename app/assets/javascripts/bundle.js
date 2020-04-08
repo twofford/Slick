@@ -331,6 +331,9 @@ var mdp = function mdp(dispatch) {
   return {
     login: function login(user) {
       return dispatch(Object(_actions_session__WEBPACK_IMPORTED_MODULE_1__["login"])(user));
+    },
+    logout: function logout() {
+      return dispatch(Object(_actions_session__WEBPACK_IMPORTED_MODULE_1__["logout"])());
     }
   };
 };
@@ -424,15 +427,36 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       //     formMessage = 'Next, choose a password';
       //     formType = 'password';
       // }
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Sign in to Slick"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      // if (currentUser) {
+      //     return (
+      //         <div>
+      //             <p>A user is logged in</p>
+      //             <button onClick={this.props.logout}>Logout</button>
+      //         </div>
+      //     )
+      // } else {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-form-container-wrapper"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-form-div"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "login-form-h1"
+      }, "Sign in to Slick"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "description"
+      }, "Enter your email and password."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "login-form-input",
         type: "text",
-        onChange: this.handleInput('email')
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.handleInput('email'),
+        placeholder: "name@example.com"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "login-form-input",
         type: "password",
-        onChange: this.handleInput('password')
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onChange: this.handleInput('password'),
+        placeholder: "password"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "login-form-button",
         onClick: this.handleSubmit
-      }, "Confirm")));
+      }, "Continue \u2192"))));
     }
   }]);
 

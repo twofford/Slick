@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import { login } from '../../actions/session';
+import { login, logout } from '../../actions/session';
 import LoginForm from './login_form'
 
 const mdp = dispatch => ({
-    login: user => dispatch(login(user))
+    login: user => dispatch(login(user)),
+    logout: () => dispatch(logout())
 })
 
 export default connect(null, mdp)(LoginForm);

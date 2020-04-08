@@ -45,7 +45,7 @@ class SignupForm extends React.Component{
             <div className='signup-form-div'>
 
                 <h1>First, enter your email and choose a password</h1>
-                    <p className='description'>No need to check your email &mdash;we'll log you right in.</p>
+                <p className='description'>No need to check your email &mdash;we'll log you right in.</p>
 
                 <form>
 

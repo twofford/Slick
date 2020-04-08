@@ -37,31 +37,51 @@ class LoginForm extends React.Component {
         //     formType = 'password';
         // }
 
-        return (
-            <div>
+        // if (currentUser) {
+        //     return (
+        //         <div>
+        //             <p>A user is logged in</p>
+        //             <button onClick={this.props.logout}>Logout</button>
+        //         </div>
+        //     )
+        // } else {
 
-                <h1>Sign in to Slick</h1>
+        return (
+            <div className='login-form-container-wrapper'>
+            <div className='login-form-div'>
+
+                <h1 className='login-form-h1'>Sign in to Slick</h1>
+
+                <p className='description'>Enter your email and password.</p>
 
                 <form>
 
-                    <label>Email:
+                   
                     <input
+                    className='login-form-input'
                         type="text"
                         onChange={this.handleInput('email')}
+                        placeholder='name@example.com'
                     />
-                    </label>
+                    
+                    <br></br>
 
-                    <label>Password:
+                    
                     <input
+                    className='login-form-input'
                         type="password"
                         onChange={this.handleInput('password')}
+                        placeholder='password'
                     />
-                    </label>
+                    
 
-                    <button onClick={this.handleSubmit}>Confirm</button>
+                    <button
+                    className='login-form-button'
+                        onClick={this.handleSubmit}>Continue →</button>
 
                 </form>
 
+            </div>
             </div>
         );
     };
