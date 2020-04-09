@@ -6,7 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+ChannelMembership.delete_all
 User.delete_all
+Channel.delete_all
 
 u1 = User.create!(
     email: 'bigbossfan@shadowmoses.gov',
@@ -20,6 +22,50 @@ u1 = User.create!(
     email: 'tnook@islandmail.com',
     password_digest: '123456',
     session_token: 'abcdef',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+c1 = Channel.create!(
+    user_id: User.first.id,
+    title: '#General',
+    channel_type: 'public',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+c2 = Channel.create!(
+    user_id: User.second.id,
+    title: '#Private Chat',
+    channel_type: 'private',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm1 = ChannelMembership.create!(
+    user_id: User.first.id,
+    channel_id: Channel.first.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm2 = ChannelMembership.create!(
+    user_id: User.second.id,
+    channel_id: Channel.first.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm3 = ChannelMembership.create!(
+    user_id: User.first.id,
+    channel_id: Channel.second.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm4 = ChannelMembership.create!(
+    user_id: User.second.id,
+    channel_id: Channel.second.id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
