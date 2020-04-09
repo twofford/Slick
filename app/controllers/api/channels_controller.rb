@@ -4,12 +4,13 @@ class Api::ChannelsController < ApplicationController
 
     def index
         @channels = Channel.all
+        #render or redirect once you know what you're doing
     end
 
     def create
         @channel = Channel.new(channel_params)
         if @channel && @channel.save!
-            render 'api/channels/show'
+            #render or redirect once you know what you're doing
         else
             render json: {errors: @channel.errors.full_messages, status: 401}
         end
@@ -36,7 +37,7 @@ class Api::ChannelsController < ApplicationController
     end
 
     def channel_params
-        params.require(:channel).permit(:title, :channel_type, :description, :topic)
+        params.require(:channel).permit(:title, :channel_type, :description, :topic, :user_id)
     end
 
 end
