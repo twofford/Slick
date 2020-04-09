@@ -31,7 +31,8 @@ c1 = Channel.create!(
     title: '#General',
     channel_type: 'public',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    description: 'Just chattin\' about whatever'
 )
 
 c2 = Channel.create!(
@@ -39,7 +40,8 @@ c2 = Channel.create!(
     title: '#Private Chat',
     channel_type: 'private',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    description: 'Super secret private convo'
 )
 
 cm1 = ChannelMembership.create!(
