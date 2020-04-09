@@ -568,7 +568,8 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
         className: "form-button",
         onClick: this.handleSubmit
       }, "Confirm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "form-image"
+        className: "form-image",
+        src: createTeam
       })));
     }
   }]);

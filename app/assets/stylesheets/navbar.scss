@@ -13,8 +13,6 @@
 
 .navbar-button-ul {
     position: absolute;
-    // display: flex;
-    // align-items: center;
     right: 25%;
 }
 
@@ -86,6 +84,7 @@
 
 .navbar-form-signup:hover {
     background-color: #4A154B;
+    cursor: pointer;
 }
 
 .navbar-form-signup a {
