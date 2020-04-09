@@ -1,35 +1,43 @@
-.login-form-container-wrapper {
-    position: relative;
-    width: 100%;
-}
 
-.login-form-div {
-    position: absolute;
-    margin-top: 25px;
-    left: 25%;
+
+.form-div {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
     padding-left: 60px;
     padding-right: 60px;
+    padding-top: 60px;
     padding-bottom: 60px;
     box-shadow: 0 10px 25px #ddd;
     font-family: 'Lato', sans-serif;
     border-radius: 10px;
     max-width: 530px;
     max-height: 635px;
-    overflow: hidden;
     
 }
 
+.signup-form-h1 {
+    font-weight: 900;
+}
+
 .login-form-h1 {
+    font-weight: 900;
     text-align: center;
 }
 
-.description {
+.form-description {
+    font-size: 16px;
+    color: #616061;
+}
+
+.login-form-description {
     font-size: 16px;
     color: #616061;
     text-align: center;
 }
 
-.login-form-input {
+.form-input {
     width: 100%;
     display: block;
     border: 1px solid #ccc;
@@ -39,7 +47,7 @@
     font-size: 20px;
 }
 
-.login-form-button {
+.form-button {
     width: 556px;
     display: block;
     background-color: #007a5a;
@@ -49,6 +57,17 @@
     margin-top: 12px;
     font-family: 'Lato', sans-serif;
     font-weight: 800;
-    font-size: 20px;
+    font-size: 28px;
     padding: 12px;
+}
+
+.form-button:hover {
+    background: #148567
+}
+
+.form-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
 }

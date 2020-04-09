@@ -16,7 +16,6 @@ class LoginForm extends React.Component {
         };
     };
 
-    // FIX - ROUTE
     handleSubmit(event) {
         event.preventDefault();
         const user = Object.assign({}, this.state);
@@ -26,39 +25,19 @@ class LoginForm extends React.Component {
 
     render() {
 
-        // let formMessage;
-        // let formType;
-
-        // if (this.props.formType === 'email') {
-        //     formMessage = 'First, enter your email';
-        //     formType = 'text';
-        // } else {
-        //     formMessage = 'Next, choose a password';
-        //     formType = 'password';
-        // }
-
-        // if (currentUser) {
-        //     return (
-        //         <div>
-        //             <p>A user is logged in</p>
-        //             <button onClick={this.props.logout}>Logout</button>
-        //         </div>
-        //     )
-        // } else {
-
         return (
-            <div className='login-form-container-wrapper'>
-            <div className='login-form-div'>
+            
+            <div className='form-div'>
 
                 <h1 className='login-form-h1'>Sign in to Slick</h1>
 
-                <p className='description'>Enter your email and password.</p>
+                <p className='login-form-description'>Enter your email and password.</p>
 
                 <form>
 
                    
                     <input
-                    className='login-form-input'
+                    className='form-input'
                         type="text"
                         onChange={this.handleInput('email')}
                         placeholder='name@example.com'
@@ -68,7 +47,7 @@ class LoginForm extends React.Component {
 
                     
                     <input
-                    className='login-form-input'
+                    className='form-input'
                         type="password"
                         onChange={this.handleInput('password')}
                         placeholder='password'
@@ -76,13 +55,13 @@ class LoginForm extends React.Component {
                     
 
                     <button
-                    className='login-form-button'
+                    className='form-button'
                         onClick={this.handleSubmit}>Continue →</button>
 
                 </form>
 
             </div>
-            </div>
+            
         );
     };
 };

@@ -164,15 +164,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
     path: "/",
     component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_4__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
     path: "/login",
     component: _session_login_container__WEBPACK_IMPORTED_MODULE_3__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
     path: "/signup",
     component: _session_signup_container__WEBPACK_IMPORTED_MODULE_2__["default"]
   }));
@@ -409,7 +406,6 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleSubmit",
-    // FIX - ROUTE
     value: function handleSubmit(event) {
       event.preventDefault();
       var user = Object.assign({}, this.state);
@@ -418,45 +414,26 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // let formMessage;
-      // let formType;
-      // if (this.props.formType === 'email') {
-      //     formMessage = 'First, enter your email';
-      //     formType = 'text';
-      // } else {
-      //     formMessage = 'Next, choose a password';
-      //     formType = 'password';
-      // }
-      // if (currentUser) {
-      //     return (
-      //         <div>
-      //             <p>A user is logged in</p>
-      //             <button onClick={this.props.logout}>Logout</button>
-      //         </div>
-      //     )
-      // } else {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-form-container-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-form-div"
+        className: "form-div"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "login-form-h1"
       }, "Sign in to Slick"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "description"
+        className: "login-form-description"
       }, "Enter your email and password."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "login-form-input",
+        className: "form-input",
         type: "text",
         onChange: this.handleInput('email'),
         placeholder: "name@example.com"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "login-form-input",
+        className: "form-input",
         type: "password",
         onChange: this.handleInput('password'),
         placeholder: "password"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "login-form-button",
+        className: "form-button",
         onClick: this.handleSubmit
-      }, "Continue \u2192"))));
+      }, "Continue \u2192")));
     }
   }]);
 
@@ -563,7 +540,6 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleSubmit",
-    // FIX - ROUTE
     value: function handleSubmit(event) {
       event.preventDefault();
       var user = Object.assign({}, this.state);
@@ -572,40 +548,28 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // let formMessage;
-      // let formType;
-      // if (this.props.formType === 'email') {
-      //     formMessage = 'First, enter your email';
-      //     formType = 'text';
-      // } else {
-      //     formMessage = 'Next, choose a password';
-      //     formType = 'password';
-      // }
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-form-container-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-form-div"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "First, enter your email and choose a password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "description"
-      }, "No need to check your email \u2014we'll log you right in."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "signup-form-input",
+        className: "form-div"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "signup-form-h1"
+      }, "First, enter your email and choose a password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "form-description"
+      }, "No need to check your email \u2014 we'll log you right in."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-input",
         type: "text",
         onChange: this.handleInput('email'),
         placeholder: "name@example.com"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "signup-form-input",
+        className: "form-input",
         type: "password",
         onChange: this.handleInput('password'),
         placeholder: "password"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "signup-form-button",
+        className: "form-button",
         onClick: this.handleSubmit
-      }, "Confirm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-form-image-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "singup-form-image",
-        src: createTeam
-      }))));
+      }, "Confirm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "form-image"
+      })));
     }
   }]);
 

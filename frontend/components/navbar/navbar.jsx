@@ -18,12 +18,11 @@ const Navbar = ({currentUser, logout}) => {
                     <li className='navbar-li'>Enterprise</li>
                     <li className='navbar-li'>Pricing</li>
                
-                    <ul className='navbar-button-ul'>
+                <ul className='navbar-button-ul'>
                     <li className='navbar-form-li'><Link to='/login'>Sign in</Link></li>
                     <li className='navbar-form-signup'><Link to='/signup'>GET STARTED</Link></li>
-                    </ul>
                 </ul>
-                
+                </ul>
             </div>
         );
     }
