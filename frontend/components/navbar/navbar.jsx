@@ -1,11 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {logout} from '../../actions/session';
 
 const Navbar = ({currentUser, logout}) => {
 
     if (currentUser) {
         return (
-            <div>A user is logged in</div>
+            <div className='navbar-div'>
+                <ul className='navbar-ul'>
+                    <li><img className="navbar-logo" src={slackLogo}></img></li>
+
+                    <ul className='navbar-button-ul'>
+                        <button className='logout-button' onClick={logout}>Log out</button>
+                    </ul>
+                </ul>
+            </div>
         );
     } else {
         return (

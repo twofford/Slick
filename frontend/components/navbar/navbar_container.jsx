@@ -1,9 +1,10 @@
 import {connect} from 'react-redux';
 import Navbar from './navbar';
 
-const msp = state => ({
-    currentUser: state.session.currentUser
-})
+const msp = state => {
+    return {
+    currentUser: state.session.id
+}}
 
 const mdp = dispatch => ({
     logout: () => dispatch(logout())

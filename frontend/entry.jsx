@@ -7,19 +7,24 @@ import {postUser, postSession, deleteSession} from './util/session';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    
-    let preloadedState = undefined;
-
-    if (window.currentUser) {
-        preloadedState = {
-            session: {
-                currentUser: window.currentUser
-            }
-        }
-    }
 
     const root = document.getElementById('root')
-    const store = configureStore();
+
+    let store;
+
+    if (window.currentUser) {
+        const preloadedState = {
+            session: {id: window.currentUser.id},
+            entities: {
+                users: {[window.currentUser.id]: window.currentUser}
+            }
+        };
+        store = configureStore(preloadedState);
+        // delete window.currentUser;
+    } else {
+        store = configureStore();
+    }
+
     
     //TEST
     window.dispatch = store.dispatch;

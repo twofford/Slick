@@ -15,9 +15,7 @@ export const logoutCurrentUser = () => ({
     type: LOGOUT_CURRENT_USER,
 })
 
-export const createNewUser = (user) => dispatch => {
-    
-    return postUser(user).then(user => dispatch(receiveCurrentUser(user)))};
+export const createNewUser = (user) => dispatch => postUser(user).then(user => dispatch(receiveCurrentUser(user)));
 
 export const login = (user) => dispatch => postSession(user).then(user => dispatch(receiveCurrentUser(user)));
 
