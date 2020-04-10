@@ -2,8 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from "./components/root";
 import configureStore from './store/store';
-import {receiveCurrentUser, logoutCurrentUser, createNewUser, login, logout} from './actions/session';
-import {postUser, postSession, deleteSession} from './util/session';
+
+//TEST
+import {receiveCurrentUser, logoutCurrentUser, createNewUser, login, logout} from './actions/session_actions';
+import {postUser, postSession, deleteSession} from './util/session_util';
+import * as ChannelActions from './actions/channel_actions';
+//TEST
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,24 +24,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
         store = configureStore(preloadedState);
-        // delete window.currentUser;
+        delete window.currentUser;
     } else {
         store = configureStore();
     }
 
     
-    //TEST
+    //SESSION TEST
     window.dispatch = store.dispatch;
     window.createNewUser = createNewUser;
     window.login = login;
     window.logout = logout;
-    window.getState = store.getState
-    window.postUser = postUser
-    window.postSession = postSession
-    window.deleteSession = deleteSession
-    window.receiveCurrentUser = receiveCurrentUser
-    window.logoutCurrentUser = logoutCurrentUser
-    //TEST
+    window.getState = store.getState;
+    window.postUser = postUser;
+    window.postSession = postSession;
+    window.deleteSession = deleteSession;
+    window.receiveCurrentUser = receiveCurrentUser;
+    window.logoutCurrentUser = logoutCurrentUser;
+    //
+
+    //CHANNEL TEST
+    window.fetchChannels = ChannelActions.fetchChannels
+    window.fetchChannel = ChannelActions.fetchChannel
+    window.createChannel = ChannelActions.createChannel
+    window.updateChannel = ChannelActions.updateChannel
+    window.deleteChannel = ChannelActions.deleteChannel
+    //
 
     ReactDOM.render(<Root store={store}/>, root);
 
