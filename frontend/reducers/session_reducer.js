@@ -4,7 +4,7 @@ import {
 } from "../actions/session";
 
 const _nullSession = {
-    user: null
+    user: {}
 };
 
 const sessionReducer = (defaultState = _nullSession, action) => {

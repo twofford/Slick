@@ -26,14 +26,16 @@ class Splash extends React.Component{
             
             <div className='splash-wrapper-2'>
                 <h1 className='splash-wrapper-2-h1'>Break out of the inbox</h1>
-                <p className='splash-wrapper-2-p'>Working in channels gives everyone on your team a shared view of progress and purpose.</p>
+                <p className='splash-wrapper-2-p'>Working in channels gives everyone on your team a shared view of progress and purpose.
+
+</p>
                 <video
                 autoPlay=""
                 loop=""
                 muted=""
                 playsInline=""
                 poster={splashVideoPoster}>
-                    <source src='https://youtu.be/hK2cnxXauls'/>
+                    <source src={splashVideo}/>
                 </video>
             </div>
             

@@ -3,7 +3,6 @@ export const postUser = (user) => {
         url: '/api/users',
         method: 'POST',
         data: {user},
-        dataType: 'application/json'
     })
 }
 
@@ -12,7 +11,6 @@ export const postSession = (user) => {
         url: '/api/session/',
         method: 'POST',
         data: {user},
-        dataType: 'application/json'
     })
 }
 
