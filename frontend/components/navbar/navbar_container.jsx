@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import Navbar from './navbar';
 
 const msp = state => {
-    debugger
+    // debugger
     return {
     currentUser: state.session.user.id
 }}

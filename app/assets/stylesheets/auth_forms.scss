@@ -67,3 +67,16 @@
     margin-right: auto;
     margin-top: 50px;
 }
+
+.login-errors-ul {
+    
+}
+
+.login-error {
+    background-color: rgba(224, 30, 90, .1);
+    border-left: 1px solid rgba(224,30,90,.4);
+    border-bottom: 1px solid rgba(224,30,90,.4);
+    border-right: 1px solid rgba(224,30,90,.4);
+    list-style: none;
+
+}

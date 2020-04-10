@@ -285,7 +285,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  debugger;
+  // debugger
   return {
     currentUser: state.session.user.id
   };
@@ -456,8 +456,11 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "login-errors-ul"
+      }, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "login-error",
           key: "error-".concat(i)
         }, error);
       }));
@@ -481,10 +484,10 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
         type: "password",
         onChange: this.handleInput('password'),
         placeholder: "password"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "form-button",
         onClick: this.handleSubmit
-      }, "Continue \u2192")), this.renderErrors());
+      }, "Continue \u2192")));
     }
   }]);
 
@@ -721,10 +724,11 @@ var Splash = /*#__PURE__*/function (_React$Component) {
       }, "Break out of the inbox"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "splash-wrapper-2-p"
       }, "Working in channels gives everyone on your team a shared view of progress and purpose."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        autoPlay: "",
-        loop: "",
-        muted: "",
-        playsInline: "",
+        className: "splash-video",
+        autoPlay: true,
+        loop: true,
+        muted: true,
+        playsInline: true,
         poster: splashVideoPoster
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: splashVideo
