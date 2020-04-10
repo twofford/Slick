@@ -8,6 +8,8 @@ const _nullSession = {
 };
 
 const sessionReducer = (defaultState = _nullSession, action) => {
+
+    // debugger
     
     Object.freeze(defaultState);
 
@@ -15,7 +17,7 @@ const sessionReducer = (defaultState = _nullSession, action) => {
         case RECEIVE_CURRENT_USER:
             return Object.assign({}, {user: action.user})
         case LOGOUT_CURRENT_USER:
-            return _nullSession;  
+            return _nullSession;
         default:
             return defaultState;
     }

@@ -22,11 +22,21 @@ export const receiveErrors = (errors) => ({
     errors
 })
 
-export const createNewUser = (user) => dispatch => postUser(user).then(user => dispatch(receiveCurrentUser(user)));
+export const createNewUser = (user) => dispatch =>
+    postUser(user).then(user =>
+    dispatch(receiveCurrentUser(user)), errors => (
+    dispatch(receiveErrors(errors.responseJSON))
+));
 
-export const login = (user) => dispatch => postSession(user).then(user => dispatch(receiveCurrentUser(user)));
+export const login = (user) => dispatch => 
+    postSession(user).then(user =>
+    dispatch(receiveCurrentUser(user)), errors => (
+        dispatch(receiveErrors(errors.responseJSON))
+));
 
-export const logout = () => dispatch => deleteSession().then(() => dispatch(logoutCurrentUser()));
+export const logout = () => dispatch =>
+    deleteSession().then(() =>
+    dispatch(logoutCurrentUser()));
 
 
 

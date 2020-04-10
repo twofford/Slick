@@ -4,6 +4,8 @@ const sessionErrorsReducer = (defaultState = [], action) => {
 
     Object.freeze(defaultState);
 
+    // debugger
+
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
             return [];
