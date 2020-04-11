@@ -12,10 +12,8 @@ const App = () => (
         <header>
             <NavbarContainer/>
         </header>
-        <div>
-            <SplashContainer exact path='/'/>
-        </div>
         <Switch>
+            <Route exact path='/' component={SplashContainer}/>
             <AuthRoute exact path='/login' component={LoginContainer}/>
             <AuthRoute exact path='/signup' component={SignupContainer}/>
         </Switch>
