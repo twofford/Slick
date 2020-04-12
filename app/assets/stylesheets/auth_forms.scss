@@ -69,9 +69,10 @@
     margin-top: 50px;
 }
 
-.login-errors-ul {
+// .login-errors-ul {
+
     
-}
+// }
 
 .login-error {
     background-color: rgba(224, 30, 90, .1);
@@ -79,5 +80,11 @@
     border-bottom: 1px solid rgba(224,30,90,.4);
     border-right: 1px solid rgba(224,30,90,.4);
     list-style: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
 
+.login-error:before {
+    content: "\26A0     ";
+    color: #e01e5a;
 }
