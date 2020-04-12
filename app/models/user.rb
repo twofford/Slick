@@ -10,6 +10,12 @@ class User < ApplicationRecord
     
     after_initialize :ensure_session_token
 
+    has_many :channel_memberships
+
+    has_many :channels,
+    through: :channel_memberships,
+    source: :channel
+
     def self.find_by_credentials(email, password)
         @user = User.find_by(email: email)
         @user && @user.is_password?(password) ? @user : nil
