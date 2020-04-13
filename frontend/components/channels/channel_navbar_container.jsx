@@ -1,5 +1,12 @@
 import {connect} from 'react-redux';
-import {createChannel} from '../../actions/channel_actions';
+import {
+    fetchChannels,
+    fetchChannel,
+    createChannel,
+    updateChannel,
+    deleteChannel
+
+} from '../../actions/channel_actions';
 import ChannelNavbar from './channel_navbar';
 
 const msp = state => {
@@ -10,7 +17,15 @@ const msp = state => {
 
 const mdp = dispatch => {
     return {
-        createChannel: channel => dispatch(createChannel(channel))
+        fetchChannels: () => dispatch(fetchChannels()),
+
+        createChannel: channel => dispatch(createChannel(channel)),
+
+        fetchChannel: channel => dispatch(fetchChannel(channel)),
+
+        updateChannel: channel => dispatch(updateChannel(channel)),
+
+        deleteChannel: channel => dispatch(deleteChannel(channel))
     }
 }
 

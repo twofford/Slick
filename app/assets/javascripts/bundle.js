@@ -90,7 +90,7 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/channel_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CHANNELS, RECEIVE_CHANNEL, REMOVE_CHANNEL, receiveChannels, receiveChannel, removeChannel, fetchChannels, fetchChannel, updateChannel, deleteChannel, createChannel */
+/*! exports provided: RECEIVE_CHANNELS, RECEIVE_CHANNEL, REMOVE_CHANNEL, receiveChannels, receiveChannel, removeChannel, fetchChannels, fetchChannel, createChannel, updateChannel, deleteChannel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103,9 +103,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeChannel", function() { return removeChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchChannels", function() { return fetchChannels; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchChannel", function() { return fetchChannel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createChannel", function() { return createChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateChannel", function() { return updateChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteChannel", function() { return deleteChannel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createChannel", function() { return createChannel; });
 /* harmony import */ var _util_channel_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/channel_util */ "./frontend/util/channel_util.js");
 //AJAX REQUESTS//
  //
@@ -149,11 +149,16 @@ var fetchChannel = function fetchChannel(channel) {
       return dispatch(receiveChannel(channel));
     });
   };
-}; // export const createChannel = (channel) => dispatch => (
-//     ChannelApiUtil.postChannel(channel).then(channel => (
-//     dispatch(receiveChannel(channel))
-// )));
-
+};
+var createChannel = function createChannel(channel) {
+  return function (dispatch) {
+    return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["postChannel"](channel).then(function (channel) {
+      return dispatch(receiveChannel(channel));
+    }, function (errors) {
+      return dispatch(receiveErrors(errors.responseJSON));
+    });
+  };
+};
 var updateChannel = function updateChannel(channel) {
   return function (dispatch) {
     return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["patchChannel"](channel).then(function (channel) {
@@ -165,15 +170,6 @@ var deleteChannel = function deleteChannel(channel) {
   return function (dispatch) {
     return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["deleteChannel"](channel).then(function (channel) {
       return dispatch(removeChannel(channel));
-    });
-  };
-};
-var createChannel = function createChannel(channel) {
-  return function (dispatch) {
-    return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["postChannel"](channel).then(function (channel) {
-      return dispatch(receiveChannel(channel));
-    }, function (errors) {
-      return dispatch(receiveErrors(errors.responseJSON));
     });
   };
 }; //
@@ -300,6 +296,66 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./frontend/components/channels/channel_item.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/channels/channel_item.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var ChannelItem = /*#__PURE__*/function (_React$Component) {
+  _inherits(ChannelItem, _React$Component);
+
+  var _super = _createSuper(ChannelItem);
+
+  function ChannelItem(props) {
+    _classCallCheck(this, ChannelItem);
+
+    return _super.call(this, props);
+  }
+
+  _createClass(ChannelItem, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.channel.title));
+    }
+  }]);
+
+  return ChannelItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (ChannelItem);
+
+/***/ }),
+
 /***/ "./frontend/components/channels/channel_navbar.jsx":
 /*!*********************************************************!*\
   !*** ./frontend/components/channels/channel_navbar.jsx ***!
@@ -311,6 +367,7 @@ var App = function App() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _channel_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./channel_item */ "./frontend/components/channels/channel_item.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -337,6 +394,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var ChannelNavbar = /*#__PURE__*/function (_React$Component) {
   _inherits(ChannelNavbar, _React$Component);
 
@@ -348,7 +406,6 @@ var ChannelNavbar = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, ChannelNavbar);
 
     _this = _super.call(this, props);
-    _this.channelsArray = Object.values(_this.props.channels);
     _this.state = {
       title: '',
       channel_type: ''
@@ -358,11 +415,15 @@ var ChannelNavbar = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(ChannelNavbar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchChannels();
+    }
+  }, {
     key: "handleInput",
     value: function handleInput(type) {
       var _this2 = this;
 
-      // debugger
       return function (event) {
         _this2.setState(_defineProperty({}, type, event.target.value));
       };
@@ -377,9 +438,12 @@ var ChannelNavbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.channelsArray.map(function (channel) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, channel.channels.title);
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      this.channelsArray = Object.values(this.props.channels);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Channels"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.channelsArray.map(function (channel) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          channel: channel
+        });
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.handleInput('title')
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Channel type:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -422,8 +486,20 @@ var msp = function msp(state) {
 
 var mdp = function mdp(dispatch) {
   return {
+    fetchChannels: function fetchChannels() {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["fetchChannels"])());
+    },
     createChannel: function createChannel(channel) {
       return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["createChannel"])(channel));
+    },
+    fetchChannel: function fetchChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["fetchChannel"])(channel));
+    },
+    updateChannel: function updateChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["updateChannel"])(channel));
+    },
+    deleteChannel: function deleteChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["deleteChannel"])(channel));
     }
   };
 };
@@ -1165,17 +1241,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var channelsReducer = function channelsReducer() {
-  var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    entities: {
-      channels: {
-        title: '#General',
-        channel_type: 'public'
-      }
-    }
-  };
+  var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(defaultState);
-  debugger;
 
   switch (action.type) {
     case _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CHANNELS"]:

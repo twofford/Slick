@@ -4,7 +4,7 @@ class Api::ChannelsController < ApplicationController
 
     def index
         @channels = Channel.all
-        #render or redirect once you know what you're doing
+        render 'api/channels/index'
     end
 
     def create

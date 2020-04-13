@@ -1,10 +1,9 @@
 import React from 'react';
+import ChannelItem from './channel_item';
 
 class ChannelNavbar extends React.Component{
     constructor(props){
         super(props);
-
-        this.channelsArray = Object.values(this.props.channels)
 
         this.state = {
             title: '',
@@ -15,8 +14,11 @@ class ChannelNavbar extends React.Component{
 
     };
 
+    componentDidMount(){
+        this.props.fetchChannels();
+    }
+
     handleInput(type) {
-        // debugger
         return (event) => {
             this.setState({ [type]: event.target.value });
         };
@@ -31,11 +33,20 @@ class ChannelNavbar extends React.Component{
     };
 
     render(){
+
+        this.channelsArray = Object.values(this.props.channels);
+
+
         return(
             <div>
-                {this.channelsArray.map(channel =>(
-                    <p>{channel.channels.title}</p>
-                ))}
+                <p>Channels</p>
+                <ul>
+                    {this.channelsArray.map(channel =>(
+                        <ChannelItem
+                            channel={channel}
+                        />
+                    ))}
+                </ul>
             <form>
                 <label>Title:
                 <input
