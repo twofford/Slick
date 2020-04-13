@@ -117,7 +117,6 @@ var REMOVE_CHANNEL = 'REMOVE_CHANNEL'; //
 //REGULAR ACTION CREATORS//
 
 var receiveChannels = function receiveChannels(channels) {
-  debugger;
   return {
     type: RECEIVE_CHANNELS,
     channels: channels
@@ -219,7 +218,6 @@ var createNewUser = function createNewUser(user) {
     return Object(_util_session_util__WEBPACK_IMPORTED_MODULE_0__["postUser"])(user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     }, function (errors) {
-      debugger;
       return dispatch(receiveErrors(errors.responseJSON));
     });
   };
@@ -229,7 +227,6 @@ var login = function login(user) {
     return Object(_util_session_util__WEBPACK_IMPORTED_MODULE_0__["postSession"])(user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     }, function (errors) {
-      debugger;
       return dispatch(receiveErrors(errors.responseJSON));
     });
   };
@@ -376,7 +373,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  // debugger
   return {
     currentUser: state.session.user.id
   };
@@ -451,7 +447,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  // debugger
   return {
     errors: state.errors.session
   };
@@ -607,7 +602,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  debugger;
   return {
     errors: state.errors.session
   };
@@ -1136,14 +1130,12 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(defaultState);
-  debugger;
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return [];
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ERRORS"]:
-      debugger;
       return action.errors;
 
     default:
@@ -1173,7 +1165,6 @@ var _nullSession = {
 var sessionReducer = function sessionReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _nullSession;
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  // debugger
   Object.freeze(defaultState);
 
   switch (action.type) {
@@ -1269,7 +1260,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "patchChannel", function() { return patchChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteChannel", function() { return deleteChannel; });
 var getChannels = function getChannels() {
-  debugger;
   return $.ajax({
     url: '/api/channels'
   });

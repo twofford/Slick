@@ -1,5 +1,4 @@
 export const getChannels = () => {
-    debugger
     return $.ajax ({
         url: '/api/channels'
     })
