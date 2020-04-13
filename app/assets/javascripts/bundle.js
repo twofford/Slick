@@ -229,7 +229,7 @@ var login = function login(user) {
     return Object(_util_session_util__WEBPACK_IMPORTED_MODULE_0__["postSession"])(user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     }, function (errors) {
-      // debugger
+      debugger;
       return dispatch(receiveErrors(errors.responseJSON));
     });
   };

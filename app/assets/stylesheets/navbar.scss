@@ -9,7 +9,6 @@
     display: flex;
     align-items: center;
     list-style: none;
-
 }
 
 .navbar-button-ul {
@@ -102,8 +101,8 @@
     color: #FFFFFF;
 }
 
-@media screen and (max-width: 1085px) {
-    .navbar-hideable {
-        display: none;
-    }
-}
+// @media screen and (max-width: 1085px) {
+//     .navbar-hideable {
+//         display: none;
+//     }
+// }
