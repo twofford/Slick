@@ -38,16 +38,6 @@ export const removeChannel = (channel) => {
 
 //THUNK ACTION CREATORS//
 
-// export const fetchChannels = () => dispatch => (dispatch (ChannelApiUtil.getChannels()).then(channels => dispatch(receiveChannels(channels))));
-
-// export const fetchChannel = (channel) => dispatch => (dispatch(ChannelApiUtil.getChannel(channel).then(channel => dispatch(receiveChannel(channel)))));
-
-// export const createChannel = (channel) => dispatch => (dispatch(ChannelApiUtil.postChannel(channel).then(channel => dispatch(receiveChannel(channel)))));
-
-// export const updateChannel = (channel) => dispatch => (dispatch(ChannelApiUtil.patchChannel(channel).then(channel => dispatch(receiveChannel(channel)))));
-
-// export const deleteChannel = (channel) => dispatch =>(dispatch(ChannelApiUtil.deleteChannel(channel).then(channel => dispatch(removeChannel(channel)))));
-
 export const fetchChannels = () => dispatch => (
     ChannelApiUtil.getChannels().then(channels => (
     dispatch(receiveChannels(channels))
@@ -72,4 +62,6 @@ export const deleteChannel = (channel) => dispatch => (
     ChannelApiUtil.deleteChannel(channel).then(channel => (
     dispatch(removeChannel(channel))
 )));
+
+//
 

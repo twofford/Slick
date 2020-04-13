@@ -30,3 +30,14 @@ export const receiveErrors = (errors) => {
     }
 }
 
+export const postMessage = (message) => {
+    return {
+        type: RECEIVE_MESSAGE,
+        message
+    }
+}
+
+export const createMessage = (message) => dispatch => (
+    postMessage(message).then(message => (
+    dispatch(receieveMessage(message))
+)));
