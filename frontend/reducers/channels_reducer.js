@@ -2,7 +2,7 @@ import {
     RECEIVE_CHANNELS,
     RECEIVE_CHANNEL,
     REMOVE_CHANNEL
-} from '../util/channel_util';
+} from '../actions/channel_actions';
 
 const channelsReducer = (defaultState = {}, action) => {
 

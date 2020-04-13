@@ -1,5 +1,4 @@
 
-
 .form-div {
     margin-top: 50px;
     margin-left: auto;
@@ -18,15 +17,30 @@
 }
 
 .login-form-h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    letter-spacing: -1px;
     text-align: center;
+    font-weight: 700;
+    margin: 0 0 1rem;
 }
 
-.form-description {
+.signup-form-h1 {
+    font-size: 28px;
+    line-height: 1.2143;
+    font-weight: 800px;
+    letter-spacing: -1px;
+    margin-bottom: .25rem;
+}
+
+.signup-form-description {
+    margin: 0 0 1rem;
     font-size: 16px;
     color: #616061;
 }
 
 .login-form-description {
+    margin: 0 0 1rem;
     font-size: 16px;
     color: #616061;
     text-align: center;
@@ -47,7 +61,6 @@
     display: block;
     background-color: #007a5a;
     color: #FFFFFF;
-    // border: 1px solid #ddd;
     border-radius: 5px;
     margin-top: 12px;
     font-family: 'Lato', sans-serif;

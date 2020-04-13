@@ -43,7 +43,7 @@ class SignupForm extends React.Component{
             
             <div className='form-div'>
                 <h1 className='signup-form-h1'>First, enter your email and choose a password</h1>
-                <p className='form-description'>No need to check your email &mdash; we'll log you right in.</p>
+                <p className='signup-form-description'>No need to check your email &mdash; we'll log you right in.</p>
 
                 <form>
 
@@ -62,6 +62,8 @@ class SignupForm extends React.Component{
                     onChange={this.handleInput('password')}
                     placeholder='password'
                 />
+
+                {this.renderErrors()}
 
                 <button
                     className='form-button'          onClick={this.handleSubmit}>

@@ -25,9 +25,10 @@ export const receiveErrors = (errors) => {
 
 export const createNewUser = (user) => dispatch =>
     postUser(user).then(user =>
-    dispatch(receiveCurrentUser(user)), errors => (
-    dispatch(receiveErrors(errors.responseJSON))
-));
+    dispatch(receiveCurrentUser(user)), errors => {
+        debugger
+    return dispatch(receiveErrors(errors.responseJSON))
+    });
 
 export const login = (user) => dispatch => 
     postSession(user).then(user =>
