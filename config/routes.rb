@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'static_pages#root'
 
+  mount ActionCable.server => '/cable'
+
   namespace :api, defaults: {format: :json} do
     resources :users
     resources :channels

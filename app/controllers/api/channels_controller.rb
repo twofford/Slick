@@ -10,7 +10,7 @@ class Api::ChannelsController < ApplicationController
     def create
         @channel = Channel.new(channel_params)
         if @channel.save
-            #render or redirect once you know what you're doing
+            render 'api/channels/show'
         else
             render json: {errors: @channel.errors.full_messages, status: 401}
         end

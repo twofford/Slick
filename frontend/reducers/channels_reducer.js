@@ -4,9 +4,11 @@ import {
     REMOVE_CHANNEL
 } from '../actions/channel_actions';
 
-const channelsReducer = (defaultState = {}, action) => {
+const channelsReducer = (defaultState = { entities: { channels: { title: '#General', channel_type: 'public', } } }, action) => {
 
     Object.freeze(defaultState);
+
+    debugger
 
     switch (action.type) {
         case RECEIVE_CHANNELS:

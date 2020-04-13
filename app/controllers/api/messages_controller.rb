@@ -9,8 +9,6 @@ class Api::MessagesController < ApplicationController
     def create
         @message = Message.new(message_params)
         if @message.save
-            @channel = Channel.find_by(params[:channel_id])
-            ChatChannel.broadcast_to @channel @message
         else
             render json: {errors: @message.errors.full_messages, status: 401}
         end
