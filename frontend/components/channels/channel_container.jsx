@@ -1,23 +1,15 @@
 import {connect} from 'react-redux';
-import {
-    fetchChannels,
-    fetchChannel,
-    createChannel,
-    updateChannel,
-    deleteChannel
 
-} from '../../actions/channel_actions';
+import Channel from './channel';
 
-import ChannelSidebar from './channel_sidebar';
-
-const msp = state => {
-    return {
-        channels: state.entities.channels
+const msp = state => (
+    {
+        state: state
     }
-}
+);
 
-const mdp = dispatch => {
-    return {
+const mdp = dispatch => (
+    {
         fetchChannels: () => dispatch(fetchChannels()),
 
         createChannel: channel => dispatch(createChannel(channel)),
@@ -28,6 +20,6 @@ const mdp = dispatch => {
 
         deleteChannel: channel => dispatch(deleteChannel(channel))
     }
-}
+)
 
-export default connect(msp,mdp)(ChannelSidebar);
+export default connect(msp,mdp)(Channel);

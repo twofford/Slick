@@ -51,7 +51,7 @@ class ChannelSidebar extends React.Component{
 
                 <div className='channels-toogle'>
 
-                    <i id='channels-carat' class="fas fa-caret-right"></i>
+                    <i id='channels-carat' className="fas fa-caret-right"></i>
                     
                     <button className='channels-toggle-button'
                     onClick={this.hideChannels}>Channels</button>

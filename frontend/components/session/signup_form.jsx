@@ -78,11 +78,11 @@ class SignupForm extends React.Component{
 
                 </form>
 
-                <div>
+                <>
                     <img
                     className='form-image'
                     src={createTeam}></img>
-                </div>
+                </>
 
             </div>
             </>
