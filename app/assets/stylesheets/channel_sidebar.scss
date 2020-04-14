@@ -1,7 +1,6 @@
 .channels-wrapper {
     position: relative;
     font-family: 'Lato', sans-serif;
-    // max-width: 255px;
     background-color: #3F0D40;
     height: 100%;
     margin: 0;
@@ -10,7 +9,7 @@
 .fa-caret-right {
     transition: 0.5s;
     color: #c3b4c4;
-    margin-left: 15%;
+    margin-left: 15px;;
 }
 
 .fa-caret-right:hover {
@@ -27,9 +26,27 @@
     font-weight: 500;
     font-size: 15px;
     cursor: pointer;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.dms-toggle-button {
+    background-color: #3F0D40;
+    color: #c3b4c4;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
 .channels-toggle-button:focus {
+    outline:0;
+}
+
+.dms-toggle-button:focus {
     outline:0;
 }
 
@@ -39,8 +56,8 @@
 }
 
 .channel-li {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 25px;
+    padding-right: 15px;
     list-style: none;
     font-size: 15px;
     line-height: 28px;
@@ -52,6 +69,20 @@
 }
 
 .channel-li:hover {
+    color: #ffffff;
+    background-color: #350C36;
+}
+
+.dm-li {
+    padding-left: 25px;
+    padding-right: 15px;
+    list-style: none;
+    font-size: 15px;
+    line-height: 28px;
+    color: #c3b4c4;
+}
+
+.dm-li:hover {
     color: #ffffff;
     background-color: #350C36;
 }

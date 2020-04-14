@@ -539,6 +539,17 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "hideDms",
+    value: function hideDms() {
+      var dmsUl = document.getElementById("dms-ul");
+
+      if (dmsUl.style.display === "none") {
+        dmsUl.style.display = "block";
+      } else {
+        dmsUl.style.display = "none";
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       this.channelsArray = Object.values(this.props.channels);
@@ -556,10 +567,29 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         id: "channels-ul",
         className: "channels-ul"
       }, this.channelsArray.map(function (channel) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          channel: channel
-        });
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Add a channel"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        if (channel.channel_type === 'public') {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            channel: channel
+          });
+        }
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "channels-toogle"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        id: "channels-carat",
+        className: "fas fa-caret-right"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "dms-toggle-button",
+        onClick: this.hideDms
+      }, "Direct messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "dms-ul",
+        className: "dms-ul"
+      }, this.channelsArray.map(function (channel) {
+        if (channel.channel_type === 'private') {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            channel: channel
+          });
+        }
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.handleInput('title')
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Channel type:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -673,11 +703,19 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebarItem, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "channel-li"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "channel-hash"
-      }, "# \xA0"), this.props.channel.title);
+      if (this.props.channel.channel_type === 'public') {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "channel-li"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "channel-hash"
+        }, "# \xA0"), this.props.channel.title);
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "dm-li"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "channel-hash"
+        }, "# \xA0"), this.props.channel.title);
+      }
     }
   }]);
 

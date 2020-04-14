@@ -9,7 +9,11 @@ class Api::ChannelsController < ApplicationController
 
     def create
         @channel = Channel.new(channel_params)
-        if @channel.save
+        if @channel.save && @channel.channel_type == 'public'
+            @channel.users << User.all
+            render 'api/channels/show'
+        elsif @channel.save && @channel.channel_type == 'private'
+            @channel.users << User.all
             render 'api/channels/show'
         else
             render json: {errors: @channel.errors.full_messages, status: 401}

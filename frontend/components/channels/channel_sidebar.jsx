@@ -40,10 +40,19 @@ class ChannelSidebar extends React.Component{
         }
     };
 
+    hideDms() {
+        const dmsUl = document.getElementById("dms-ul");
+
+        if (dmsUl.style.display === "none") {
+            dmsUl.style.display = "block";
+        } else {
+            dmsUl.style.display = "none";
+        }
+    };
+
     render(){
 
         this.channelsArray = Object.values(this.props.channels);
-
 
         return(
 
@@ -56,15 +65,33 @@ class ChannelSidebar extends React.Component{
                     <button className='channels-toggle-button'
                     onClick={this.hideChannels}>Channels</button>
 
-                    <ul
-                    id='channels-ul' className='channels-ul'>
-                        {this.channelsArray.map(channel =>(
-                            <ChannelSidebarItem
-                                channel={channel}
-                            />
-                        ))}
+                    <ul id='channels-ul' className='channels-ul'>
 
-                        <li>Add a channel</li>
+                        {this.channelsArray.map(channel => {
+
+                            if (channel.channel_type === 'public') {
+                                return <ChannelSidebarItem channel={channel}/>
+                        }})}
+
+                    </ul>
+
+                </div>
+
+                <div className='channels-toogle'>
+
+                    <i id='channels-carat' className="fas fa-caret-right"></i>
+
+                    <button className='dms-toggle-button'
+                        onClick={this.hideDms}>Direct messages</button>
+
+                    <ul id='dms-ul' className='dms-ul'>
+
+                        {this.channelsArray.map(channel => {
+
+                            if (channel.channel_type === 'private') {
+                                return <ChannelSidebarItem channel={channel} />
+                            }
+                        })}
 
                     </ul>
 

@@ -6,6 +6,8 @@ class ChannelSidebarItem extends React.Component{
     };
 
     render(){
+
+        if (this.props.channel.channel_type === 'public'){
         
         return(
             <li className='channel-li'>
@@ -13,6 +15,14 @@ class ChannelSidebarItem extends React.Component{
                 {this.props.channel.title}
             </li>
         )
+        } else {
+            return (
+            <li className='dm-li'>
+                <span className='channel-hash'># &nbsp;</span>
+                {this.props.channel.title}
+            </li>
+        )
+        }
     }
 }
 
