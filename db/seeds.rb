@@ -27,7 +27,7 @@ u1 = User.create!(
 )
 
 c1 = Channel.create!(
-    title: '#General',
+    title: 'General',
     channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
@@ -35,7 +35,7 @@ c1 = Channel.create!(
 )
 
 c2 = Channel.create!(
-    title: '#Private Chat',
+    title: 'Private Chat',
     channel_type: 'private',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',

@@ -1,4 +1,5 @@
 import React from 'react';
+import NavbarContainer from '../navbar/navbar_container'
 
 class Splash extends React.Component{
     constructor(props) {
@@ -8,6 +9,8 @@ class Splash extends React.Component{
     render(){
         return(
             <>
+
+            <NavbarContainer/>
             
             <div className='splash-wrapper-1'>
                 <div className='splash-1-left'>

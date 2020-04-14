@@ -40,6 +40,12 @@ class LoginForm extends React.Component {
     render() {
 
         return (
+            <>
+            <div className='navbar-div'>
+                <ul className='navbar-ul'>
+                    <li><img className="navbar-logo" src={slackLogo}></img></li>
+                </ul>
+            </div>
             
             <div className='form-div'>
 
@@ -78,7 +84,7 @@ class LoginForm extends React.Component {
                 </form>
 
             </div>
-            
+            </>
         );
     };
 };

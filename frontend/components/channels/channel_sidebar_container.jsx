@@ -7,7 +7,7 @@ import {
     deleteChannel
 
 } from '../../actions/channel_actions';
-import ChannelNavbar from './channel_navbar';
+import ChannelSidebar from './channel_sidebar';
 
 const msp = state => {
     return {
@@ -29,4 +29,4 @@ const mdp = dispatch => {
     }
 }
 
-export default connect(msp,mdp)(ChannelNavbar);
+export default connect(msp,mdp)(ChannelSidebar);

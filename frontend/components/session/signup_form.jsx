@@ -40,7 +40,13 @@ class SignupForm extends React.Component{
 
         return(
 
-            
+            <>
+                <div className='navbar-div'>
+                    <ul className='navbar-ul'>
+                        <li><img className="navbar-logo" src={slackLogo}></img></li>
+                    </ul>
+                </div>
+
             <div className='form-div'>
                 <h1 className='signup-form-h1'>First, enter your email and choose a password</h1>
                 <p className='signup-form-description'>No need to check your email &mdash; we'll log you right in.</p>
@@ -79,6 +85,7 @@ class SignupForm extends React.Component{
                 </div>
 
             </div>
+            </>
         );
     };
 };

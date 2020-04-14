@@ -1,7 +1,7 @@
 import React from 'react';
-import ChannelItem from './channel_item';
+import ChannelSidebarItem from './channel_sidebar_item';
 
-class ChannelNavbar extends React.Component{
+class ChannelSidebar extends React.Component{
     constructor(props){
         super(props);
 
@@ -16,7 +16,7 @@ class ChannelNavbar extends React.Component{
 
     componentDidMount(){
         this.props.fetchChannels();
-    }
+    };
 
     handleInput(type) {
         return (event) => {
@@ -25,11 +25,19 @@ class ChannelNavbar extends React.Component{
     };
 
     handleSubmit(event) {
-
         event.preventDefault();
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel);
+    };
 
+    hideChannels() {
+        const channelsUl = document.getElementById("channels-ul");
+
+        if (channelsUl.style.display === "none") {
+            channelsUl.style.display = "block";
+        } else {
+            channelsUl.style.display = "none";
+        }
     };
 
     render(){
@@ -38,15 +46,30 @@ class ChannelNavbar extends React.Component{
 
 
         return(
-            <div>
-                <p>Channels</p>
-                <ul>
-                    {this.channelsArray.map(channel =>(
-                        <ChannelItem
-                            channel={channel}
-                        />
-                    ))}
-                </ul>
+
+            <div className='channels-wrapper'>
+
+                <div className='channels-toogle'>
+
+                    <i id='channels-carat' class="fas fa-caret-right"></i>
+                    
+                    <button className='channels-toggle-button'
+                    onClick={this.hideChannels}>Channels</button>
+
+                    <ul
+                    id='channels-ul' className='channels-ul'>
+                        {this.channelsArray.map(channel =>(
+                            <ChannelSidebarItem
+                                channel={channel}
+                            />
+                        ))}
+
+                        <li>Add a channel</li>
+
+                    </ul>
+
+                </div>
+
             <form>
                 <label>Title:
                 <input
@@ -66,10 +89,12 @@ class ChannelNavbar extends React.Component{
                         Submit
                 </button>
                 </label>
+
             </form>
             </div>
+
     )
     }
 }
 
-export default ChannelNavbar;
+export default ChannelSidebar;

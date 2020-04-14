@@ -5,23 +5,19 @@ import {Route, Switch} from 'react-router-dom';
 
 import SignupContainer from './session/signup_container';
 import LoginContainer from './session/login_container';
-import NavbarContainer from './navbar/navbar_container';
 import SplashContainer from './splash/splash_container';
-import ChannelNavbarContainer from './channels/channel_navbar_container';
-import {AuthRoute} from '../util/route';
+import ChannelSidebarContainer from './channels/channel_sidebar_container';
+import {AuthRoute, ProtectedRoute} from '../util/route';
 
 //
 
 const App = () => (
     <div>
-        <header>
-            <NavbarContainer/>
-        </header>
         <Switch>
-            <Route exact path='/' component={SplashContainer}/>
-            <AuthRoute exact path='/login' component={LoginContainer}/>
-            <AuthRoute exact path='/signup' component={SignupContainer}/>
-            <AuthRoute exact path='/channels' component={ChannelNavbarContainer}/>
+            <ProtectedRoute exact path='/' component={SplashContainer}/>
+            <ProtectedRoute exact path='/login' component={LoginContainer}/>
+            <ProtectedRoute exact path='/signup' component={SignupContainer}/>
+            <AuthRoute exact path='/channels' component={ChannelSidebarContainer}/>
         </Switch>
     </div>
 )
