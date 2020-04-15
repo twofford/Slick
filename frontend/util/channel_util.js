@@ -4,9 +4,9 @@ export const getChannels = () => {
     })
 }
 
-export const getChannel = (channel) => {
+export const getChannel = (channelId) => {
     return $.ajax ({
-        url: `/api/channels/${channel.id}`
+        url: `/api/channels/${channelId}`
     })
 }
 
@@ -18,17 +18,17 @@ export const postChannel = (channel) => {
     })
 }
 
-export const patchChannel = (channel) => {
+export const patchChannel = (channelId) => {
     return $.ajax ({
-        url: `/api/channels/${channel.id}`,
+        url: `/api/channels/${channelId}`,
         method: 'PATCH',
         data: {channel}
     })
 }
 
-export const deleteChannel = (channel) => {
+export const deleteChannel = (channelId) => {
     return $.ajax ({
-        url: `/api/channels/${channel.id}`,
+        url: `/api/channels/${channelId}`,
         method: 'DELETE'
     })
 }

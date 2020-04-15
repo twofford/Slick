@@ -52,6 +52,8 @@ class ChannelSidebar extends React.Component{
 
     render(){
 
+        // debugger
+
         this.channelsArray = Object.values(this.props.channels);
 
         return(
@@ -70,7 +72,9 @@ class ChannelSidebar extends React.Component{
                         {this.channelsArray.map(channel => {
 
                             if (channel.channel_type === 'public') {
-                                return <ChannelSidebarItem channel={channel}/>
+                                return <ChannelSidebarItem 
+                                key={channel.id}
+                                channel={channel} currentChannelId={this.props.currentChannelId}/>
                         }})}
 
                     </ul>
@@ -89,7 +93,9 @@ class ChannelSidebar extends React.Component{
                         {this.channelsArray.map(channel => {
 
                             if (channel.channel_type === 'private') {
-                                return <ChannelSidebarItem channel={channel} />
+                                return <ChannelSidebarItem
+                                key={channel.id}
+                                channel={channel} currentChannelId={this.props.currentChannelId} />
                             }
                         })}
 
@@ -116,6 +122,8 @@ class ChannelSidebar extends React.Component{
                         Submit
                 </button>
                 </label>
+
+                <button className='logout-button' onClick={this.props.logout}>Log out</button>
 
             </form>
             </div>

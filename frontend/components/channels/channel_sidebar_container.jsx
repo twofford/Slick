@@ -1,3 +1,4 @@
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {
     fetchChannels,
@@ -10,9 +11,12 @@ import {
 
 import ChannelSidebar from './channel_sidebar';
 
-const msp = state => {
+const msp = (state, ownProps) => {
+    // debugger
     return {
-        channels: state.entities.channels
+        currentUser: state.session.user.id,
+        channels: state.entities.channels,
+        currentChannelId: ownProps.match.params.channelId
     }
 }
 
@@ -26,8 +30,10 @@ const mdp = dispatch => {
 
         updateChannel: channel => dispatch(updateChannel(channel)),
 
-        deleteChannel: channel => dispatch(deleteChannel(channel))
+        deleteChannel: channel => dispatch(deleteChannel(channel)),
+
+        logout: () => dispatch(logout())
     }
 }
 
-export default connect(msp,mdp)(ChannelSidebar);
+export default withRouter(connect(msp,mdp)(ChannelSidebar));

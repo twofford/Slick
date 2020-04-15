@@ -117,7 +117,6 @@ var REMOVE_CHANNEL = 'REMOVE_CHANNEL'; //
 //REGULAR ACTION CREATORS//
 
 var receiveChannels = function receiveChannels(channels) {
-  // debugger
   return {
     type: RECEIVE_CHANNELS,
     channels: channels
@@ -256,13 +255,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _session_signup_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session/signup_container */ "./frontend/components/session/signup_container.jsx");
-/* harmony import */ var _session_login_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session/login_container */ "./frontend/components/session/login_container.jsx");
-/* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.jsx");
-/* harmony import */ var _channels_channel_viewport__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./channels/channel_viewport */ "./frontend/components/channels/channel_viewport.jsx");
-/* harmony import */ var _util_route__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/route */ "./frontend/util/route.jsx");
+/* harmony import */ var _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbar/navbar_container */ "./frontend/components/navbar/navbar_container.jsx");
+/* harmony import */ var _session_signup_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session/signup_container */ "./frontend/components/session/signup_container.jsx");
+/* harmony import */ var _session_login_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session/login_container */ "./frontend/components/session/login_container.jsx");
+/* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.jsx");
+/* harmony import */ var _channels_channel_viewport_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./channels/channel_viewport_container */ "./frontend/components/channels/channel_viewport_container.jsx");
+/* harmony import */ var _util_route__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/route */ "./frontend/util/route.jsx");
 
  //COMPONENTS//
+
 
 
 
@@ -271,23 +272,25 @@ __webpack_require__.r(__webpack_exports__);
  //
 
 var App = function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/",
+    component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/",
-    component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
+    component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/login",
-    component: _session_login_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
+    component: _session_login_container__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/signup",
-    component: _session_signup_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
-    exact: true,
-    path: "/channels",
-    component: _channels_channel_viewport__WEBPACK_IMPORTED_MODULE_5__["default"]
-  })));
+    component: _session_signup_container__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/channels/:channelId",
+    component: _channels_channel_viewport_container__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -335,15 +338,27 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(Channel);
 
   function Channel(props) {
+    var _this;
+
     _classCallCheck(this, Channel);
 
-    return _super.call(this, props);
-  }
+    _this = _super.call(this, props);
+    _this.currentChannel = _this.props.fetchChannel(_this.props.match.params.channelId);
+    return _this;
+  } // componentDidMount(){
+  //     this.props.fetchChannel(this.props.match.params.channelId);
+  // }
+
 
   _createClass(Channel, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "This is a channel.");
+      // debugger
+      if (this.props.channel) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.channel.title);
+      } else {
+        return null;
+      }
     }
   }]);
 
@@ -363,88 +378,45 @@ var Channel = /*#__PURE__*/function (_React$Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
+/* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
 
 
 
-var msp = function msp(state) {
+
+
+var msp = function msp(state, ownProps) {
+  // debugger
   return {
-    state: state
+    users: state.entities.users,
+    channel: state.entities.channels[ownProps.match.params.channelId],
+    currentUser: state.entities.users[state.session.id]
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
-    fetchChannels: function (_fetchChannels) {
-      function fetchChannels() {
-        return _fetchChannels.apply(this, arguments);
-      }
-
-      fetchChannels.toString = function () {
-        return _fetchChannels.toString();
-      };
-
-      return fetchChannels;
-    }(function () {
-      return dispatch(fetchChannels());
-    }),
-    createChannel: function (_createChannel) {
-      function createChannel(_x) {
-        return _createChannel.apply(this, arguments);
-      }
-
-      createChannel.toString = function () {
-        return _createChannel.toString();
-      };
-
-      return createChannel;
-    }(function (channel) {
-      return dispatch(createChannel(channel));
-    }),
-    fetchChannel: function (_fetchChannel) {
-      function fetchChannel(_x2) {
-        return _fetchChannel.apply(this, arguments);
-      }
-
-      fetchChannel.toString = function () {
-        return _fetchChannel.toString();
-      };
-
-      return fetchChannel;
-    }(function (channel) {
-      return dispatch(fetchChannel(channel));
-    }),
-    updateChannel: function (_updateChannel) {
-      function updateChannel(_x3) {
-        return _updateChannel.apply(this, arguments);
-      }
-
-      updateChannel.toString = function () {
-        return _updateChannel.toString();
-      };
-
-      return updateChannel;
-    }(function (channel) {
-      return dispatch(updateChannel(channel));
-    }),
-    deleteChannel: function (_deleteChannel) {
-      function deleteChannel(_x4) {
-        return _deleteChannel.apply(this, arguments);
-      }
-
-      deleteChannel.toString = function () {
-        return _deleteChannel.toString();
-      };
-
-      return deleteChannel;
-    }(function (channel) {
-      return dispatch(deleteChannel(channel));
-    })
+    fetchChannels: function fetchChannels() {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["fetchChannels"])());
+    },
+    createChannel: function createChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["createChannel"])(channel));
+    },
+    fetchChannel: function fetchChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["fetchChannel"])(channel));
+    },
+    updateChannel: function updateChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["updateChannel"])(channel));
+    },
+    deleteChannel: function deleteChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["deleteChannel"])(channel));
+    }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_3__["default"])));
 
 /***/ }),
 
@@ -552,6 +524,9 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
+      debugger;
       this.channelsArray = Object.values(this.props.channels);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-wrapper"
@@ -569,7 +544,9 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }, this.channelsArray.map(function (channel) {
         if (channel.channel_type === 'public') {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            channel: channel
+            key: channel.id,
+            channel: channel,
+            currentChannelId: _this3.props.currentChannelId
           });
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -586,7 +563,9 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }, this.channelsArray.map(function (channel) {
         if (channel.channel_type === 'private') {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            channel: channel
+            key: channel.id,
+            channel: channel,
+            currentChannelId: _this3.props.currentChannelId
           });
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -597,7 +576,10 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         onChange: this.handleInput('channel_type')
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleSubmit
-      }, "Submit"))));
+      }, "Submit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "logout-button",
+        onClick: this.props.logout
+      }, "Log out")));
     }
   }]);
 
@@ -617,40 +599,58 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
-/* harmony import */ var _channel_sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./channel_sidebar */ "./frontend/components/channels/channel_sidebar.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
+/* harmony import */ var _channel_sidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./channel_sidebar */ "./frontend/components/channels/channel_sidebar.jsx");
 
 
 
 
-var msp = function msp(state) {
+
+var msp = function msp(state, ownProps) {
+  // debugger
   return {
-    channels: state.entities.channels
+    currentUser: state.session.user.id,
+    channels: state.entities.channels,
+    currentChannelId: ownProps.match.params.channelId
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
     fetchChannels: function fetchChannels() {
-      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["fetchChannels"])());
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["fetchChannels"])());
     },
     createChannel: function createChannel(channel) {
-      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["createChannel"])(channel));
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["createChannel"])(channel));
     },
     fetchChannel: function fetchChannel(channel) {
-      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["fetchChannel"])(channel));
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["fetchChannel"])(channel));
     },
     updateChannel: function updateChannel(channel) {
-      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["updateChannel"])(channel));
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["updateChannel"])(channel));
     },
     deleteChannel: function deleteChannel(channel) {
-      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_1__["deleteChannel"])(channel));
-    }
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["deleteChannel"])(channel));
+    },
+    logout: function (_logout) {
+      function logout() {
+        return _logout.apply(this, arguments);
+      }
+
+      logout.toString = function () {
+        return _logout.toString();
+      };
+
+      return logout;
+    }(function () {
+      return dispatch(logout());
+    })
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_channel_sidebar__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(msp, mdp)(_channel_sidebar__WEBPACK_IMPORTED_MODULE_3__["default"])));
 
 /***/ }),
 
@@ -665,6 +665,7 @@ var mdp = function mdp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -689,6 +690,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
   _inherits(ChannelSidebarItem, _React$Component);
 
@@ -703,18 +705,44 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebarItem, [{
     key: "render",
     value: function render() {
+      // debugger
       if (this.props.channel.channel_type === 'public') {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "channel-li"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "channel-hash"
-        }, "# \xA0"), this.props.channel.title);
+        if (this.props.currentChannelId == this.props.channel.id) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "channel-li-current"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "channel-hash"
+          }, "# \xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            to: "/channels/".concat(this.props.channel.id)
+          }, this.props.channel.title));
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "channel-li"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "channel-hash"
+          }, "# \xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            to: "/channels/".concat(this.props.channel.id)
+          }, this.props.channel.title));
+        }
       } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dm-li"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "channel-hash"
-        }, "# \xA0"), this.props.channel.title);
+        // debugger
+        if (this.props.currentChannelId == this.props.channel.id) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "dm-li-current"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "channel-hash"
+          }, "# \xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            to: "/channels/".concat(this.props.channel.id)
+          }, this.props.channel.title));
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "dm-li"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "channel-hash"
+          }, "# \xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            to: "/channels/".concat(this.props.channel.id)
+          }, this.props.channel.title));
+        }
       }
     }
   }]);
@@ -779,6 +807,7 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelViewport, [{
     key: "render",
     value: function render() {
+      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channel-viewport"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
@@ -789,6 +818,33 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (ChannelViewport);
+
+/***/ }),
+
+/***/ "./frontend/components/channels/channel_viewport_container.jsx":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/channels/channel_viewport_container.jsx ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _channel_viewport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./channel_viewport */ "./frontend/components/channels/channel_viewport.jsx");
+
+
+
+var msp = function msp(state) {
+  // debugger
+  return {
+    users: state.entities.users,
+    currentUser: state.entities.users[state.session.id],
+    channels: state.entities.channels
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, null)(_channel_viewport__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -1785,9 +1841,9 @@ var getChannels = function getChannels() {
     url: '/api/channels'
   });
 };
-var getChannel = function getChannel(channel) {
+var getChannel = function getChannel(channelId) {
   return $.ajax({
-    url: "/api/channels/".concat(channel.id)
+    url: "/api/channels/".concat(channelId)
   });
 };
 var postChannel = function postChannel(channel) {
@@ -1799,18 +1855,18 @@ var postChannel = function postChannel(channel) {
     }
   });
 };
-var patchChannel = function patchChannel(channel) {
+var patchChannel = function patchChannel(channelId) {
   return $.ajax({
-    url: "/api/channels/".concat(channel.id),
+    url: "/api/channels/".concat(channelId),
     method: 'PATCH',
     data: {
       channel: channel
     }
   });
 };
-var deleteChannel = function deleteChannel(channel) {
+var deleteChannel = function deleteChannel(channelId) {
   return $.ajax({
-    url: "/api/channels/".concat(channel.id),
+    url: "/api/channels/".concat(channelId),
     method: 'DELETE'
   });
 };

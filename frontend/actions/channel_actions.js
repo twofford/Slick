@@ -15,7 +15,6 @@ export const REMOVE_CHANNEL = 'REMOVE_CHANNEL';
 //REGULAR ACTION CREATORS//
 
 export const receiveChannels = (channels) => {
-    // debugger
     return {
         type: RECEIVE_CHANNELS,
         channels

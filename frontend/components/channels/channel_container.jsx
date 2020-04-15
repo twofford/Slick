@@ -1,12 +1,25 @@
+import {
+    fetchChannels,
+    fetchChannel,
+    createChannel,
+    updateChannel,
+    deleteChannel
+} from '../../actions/channel_actions'
+
+import {withRouter} from 'react-router-dom';
+
 import {connect} from 'react-redux';
 
 import Channel from './channel';
 
-const msp = state => (
-    {
-        state: state
+const msp = (state, ownProps) => {
+    // debugger
+    return {
+        users: state.entities.users,
+        channel: state.entities.channels[ownProps.match.params.channelId],
+        currentUser: state.entities.users[state.session.id]
     }
-);
+};
 
 const mdp = dispatch => (
     {
@@ -22,4 +35,4 @@ const mdp = dispatch => (
     }
 )
 
-export default connect(msp,mdp)(Channel);
+export default withRouter(connect(msp,mdp)(Channel));

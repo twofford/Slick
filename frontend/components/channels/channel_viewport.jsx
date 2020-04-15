@@ -9,6 +9,7 @@ class ChannelViewport extends React.Component{
     }
 
     render(){
+        // debugger
         return(
             <div className='channel-viewport'>
                 <ChannelSidebarContainer/>

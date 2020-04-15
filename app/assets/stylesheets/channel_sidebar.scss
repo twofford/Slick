@@ -52,16 +52,41 @@
 
 .channels-ul {
     line-height: 150%;
-    text-overflow: ellipsis;
 }
 
 .channel-li {
     padding-left: 25px;
     padding-right: 15px;
+    color: #c3b4c4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.channel-li-current {
+    padding-left: 25px;
+    padding-right: 15px;
+    color: #c3b4c4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #1164A3;
+}
+
+.channel-li a {
     list-style: none;
     font-size: 15px;
     line-height: 28px;
     color: #c3b4c4;
+    text-decoration: none;
+}
+
+.channel-li-current a {
+    list-style: none;
+    font-size: 15px;
+    line-height: 28px;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .channel-hash {
@@ -69,21 +94,52 @@
 }
 
 .channel-li:hover {
-    color: #ffffff;
+    cursor: pointer;
     background-color: #350C36;
+}
+
+.dms-ul {
+    line-height: 150%;
+    text-overflow: ellipsis;
 }
 
 .dm-li {
     padding-left: 25px;
     padding-right: 15px;
+    color: #c3b4c4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dm-li-current {
+    padding-left: 25px;
+    padding-right: 15px;
+    color: #c3b4c4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #1164A3;
+}
+
+.dm-li a {
     list-style: none;
     font-size: 15px;
     line-height: 28px;
     color: #c3b4c4;
+    text-decoration: none;
+}
+
+.dm-li-current a {
+    list-style: none;
+    font-size: 15px;
+    line-height: 28px;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .dm-li:hover {
-    color: #ffffff;
+    cursor: pointer;
     background-color: #350C36;
 }
 
