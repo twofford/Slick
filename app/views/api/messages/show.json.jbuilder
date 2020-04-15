@@ -1,0 +1,1 @@
+json.partial! 'api/messages/messae', message: @message

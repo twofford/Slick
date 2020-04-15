@@ -38,9 +38,7 @@ export const removeChannel = (channel) => {
 //THUNK ACTION CREATORS//
 
 export const fetchChannels = () => dispatch => (
-    ChannelApiUtil.getChannels().then(channels => (
-    dispatch(receiveChannels(channels))
-)));
+    ChannelApiUtil.getChannels().then(channels => (dispatch(receiveChannels(channels)))));
 
 export const fetchChannel = (channel) => dispatch => (
     ChannelApiUtil.getChannel(channel).then(channel => (
