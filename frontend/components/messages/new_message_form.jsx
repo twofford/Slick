@@ -5,9 +5,9 @@ export default class NewMessageForm extends React.Component{
         super(props)
 
         this.state = {
-            body: ''
-            // channel_id: '',
-            // user_id: ''
+            body: '',
+            channel_id: parseInt(this.props.currentChannelId),
+            user_id: this.props.currentUser.id
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,16 +23,17 @@ export default class NewMessageForm extends React.Component{
 
         // debugger
         event.preventDefault();
-
-        this.setState({['channel_id']: parseInt(this.props.currentChannelId), ['user_id']: this.props.currentUser.id})
-
-        // debugger
-
+        
         const message = Object.assign({}, this.state);
 
         this.props.createMessage(message);
+        
+        // this.setState({
+        //     ['channel_id']: parseInt(this.props.currentChannelId),
+        //     ['user_id']: this.props.currentUser.id
+        // }, () => {
+        // })
 
-        // debugger
     };
 
     render(){

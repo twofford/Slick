@@ -6,11 +6,15 @@
 }
 
 .messages-wrapper{
-    width: 100%;
+    display: grid;
+    grid-template-rows: 20% 70% 10%
+    // width: 100%;
 }
 
 .messages-header {
     display: flex;
+    position: relative;
+    align-items: center;
     padding-left: 20px;
     border-bottom: 1px solid #E2E1E1;
     width: 100%;
@@ -18,22 +22,46 @@
     background-color: #ffffff;
 }
 
+.messages-header-left {
+    position: absolute;
+    left: 20px;
+}
+
+.messages-header-right {
+    position: absolute;
+    left: 80%;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 700px;
+    color: #959595;
+}
+
 .channel-title {
-    font-family: 'Lato', sans-serif;
+    // font-family: 'Lato', sans-serif;
     display: block;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 15px;
+    font-size: 20px;
     line-height: 1.5;
     font-weight: 700;
+    // margin-top: 10px;
 }
 
 .fa-star {
     margin-left: 10px;
 }
 
-.fa-star:hover {
-    background-color: #E2E1E1;
-    border-radius: 4px;
+.subs-pins-addtopic {
+    display: flex;
+    justify-content: space-around;
+    // font-family: inherit;
+    font-size: 15px;
+    font-weight: 400;
+    color: #959595;
 }
+
+// .subs-pins-addtopic-text {
+// }
+

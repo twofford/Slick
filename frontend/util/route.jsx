@@ -6,28 +6,35 @@ import {
     withRouter
 } from 'react-router-dom';
 
-const Auth = ({ component: Component, path, loggedIn, exact }) => (
-    <Route path={path} exact={exact} render={(props) => (
+//DEBUGGING NOTE: LOGGEDIN ISN'T WORKING. IT'S RETURNING FALSE EVEN WHEN THERE'S A USER IN SESSION.
+
+const Auth = ({ component: Component, path, loggedIn, channelId, exact }) => {
+    // debugger
+    return <Route path={path} exact={exact} render={(props) => (
         !loggedIn ? (
+            <Component {...props} />
+        ) : (
+                <Redirect to={`/channels/${channelId}`} />
+            )
+    )} />
+        };
+
+const Protected = ({ component: Component, path, loggedIn, exact }) => {
+    // debugger
+    return <Route path={path} exact={exact} render={(props) => (
+        loggedIn ? (
             <Component {...props} />
         ) : (
                 <Redirect to="/" />
             )
     )} />
-);
-
-const Protected = ({ component: Component, path, loggedIn, exact }) => (
-    <Route path={path} exact={exact} render={(props) => (
-        loggedIn ? (
-            <Component {...props} />
-        ) : (
-                <Redirect to="/channels" />
-            )
-    )} />
-);
+        };
 
 const mapStateToProps = state => {
-    return { loggedIn: Boolean(state.session.id) };
+    return {
+        loggedIn: Boolean(state.session.user.id),
+        channelId: state.session.user.channel_id
+    };
 }
 
 export const AuthRoute = withRouter(connect(mapStateToProps)(Auth));

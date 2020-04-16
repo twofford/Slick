@@ -1,5 +1,6 @@
 import React from 'react';
 import MessagesViewportContainer from '../messages/messages_viewport_container';
+import NewMessageFormContainer from '../messages/new_message_form_container';
 
 class Channel extends React.Component{
     constructor(props){
@@ -18,14 +19,20 @@ class Channel extends React.Component{
                         </div>
         
                             <div className='subs-pins-addtopic'>
-                                <i className="far fa-user">79</i>
-                                <i className="fas fa-thumbtack">10</i>
-                                <span>Add a topic</span>
+                                <i className="far fa-user"><span className='subs-pins-addtopic-text'>&nbsp;{this.props.channel.users.length}</span></i>
+                                <i className="far fa-flag"><span className='subs-pins-addtopic-text'>&nbsp;10</span></i>
+                                <span className='subs-pins-addtopic-text'>Add a topic</span>
                             </div>
+                    </div>
+
+                    <div className='messages-header-right'>
+                            <i className="far fa-question-circle"></i>
+                            <span>&nbsp;Details</span>
                     </div>
                 </div>
                 
                 <MessagesViewportContainer/>
+                <NewMessageFormContainer/>
             </div>
             )
         } else {

@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require message
  *= require channel_viewport
  *= require channel_sidebar
  *= require splash
@@ -37,6 +38,7 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
+  font-family: Slack-Lato,appleLogo,sans-serif;
 	margin: 0;
 	padding: 0;
 	border: 0;

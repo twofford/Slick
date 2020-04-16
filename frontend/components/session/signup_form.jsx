@@ -72,7 +72,8 @@ class SignupForm extends React.Component{
                 {this.renderErrors()}
 
                 <button
-                    className='form-button'          onClick={this.handleSubmit}>
+                    className='form-button'
+                    onClick={this.handleSubmit}>
                     Confirm
                 </button>
 

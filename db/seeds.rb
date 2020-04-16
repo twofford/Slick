@@ -14,16 +14,28 @@ UserMessage.delete_all
 
 u1 = User.create!(
     email: 'bigbossfan@shadowmoses.gov',
-    password_digest: '123456',
-    session_token: '123456',
+    password: 'password',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
 u1 = User.create!(
     email: 'tnook@islandmail.com',
-    password_digest: '123456',
-    session_token: 'abcdef',
+    password: 'password',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+u3 = User.create!(
+    email: 'i<3princesszelda@hyruleisp.com',
+    password: '12345678',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+u4 = User.create!(
+    email: 'wario_rulez@mushroomkingdom.org',
+    password: '12345678',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
@@ -42,6 +54,22 @@ c2 = Channel.create!(
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Super secret private convo'
+)
+
+c3 = Channel.create!(
+    title: 'HorsePlay',
+    channel_type: 'public',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+    description: 'Horses and the amusement to gained thereby'
+)
+
+c4 = Channel.create!(
+    title: 'A Group DM With A Very Long Name To Test Text Overflow',
+    channel_type: 'private',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+    description: 'Nothing to see here'
 )
 
 cm1 = ChannelMembership.create!(

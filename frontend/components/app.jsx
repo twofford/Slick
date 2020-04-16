@@ -16,10 +16,10 @@ const App = () => (
     <>
         
             
-            <Route exact path='/' component={SplashContainer}/>
-            <Route exact path='/login' component={LoginContainer}/>
-            <Route exact path='/signup' component={SignupContainer}/>
-            <Route path='/channels/:channelId' component={ChannelViewportContainer}/>
+            <AuthRoute exact path='/' component={SplashContainer}/>
+            <AuthRoute exact path='/login' component={LoginContainer}/>
+            <AuthRoute exact path='/signup' component={SignupContainer}/>
+            <ProtectedRoute path='/channels/:channelId' component={ChannelViewportContainer}/>
       
     </>
 )
