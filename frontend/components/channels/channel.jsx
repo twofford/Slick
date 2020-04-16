@@ -14,12 +14,12 @@ class Channel extends React.Component{
                 <div className='messages-header'>
                     <div className='messages-header-left'>
                         <div className='channel-title'># &nbsp; {this.props.channel.title}
-                            <i class="far fa-star"></i>
+                            <i className="far fa-star"></i>
                         </div>
         
                             <div className='subs-pins-addtopic'>
-                                <i class="far fa-user">79</i>
-                                <i class="fas fa-thumbtack">10</i>
+                                <i className="far fa-user">79</i>
+                                <i className="fas fa-thumbtack">10</i>
                                 <span>Add a topic</span>
                             </div>
                     </div>

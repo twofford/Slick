@@ -346,9 +346,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    path: "/",
-    component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/",
     component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -432,13 +429,13 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "channel-title"
         }, "# \xA0 ", this.props.channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          "class": "far fa-star"
+          className: "far fa-star"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "subs-pins-addtopic"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          "class": "far fa-user"
+          className: "far fa-user"
         }, "79"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          "class": "fas fa-thumbtack"
+          className: "fas fa-thumbtack"
         }, "10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Add a topic")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
       } else {
         return null;
@@ -1050,12 +1047,15 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(MessagesViewport, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchMessages(this.props.currentChannelId);
+      this.props.fetchMessages(this.props.currentChannelId); //COMMENT THIS BACK IN WHEN YOU'RE DONE STYLING
+      // this.poll = setInterval(() => {
+      //     this.props.fetchMessages(this.props.currentChannelId);
+      // }, 2500);
     }
   }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      this.props.fetchMessages(this.props.currentChannelId);
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearInterval(this.poll);
     }
   }, {
     key: "render",
