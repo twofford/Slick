@@ -21,7 +21,7 @@ export const receiveMessages = (messages) => {
     }
 }
 
-export const receieveMessage = (message) => {
+export const receiveMessage = (message) => {
     return {
         type: RECEIVE_MESSAGE,
         message
@@ -40,10 +40,10 @@ export const receiveErrors = (errors) => {
 export const fetchMessages = (channelId) => dispatch => (
     MessageApiUtil.getMessages(channelId).then(messages => (dispatch(receiveMessages(messages)))));
 
-export const fetchMessage = (message) => dispatch => (
-    MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
+// export const fetchMessage = (message) => dispatch => (
+//     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
 
-export const createMessage = (message) => dispatch => MessageApiUtil.postMessage(message).then(message => dispatch(receiveMessage(message)), errors => dispatch(receiveErrors(errors.responseJSON)));
+export const createMessage = (message) => dispatch => MessageApiUtil.postMessage(message).then(message => dispatch(receiveMessage(message)));
 
 export const updateMessage = (message) => dispatch => (
     MessageApiUtil.patchMessage(message).then(message => (

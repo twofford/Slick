@@ -5,8 +5,9 @@ export const getMessages = (channelId) => {
 };
 
 export const postMessage = (message) => {
+    // debugger
     return $.ajax({
-        url: `/api/${message.channelId}`,
+        url: `/api/channels/${message.channel_id}/messages`,
         method: 'POST',
         data: {message}
     })

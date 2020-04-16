@@ -10,6 +10,7 @@ ChannelMembership.delete_all
 User.delete_all
 Channel.delete_all
 Message.delete_all
+UserMessage.delete_all
 
 u1 = User.create!(
     email: 'bigbossfan@shadowmoses.gov',
@@ -83,6 +84,20 @@ m2 = Message.create!(
     user_id: User.second.id,
     channel_id: Channel.first.id,
     body: 'Not much.',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+um1 = UserMessage.create!(
+    user_id: User.first.id,
+    message_id: Message.first.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+um2 = UserMessage.create!(
+    user_id: User.second.id,
+    message_id: Message.second.id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )

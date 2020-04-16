@@ -6,8 +6,11 @@ export default class MessageItem extends React.Component{
     }
 
     render(){
+        // debugger
         return(
-            <div>
+            <div className='message-wrapper'>
+                <li>{this.props.message.user.email}:</li>
+                <li>{this.props.message.created_at}</li>
                 <li>{this.props.message.body}</li>
             </div>
         )

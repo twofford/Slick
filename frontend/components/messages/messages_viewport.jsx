@@ -1,5 +1,6 @@
 import React from 'react';
 import MessageItem from './message_item'
+import NewMessageFormContainer from './new_message_form_container';
 
 export default class MessagesViewport extends React.Component{
     constructor(props){
@@ -16,13 +17,12 @@ export default class MessagesViewport extends React.Component{
 
         this.currentChannelMessages = this.messagesArray.filter(message => message.channel_id == this.props.currentChannelId)
 
-        debugger
-
-        console.log(this.currentChannelMessages)
+        // debugger
 
         if (this.props.messages) {
             return (
-                <ul>
+                <>
+                <ul className='messages-ul'>
 
                     {this.currentChannelMessages.map(message => {
                         return(
@@ -31,6 +31,8 @@ export default class MessagesViewport extends React.Component{
                         )
                     })}
                 </ul>
+                <NewMessageFormContainer/>
+                </>
             )
         } else {
             return <div>This is the messages viewport</div>;

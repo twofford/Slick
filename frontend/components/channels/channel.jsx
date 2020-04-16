@@ -12,10 +12,13 @@ class Channel extends React.Component{
         // debugger
         if (this.props.channel) {
             return (
-            <>
-            <h1>{this.props.channel.title}</h1>
-            <MessagesViewportContainer/>
-            </>
+            <div className='messages-wrapper'>
+                <div className='messages-header'>
+                        <span className='channel-title'>#{this.props.channel.title}</span>
+                </div>
+                
+                <MessagesViewportContainer/>
+            </div>
             )
         } else {
             return null
