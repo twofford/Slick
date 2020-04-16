@@ -22,8 +22,6 @@ class Api::MessagesController < ApplicationController
                 user: @user
             }
 
-            ChatChannel.speak(params[:channel_id], message.as_json)
-
             render 'api/channels/messages/show'
 
         else
