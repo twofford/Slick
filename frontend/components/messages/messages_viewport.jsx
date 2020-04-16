@@ -11,6 +11,10 @@ export default class MessagesViewport extends React.Component{
         this.props.fetchMessages(this.props.currentChannelId)
     }
 
+    componentDidUpdate(){
+        this.props.fetchMessages(this.props.currentChannelId)
+    }
+
     render(){
 
         this.messagesArray = Object.values(this.props.messages)

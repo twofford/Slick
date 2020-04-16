@@ -413,13 +413,9 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(Channel);
 
   function Channel(props) {
-    var _this;
-
     _classCallCheck(this, Channel);
 
-    _this = _super.call(this, props);
-    _this.currentChannel = _this.props.fetchChannel(_this.props.match.params.channelId);
-    return _this;
+    return _super.call(this, props);
   }
 
   _createClass(Channel, [{
@@ -431,9 +427,19 @@ var Channel = /*#__PURE__*/function (_React$Component) {
           className: "messages-wrapper"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "messages-header"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "messages-header-left"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "channel-title"
-        }, "#", this.props.channel.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+        }, "# \xA0 ", this.props.channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          "class": "far fa-star"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "subs-pins-addtopic"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          "class": "far fa-user"
+        }, "79"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          "class": "fas fa-thumbtack"
+        }, "10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Add a topic")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
       } else {
         return null;
       }
@@ -1044,6 +1050,11 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(MessagesViewport, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.props.fetchMessages(this.props.currentChannelId);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
       this.props.fetchMessages(this.props.currentChannelId);
     }
   }, {

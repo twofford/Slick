@@ -4,8 +4,6 @@ import MessagesViewportContainer from '../messages/messages_viewport_container';
 class Channel extends React.Component{
     constructor(props){
         super(props)
-
-        this.currentChannel = this.props.fetchChannel(this.props.match.params.channelId)
     }
 
     render(){
@@ -14,7 +12,17 @@ class Channel extends React.Component{
             return (
             <div className='messages-wrapper'>
                 <div className='messages-header'>
-                        <span className='channel-title'>#{this.props.channel.title}</span>
+                    <div className='messages-header-left'>
+                        <div className='channel-title'># &nbsp; {this.props.channel.title}
+                            <i class="far fa-star"></i>
+                        </div>
+        
+                            <div className='subs-pins-addtopic'>
+                                <i class="far fa-user">79</i>
+                                <i class="fas fa-thumbtack">10</i>
+                                <span>Add a topic</span>
+                            </div>
+                    </div>
                 </div>
                 
                 <MessagesViewportContainer/>
