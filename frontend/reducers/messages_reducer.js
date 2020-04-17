@@ -6,8 +6,6 @@ import {
 
 const messagesReducer = (defaultState = false, action) => {
 
-    // debugger
-
     Object.freeze(defaultState);
 
     switch (action.type) {

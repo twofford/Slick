@@ -9,7 +9,6 @@
     padding-top: 30px;
     padding-bottom: 60px;
     box-shadow: 0 10px 25px #ddd;
-    // font-family: 'Lato', sans-serif;
     border-radius: 10px;
     border: 1px solid #ddd;
     max-width: 528px;
@@ -52,7 +51,6 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 12px;
-    // font-family: 'Lato', sans-serif;
     font-size: 20px;
 }
 
@@ -63,7 +61,6 @@
     color: #FFFFFF;
     border-radius: 5px;
     margin-top: 12px;
-    // font-family: 'Lato', sans-serif;
     font-weight: 800;
     font-size: 28px;
     padding-top: 12px;
@@ -82,12 +79,7 @@
     margin-top: 50px;
 }
 
-// .login-errors-ul {
-
-    
-// }
-
-.login-error {
+.error {
     background-color: rgba(224, 30, 90, .1);
     border-left: 1px solid rgba(224,30,90,.4);
     border-bottom: 1px solid rgba(224,30,90,.4);
@@ -97,7 +89,7 @@
     border-bottom-right-radius: 4px;
 }
 
-.login-error:before {
+.error:before {
     content: "\26A0     ";
     color: #e01e5a;
 }

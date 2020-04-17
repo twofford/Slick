@@ -6,10 +6,8 @@ import {
     withRouter
 } from 'react-router-dom';
 
-//DEBUGGING NOTE: LOGGEDIN ISN'T WORKING. IT'S RETURNING FALSE EVEN WHEN THERE'S A USER IN SESSION.
 
 const Auth = ({ component: Component, path, loggedIn, channelId, exact }) => {
-    // debugger
     return <Route path={path} exact={exact} render={(props) => (
         !loggedIn ? (
             <Component {...props} />
@@ -20,7 +18,6 @@ const Auth = ({ component: Component, path, loggedIn, channelId, exact }) => {
         };
 
 const Protected = ({ component: Component, path, loggedIn, exact }) => {
-    // debugger
     return <Route path={path} exact={exact} render={(props) => (
         loggedIn ? (
             <Component {...props} />

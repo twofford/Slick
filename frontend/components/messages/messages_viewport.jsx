@@ -26,8 +26,6 @@ export default class MessagesViewport extends React.Component{
 
         this.currentChannelMessages = this.messagesArray.filter(message => message.channel_id == this.props.currentChannelId)
 
-        // debugger
-
         if (this.props.messages) {
             return (
                 <>

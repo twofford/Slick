@@ -232,7 +232,6 @@ var fetchMessages = function fetchMessages(channelId) {
 //     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
 
 var createMessage = function createMessage(message) {
-  // debugger
   return function (dispatch) {
     return _util_message__WEBPACK_IMPORTED_MODULE_0__["postMessage"](message).then(function (message) {
       return dispatch(receiveMessage(message));
@@ -421,7 +420,6 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   _createClass(Channel, [{
     key: "render",
     value: function render() {
-      // debugger
       if (this.props.channel) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "messages-wrapper"
@@ -482,7 +480,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
   return {
     users: state.entities.users,
     channel: state.entities.channels[ownProps.match.params.channelId],
@@ -620,7 +617,6 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      // debugger
       this.channelsArray = Object.values(this.props.channels);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-wrapper"
@@ -703,7 +699,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
   return {
     currentUser: state.session.user.id,
     channels: state.entities.channels,
@@ -799,7 +794,6 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebarItem, [{
     key: "render",
     value: function render() {
-      // debugger
       if (this.props.channel.channel_type === 'public') {
         if (this.props.currentChannelId == this.props.channel.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -815,7 +809,6 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
           }, "# ", this.props.channel.title));
         }
       } else {
-        // debugger
         if (this.props.currentChannelId == this.props.channel.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "dm-li-current"
@@ -893,7 +886,6 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelViewport, [{
     key: "render",
     value: function render() {
-      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channel-viewport"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
@@ -922,7 +914,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  // debugger
   return {
     users: state.entities.users,
     currentUser: state.entities.users[state.session.id],
@@ -1567,11 +1558,9 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "login-errors-ul"
-      }, this.props.errors.map(function (error, i) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "login-error",
+          className: "error",
           key: "error-".concat(i)
         }, error);
       })));
@@ -1728,6 +1717,7 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
     value: function renderErrors() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "error",
           key: "error-".concat(i)
         }, error);
       }));

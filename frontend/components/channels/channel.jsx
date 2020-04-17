@@ -8,7 +8,6 @@ class Channel extends React.Component{
     }
 
     render(){
-        // debugger
         if (this.props.channel) {
             return (
             <div className='messages-wrapper'>

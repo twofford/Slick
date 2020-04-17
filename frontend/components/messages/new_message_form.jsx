@@ -31,8 +31,6 @@ export default class NewMessageForm extends React.Component{
 
     handleSubmit(event) {
 
-        // debugger
-
         event.preventDefault();
         
         const message = Object.assign({}, this.state);

@@ -52,8 +52,6 @@ class ChannelSidebar extends React.Component{
 
     render(){
 
-        // debugger
-
         this.channelsArray = Object.values(this.props.channels);
 
         return(

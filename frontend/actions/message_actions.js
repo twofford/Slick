@@ -44,7 +44,6 @@ export const fetchMessages = (channelId) => dispatch => (
 //     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
 
 export const createMessage = (message) => {
-    // debugger
     return dispatch => MessageApiUtil.postMessage(message).then(message => dispatch(receiveMessage(message)))};
 
 export const updateMessage = (message) => dispatch => (

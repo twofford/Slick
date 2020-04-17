@@ -13,7 +13,6 @@ import {connect} from 'react-redux';
 import Channel from './channel';
 
 const msp = (state, ownProps) => {
-    // debugger
     return {
         users: state.entities.users,
         channel: state.entities.channels[ownProps.match.params.channelId],

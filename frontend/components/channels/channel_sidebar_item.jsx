@@ -8,8 +8,6 @@ class ChannelSidebarItem extends React.Component{
 
     render(){
 
-        // debugger
-
         if (this.props.channel.channel_type === 'public'){
 
             if (this.props.currentChannelId == this.props.channel.id){
@@ -29,8 +27,6 @@ class ChannelSidebarItem extends React.Component{
                 )}
 
         } else {
-
-            // debugger
 
             if (this.props.currentChannelId == this.props.channel.id) {
                 return (
