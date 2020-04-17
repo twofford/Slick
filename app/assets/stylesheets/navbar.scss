@@ -1,9 +1,10 @@
 .navbar-div {
-    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #cccccc;
 }
 
 .navbar-ul {
-    position: aboslute;
+    // position: relative;
     width: 100%;
     margin-left:5%;
     display: flex;
@@ -23,7 +24,6 @@
 }
 
 .navbar-li {
-    // font-family: 'Lato', sans-serif;
     display: inline-block;
     padding-left: 15px;
     padding-right: 15px;
@@ -34,21 +34,7 @@
     color: #4c9689;
 }
 
-// .navbar-li-link {
-//     font-family: 'Lato', sans-serif;
-//     display: inline-block;
-//     padding-left: 15px;
-//     padding-right: 15px;
-// }
-
-
-// .navbar-li-link:hover {
-//     text-decoration: underline;
-//     color: #4c9689;
-// }
-
 .navbar-form-li {
-    // font-family: 'Lato', sans-serif;
     display: inline-block;
     padding-left: 10px;
     padding-right: 10px;
@@ -69,18 +55,16 @@
 }
 
 .navbar-form-signup {
-    // font-family: 'Lato', sans-serif;
     display: inline-block;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: .75rem 1rem;
     background-color: #611f69;
     color: #FFFFFF;
     border-radius: 4px;
     transition: 0.3s;
+    font-size: .875rem;
     font-weight: 700;
-    letter-spacing: .8px;;
+    letter-spacing: .8px;
+    word-break: break-word;
 }
 
 .navbar-form-signup:hover {

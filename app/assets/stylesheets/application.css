@@ -40,7 +40,7 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-  font-family: Slack-Lato,appleLogo,sans-serif;
+  font-family: 'Lato', sans-serif;
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -49,7 +49,8 @@ time, mark, audio, video {
 }
 
 #root {
-    position: fixed;
+    position: absolute;
+    overflow-x: hidden;
     width: 100%;
     height: 100%;
     left: 0;
