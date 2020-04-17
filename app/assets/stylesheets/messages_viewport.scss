@@ -1,4 +1,7 @@
 .messages-ul {
     overflow-y: scroll;
     overflow-x: hidden;
+    position: absolute;
+    top: 90px;
+    width: 100%;
 }

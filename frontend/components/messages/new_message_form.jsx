@@ -48,6 +48,8 @@ export default class NewMessageForm extends React.Component{
             <form id='message-form' className='message-form'
             onSubmit={this.handleSubmit}>
                 <input
+                className='message-form-input'
+                placeholder='Message goes here'
                 type="text"
                 onChange={this.handleInput('body')}/>
             </form>
