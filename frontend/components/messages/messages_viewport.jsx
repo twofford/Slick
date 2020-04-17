@@ -10,10 +10,10 @@ export default class MessagesViewport extends React.Component{
     componentDidMount(){
         this.props.fetchMessages(this.props.currentChannelId);
 
-        //COMMENT THIS BACK IN WHEN YOU'RE DONE STYLING
-        // this.poll = setInterval(() => {
-        //     this.props.fetchMessages(this.props.currentChannelId);
-        // }, 2500);
+        // COMMENT THIS BACK IN WHEN YOU'RE DONE STYLING
+        this.poll = setInterval(() => {
+            this.props.fetchMessages(this.props.currentChannelId);
+        }, 2500);
     }
 
     componentWillUnmount(){

@@ -1082,10 +1082,13 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(MessagesViewport, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchMessages(this.props.currentChannelId); //COMMENT THIS BACK IN WHEN YOU'RE DONE STYLING
-      // this.poll = setInterval(() => {
-      //     this.props.fetchMessages(this.props.currentChannelId);
-      // }, 2500);
+      var _this = this;
+
+      this.props.fetchMessages(this.props.currentChannelId); // COMMENT THIS BACK IN WHEN YOU'RE DONE STYLING
+
+      this.poll = setInterval(function () {
+        _this.props.fetchMessages(_this.props.currentChannelId);
+      }, 2500);
     }
   }, {
     key: "componentWillUnmount",
@@ -1095,11 +1098,11 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       this.messagesArray = Object.values(this.props.messages);
       this.currentChannelMessages = this.messagesArray.filter(function (message) {
-        return message.channel_id == _this.props.currentChannelId;
+        return message.channel_id == _this2.props.currentChannelId;
       }); // debugger
 
       if (this.props.messages) {
