@@ -232,6 +232,7 @@ var fetchMessages = function fetchMessages(channelId) {
 //     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
 
 var createMessage = function createMessage(message) {
+  // debugger
   return function (dispatch) {
     return _util_message__WEBPACK_IMPORTED_MODULE_0__["postMessage"](message).then(function (message) {
       return dispatch(receiveMessage(message));
@@ -1221,6 +1222,14 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(NewMessageForm, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.state = Object.assign(this.state, {
+        channel_id: parseInt(this.props.currentChannelId),
+        user_id: this.props.currentUser.id
+      });
+    }
+  }, {
     key: "handleInput",
     value: function handleInput(type) {
       var _this2 = this;
@@ -1235,23 +1244,23 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
       // debugger
       event.preventDefault();
       var message = Object.assign({}, this.state);
-      this.props.createMessage(message); // this.setState({
-      //     ['channel_id']: parseInt(this.props.currentChannelId),
-      //     ['user_id']: this.props.currentUser.id
-      // }, () => {
-      // })
+      this.props.createMessage(message);
     }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "message-form-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "message-form-inner-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.handleInput('body')
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden"
-      }));
+      }))));
     }
   }]);
 
@@ -1281,6 +1290,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
+  // debugger
   return {
     currentUser: state.entities.users[state.session.user.id],
     currentChannelId: ownProps.match.params.channelId

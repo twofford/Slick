@@ -3,6 +3,10 @@
     padding: 8px 10px;
 }
 
+.message-wrapper:hover {
+    background: #f8f8f8;
+}
+
 .username {
     font-weight: 900;
 }
@@ -16,10 +20,6 @@
     display: flex;
     flex-direction: column;
     margin-left: 20px;
-}
-
-.message-wrapper:hover {
-    background: #f8f8f8;
 }
 
 .username-timestamp {

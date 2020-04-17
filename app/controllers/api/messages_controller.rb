@@ -8,19 +8,12 @@ class Api::MessagesController < ApplicationController
     end
 
     def create
+        #debugger
         @message = Message.new(message_params)
         if @message.save
             @user = User.find_by(id: params[:user_id])
-
-            message = {
-                id: @message.id,
-                user_id: @message.user_id,
-                channel_id: @message.channel_id,
-                body: @message.body,
-                created_at: @message.created_at,
-                updated_at: @message.updated_at,
-                user: @user
-            }
+            @channel = Channel.find_by(id: params[:channel_id])
+            #debugger
 
             render 'api/channels/messages/show'
 
