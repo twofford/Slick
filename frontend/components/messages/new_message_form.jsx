@@ -36,20 +36,20 @@ export default class NewMessageForm extends React.Component{
         const message = Object.assign({}, this.state);
 
         this.props.createMessage(message);
-        
 
+        $('#message-form')[0].reset();
+        
     };
 
     render(){
         return(
             <div className='message-form-container'>
             <div className='message-form-inner-container'>
-            <form
+            <form id='message-form' className='message-form'
             onSubmit={this.handleSubmit}>
                 <input
                 type="text"
                 onChange={this.handleInput('body')}/>
-                <input type="hidden"/>
             </form>
             </div>
             </div>

@@ -447,7 +447,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
           className: "messages-header-right"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "far fa-question-circle"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xA0Details"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xA0Details"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
       } else {
         return null;
       }
@@ -992,7 +992,6 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1094,7 +1093,7 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
       this.messagesArray = Object.values(this.props.messages);
       this.currentChannelMessages = this.messagesArray.filter(function (message) {
         return message.channel_id == _this2.props.currentChannelId;
-      }); // debugger
+      });
 
       if (this.props.messages) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1137,7 +1136,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
   return {
     messages: state.entities.messages,
     currentChannelId: ownProps.match.params.channelId
@@ -1145,7 +1143,6 @@ var msp = function msp(state, ownProps) {
 };
 
 var mdp = function mdp(dispatch) {
-  // debugger
   return {
     fetchMessages: function fetchMessages(channelId) {
       return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_3__["fetchMessages"])(channelId));
@@ -1235,10 +1232,10 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      // debugger
       event.preventDefault();
       var message = Object.assign({}, this.state);
       this.props.createMessage(message);
+      $('#message-form')[0].reset();
     }
   }, {
     key: "render",
@@ -1248,12 +1245,12 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-form-inner-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        id: "message-form",
+        className: "message-form",
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.handleInput('body')
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "hidden"
       }))));
     }
   }]);
@@ -1284,7 +1281,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
   return {
     currentUser: state.entities.users[state.session.user.id],
     currentChannelId: ownProps.match.params.channelId
@@ -1725,7 +1721,6 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "navbar-div"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -2143,7 +2138,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var messagesReducer = function messagesReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  // debugger
   Object.freeze(defaultState);
 
   switch (action.type) {
@@ -2426,7 +2420,6 @@ var getMessages = function getMessages(channelId) {
   });
 };
 var postMessage = function postMessage(message) {
-  // debugger
   return $.ajax({
     url: "/api/channels/".concat(message.channel_id, "/messages"),
     method: 'POST',
@@ -2470,7 +2463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 
- //DEBUGGING NOTE: LOGGEDIN ISN'T WORKING. IT'S RETURNING FALSE EVEN WHEN THERE'S A USER IN SESSION.
+
 
 var Auth = function Auth(_ref) {
   var Component = _ref.component,
@@ -2478,7 +2471,6 @@ var Auth = function Auth(_ref) {
       loggedIn = _ref.loggedIn,
       channelId = _ref.channelId,
       exact = _ref.exact;
-  // debugger
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     path: path,
     exact: exact,
@@ -2495,7 +2487,6 @@ var Protected = function Protected(_ref2) {
       path = _ref2.path,
       loggedIn = _ref2.loggedIn,
       exact = _ref2.exact;
-  // debugger
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     path: path,
     exact: exact,

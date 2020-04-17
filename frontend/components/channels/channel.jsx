@@ -31,7 +31,7 @@ class Channel extends React.Component{
                 </div>
                 
                 <MessagesViewportContainer/>
-                <NewMessageFormContainer/>
+                {/* <NewMessageFormContainer/> */}
             </div>
             )
         } else {
