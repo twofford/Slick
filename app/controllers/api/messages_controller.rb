@@ -8,19 +8,30 @@ class Api::MessagesController < ApplicationController
     end
 
     def create
-        #debugger
         @message = Message.new(message_params)
+
         if @message.save
-            @user = User.find_by(id: params[:user_id])
-            @channel = Channel.find_by(id: params[:channel_id])
-            #debugger
-
-            render 'api/channels/messages/show'
-
+            ActionCable.server.broadcast "chat", {message: @message}
+            render 'api/messages/show'
         else
-            render json: {errors: @message.errors.full_messages, status: 401}
+            render @user.errors.full_messages, status: 422
         end
     end
+
+    # def create
+    #     #debugger
+    #     @message = Message.new(message_params)
+    #     if @message.save
+    #         @user = User.find_by(id: params[:user_id])
+    #         @channel = Channel.find_by(id: params[:channel_id])
+    #         #debugger
+
+    #         render 'api/channels/messages/show'
+
+    #     else
+    #         render json: {errors: @message.errors.full_messages, status: 401}
+    #     end
+    # end
 
     def show
         # debugger
