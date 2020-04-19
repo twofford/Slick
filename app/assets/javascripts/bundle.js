@@ -380,6 +380,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../messages/messages_viewport_container */ "./frontend/components/messages/messages_viewport_container.jsx");
 /* harmony import */ var _messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../messages/new_message_form_container */ "./frontend/components/messages/new_message_form_container.jsx");
+/* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/message_actions */ "./frontend/actions/message_actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -406,52 +407,85 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Channel = /*#__PURE__*/function (_React$Component) {
   _inherits(Channel, _React$Component);
 
   var _super = _createSuper(Channel);
 
   function Channel(props) {
+    var _this;
+
     _classCallCheck(this, Channel);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      messages: []
+    };
+    _this.bottom = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    return _this;
   }
 
   _createClass(Channel, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // debugger
+      App.cable.subscriptions.create({
+        channel: 'ChatChannel'
+      }, {
+        received: function received(data) {
+          dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_3__["receiveMessage"])(data)); // debugger
+
+          console.log(data);
+        },
+        speak: function speak(data) {
+          return this.perform('speak', data);
+        },
+        load: function load() {
+          return this.perform('load');
+        }
+      });
+    } // componentDidUpdate(){
+    //     debugger
+    //     this.bottom.current.scrollIntoView();
+    // }
+
+  }, {
     key: "render",
     value: function render() {
-      if (this.props.channel) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "messages-wrapper"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "messages-header"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "messages-header-left"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "channel-title"
-        }, "# \xA0 ", this.props.channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-star"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "subs-pins-addtopic"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-user"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "subs-pins-addtopic-text"
-        }, "\xA0", this.props.channel.users.length)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-flag"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "subs-pins-addtopic-text"
-        }, "\xA010")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "subs-pins-addtopic-text"
-        }, "Add a topic"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "messages-header-right"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-question-circle"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xA0Details"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
-      } else {
-        return null;
-      }
-    }
+      // debugger
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        messages: this.state
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+    } // render(){
+    //     if (this.props.channel) {
+    //         return (
+    //         <div className='messages-wrapper'>
+    //             <div className='messages-header'>
+    //                 <div className='messages-header-left'>
+    //                     <div className='channel-title'># &nbsp; {this.props.channel.title}
+    //                         <i className="far fa-star"></i>
+    //                     </div>
+    //                         <div className='subs-pins-addtopic'>
+    //                             <i className="far fa-user"><span className='subs-pins-addtopic-text'>&nbsp;{this.props.channel.users.length}</span></i>
+    //                             <i className="far fa-flag"><span className='subs-pins-addtopic-text'>&nbsp;10</span></i>
+    //                             <span className='subs-pins-addtopic-text'>Add a topic</span>
+    //                         </div>
+    //                 </div>
+    //                 <div className='messages-header-right'>
+    //                         <i className="far fa-question-circle"></i>
+    //                         <span>&nbsp;Details</span>
+    //                 </div>
+    //             </div>
+    //             <MessagesViewportContainer/>
+    //             {/* <NewMessageFormContainer/> */}
+    //         </div>
+    //         )
+    //     } else {
+    //         return null
+    //     }
+    // }
+
   }]);
 
   return Channel;
@@ -992,6 +1026,7 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1096,10 +1131,8 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "messages-ul"
         }, this.currentChannelMessages.map(function (message) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_message_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            key: message.id,
-            message: message
-          });
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hey") // <MessageItem key={message.id} message={message}/>
+          ;
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "This is the messages viewport");
@@ -1133,6 +1166,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
+  // debugger
   return {
     messages: state.entities.messages,
     currentChannelId: ownProps.match.params.channelId
@@ -1207,17 +1241,15 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // componentDidUpdate(){
+  //     this.state = Object.assign(this.state, {
+  //         channel_id: parseInt(this.props.currentChannelId),
+  //         user_id: this.props.currentUser.id
+  //     });
+  // }
+
 
   _createClass(NewMessageForm, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      this.state = Object.assign(this.state, {
-        channel_id: parseInt(this.props.currentChannelId),
-        user_id: this.props.currentUser.id
-      });
-    }
-  }, {
     key: "handleInput",
     value: function handleInput(type) {
       var _this2 = this;
@@ -1229,7 +1261,15 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      // debugger
       event.preventDefault();
+      App.cable.subscriptions.subscriptions[0].speak({
+        message: this.state
+      });
+      console.log({
+        message: this.state
+      }); // this.setState({body: ''});
+
       var message = Object.assign({}, this.state);
       this.props.createMessage(message);
       $('#message-form')[0].reset();
@@ -2139,6 +2179,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var messagesReducer = function messagesReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  // debugger
   Object.freeze(defaultState);
 
   switch (action.type) {

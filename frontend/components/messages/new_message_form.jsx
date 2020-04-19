@@ -16,12 +16,12 @@ export default class NewMessageForm extends React.Component{
 
     }
 
-    componentDidUpdate(){
-        this.state = Object.assign(this.state, {
-            channel_id: parseInt(this.props.currentChannelId),
-            user_id: this.props.currentUser.id
-        });
-    }
+    // componentDidUpdate(){
+    //     this.state = Object.assign(this.state, {
+    //         channel_id: parseInt(this.props.currentChannelId),
+    //         user_id: this.props.currentUser.id
+    //     });
+    // }
 
     handleInput(type) {
         return (event) => {
@@ -31,7 +31,15 @@ export default class NewMessageForm extends React.Component{
 
     handleSubmit(event) {
 
+        // debugger
+
         event.preventDefault();
+
+        App.cable.subscriptions.subscriptions[0].speak({message: this.state});
+
+        console.log({message: this.state});
+
+        // this.setState({body: ''});
         
         const message = Object.assign({}, this.state);
 
