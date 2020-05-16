@@ -33,7 +33,7 @@ export default class MessagesViewport extends React.Component{
 
                     {this.currentChannelMessages.map(message => {
                         return(
-                            <div>Hey</div>
+                            <div>Hi</div>
                             // <MessageItem key={message.id} message={message}/>
                             
                         )

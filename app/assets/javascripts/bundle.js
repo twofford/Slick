@@ -1131,7 +1131,7 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "messages-ul"
         }, this.currentChannelMessages.map(function (message) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hey") // <MessageItem key={message.id} message={message}/>
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi") // <MessageItem key={message.id} message={message}/>
           ;
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
       } else {
