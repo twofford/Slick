@@ -9,18 +9,11 @@ export default class MessagesViewport extends React.Component{
 
     componentDidMount(){
         this.props.fetchMessages(this.props.currentChannelId);
-
-        // // COMMENT THIS BACK IN WHEN YOU'RE DONE STYLING
-        // this.poll = setInterval(() => {
-        //     this.props.fetchMessages(this.props.currentChannelId);
-        // }, 2500);
-    }
-
-    componentWillUnmount(){
-        clearInterval(this.poll);
     }
 
     render(){
+
+        // debugger
 
         this.messagesArray = Object.values(this.props.messages)
 
@@ -33,8 +26,7 @@ export default class MessagesViewport extends React.Component{
 
                     {this.currentChannelMessages.map(message => {
                         return(
-                            <div>Hey</div>
-                            // <MessageItem key={message.id} message={message}/>
+                            <MessageItem key={message.id} message={message}/>
                             
                         )
                     })}

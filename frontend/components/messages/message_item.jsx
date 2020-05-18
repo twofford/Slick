@@ -35,10 +35,10 @@ export default class MessageItem extends React.Component{
     render(){
         // debugger
         return(
+            
             <div className='message-wrapper'>
                 <div>
                     <img className='message-avatar' src={avatar}/>
-                    {/* <i className="far fa-user avatar"></i> */}
                 </div>
                 <div className='message-container'>
                     <div className='username-timestamp'>

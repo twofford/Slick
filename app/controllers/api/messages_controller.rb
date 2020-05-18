@@ -3,7 +3,7 @@ class Api::MessagesController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        @messages = Message.all.includes(:user)
+        @messages = Message.all
         render 'api/messages/index'
     end
 
@@ -11,10 +11,9 @@ class Api::MessagesController < ApplicationController
         @message = Message.new(message_params)
 
         if @message.save
-            # ActionCable.server.broadcast "chat", {message: @message}
             render 'api/messages/show'
         else
-            render @user.errors.full_messages, status: 422
+            render @message.errors.full_messages, status: 422
         end
     end
 
@@ -34,7 +33,6 @@ class Api::MessagesController < ApplicationController
     # end
 
     def show
-        # debugger
         @message = Message.find(params[:id])
         render 'api/messages/show'
     end

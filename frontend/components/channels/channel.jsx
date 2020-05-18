@@ -18,26 +18,23 @@ class Channel extends React.Component{
             {
                 received: data => {
                     dispatch(receiveMessage(data));
-                    // debugger
-                    console.log(data);
+                    console.log("data received");
                 },
 
                 speak: function(data) {
+                    console.log("data spoken")
                     return this.perform('speak', data);
                 },
 
-                load: function() {return this.perform('load')}
+                load: function() {
+                    console.log("data loaded")
+                    return this.perform('load')
+                }
             }
         );
     }
 
-    // componentDidUpdate(){
-    //     debugger
-    //     this.bottom.current.scrollIntoView();
-    // }
-
     render(){
-        // debugger
         return (
             <div>
               <MessagesViewportContainer messages ={this.state}/>
@@ -47,37 +44,37 @@ class Channel extends React.Component{
     }
 
 
-    // render(){
-    //     if (this.props.channel) {
-    //         return (
-    //         <div className='messages-wrapper'>
-    //             <div className='messages-header'>
-    //                 <div className='messages-header-left'>
-    //                     <div className='channel-title'># &nbsp; {this.props.channel.title}
-    //                         <i className="far fa-star"></i>
-    //                     </div>
+    render(){
+        if (this.props.channel) {
+            return (
+            <div className='messages-wrapper'>
+                <div className='messages-header'>
+                    <div className='messages-header-left'>
+                        <div className='channel-title'># &nbsp; {this.props.channel.title}
+                            <i className="far fa-star"></i>
+                        </div>
         
-    //                         <div className='subs-pins-addtopic'>
-    //                             <i className="far fa-user"><span className='subs-pins-addtopic-text'>&nbsp;{this.props.channel.users.length}</span></i>
-    //                             <i className="far fa-flag"><span className='subs-pins-addtopic-text'>&nbsp;10</span></i>
-    //                             <span className='subs-pins-addtopic-text'>Add a topic</span>
-    //                         </div>
-    //                 </div>
+                            <div className='subs-pins-addtopic'>
+                                <i className="far fa-user"><span className='subs-pins-addtopic-text'>&nbsp;{this.props.channel.users.length}</span></i>
+                                <i className="far fa-flag"><span className='subs-pins-addtopic-text'>&nbsp;10</span></i>
+                                <span className='subs-pins-addtopic-text'>Add a topic</span>
+                            </div>
+                    </div>
 
-    //                 <div className='messages-header-right'>
-    //                         <i className="far fa-question-circle"></i>
-    //                         <span>&nbsp;Details</span>
-    //                 </div>
-    //             </div>
+                    <div className='messages-header-right'>
+                            <i className="far fa-question-circle"></i>
+                            <span>&nbsp;Details</span>
+                    </div>
+                </div>
                 
-    //             <MessagesViewportContainer/>
-    //             {/* <NewMessageFormContainer/> */}
-    //         </div>
-    //         )
-    //     } else {
-    //         return null
-    //     }
-    // }
+                <MessagesViewportContainer/>
+                {/* <NewMessageFormContainer/> */}
+            </div>
+            )
+        } else {
+            return null
+        }
+    }
 }
 
 export default Channel;

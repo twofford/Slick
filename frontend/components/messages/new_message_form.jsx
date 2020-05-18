@@ -3,25 +3,21 @@ import React from 'react';
 export default class NewMessageForm extends React.Component{
 
     constructor(props){
+
         super(props)
 
         this.state = {
 
             body: '',
             channel_id: parseInt(this.props.currentChannelId),
-            user_id: this.props.currentUser.id
+            user_id: this.props.currentUser.id,
+            user: this.props.currentUser
+        
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
-
-    // componentDidUpdate(){
-    //     this.state = Object.assign(this.state, {
-    //         channel_id: parseInt(this.props.currentChannelId),
-    //         user_id: this.props.currentUser.id
-    //     });
-    // }
 
     handleInput(type) {
         return (event) => {
@@ -31,17 +27,15 @@ export default class NewMessageForm extends React.Component{
 
     handleSubmit(event) {
 
-        // debugger
-
         event.preventDefault();
 
+        //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
+
         App.cable.subscriptions.subscriptions[0].speak({message: this.state});
-
-        console.log({message: this.state});
-
-        // this.setState({body: ''});
         
         const message = Object.assign({}, this.state);
+
+        //this persists the message to the database
 
         this.props.createMessage(message);
 
