@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
 
-    ###TESTING
+    ###TEST
     protect_from_forgery with: :exception
-    ###TESTING
 
     helper_method :current_user, :logged_in?, :general_channel
 

@@ -429,20 +429,16 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   _createClass(Channel, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
       App.cable.subscriptions.create({
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
           dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_3__["receiveMessage"])(data));
-          console.log("data received");
         },
         speak: function speak(data) {
-          console.log("data spoken");
           return this.perform('speak', data);
         },
         load: function load() {
-          console.log("data loaded");
           return this.perform('load');
         }
       });
@@ -1029,7 +1025,6 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1117,7 +1112,6 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      // debugger
       this.messagesArray = Object.values(this.props.messages);
       this.currentChannelMessages = this.messagesArray.filter(function (message) {
         return message.channel_id == _this.props.currentChannelId;
@@ -1164,7 +1158,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
   return {
     messages: state.entities.messages,
     currentChannelId: ownProps.match.params.channelId
@@ -1310,7 +1303,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
   return {
     currentUser: state.entities.users[state.session.user.id],
     currentChannelId: ownProps.match.params.channelId
@@ -2170,7 +2162,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var messagesReducer = function messagesReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  // debugger
   Object.freeze(defaultState);
 
   switch (action.type) {
@@ -2179,10 +2170,6 @@ var messagesReducer = function messagesReducer() {
 
     case _actions_message_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_MESSAGE"]:
       return Object.assign({}, defaultState, _defineProperty({}, action.message.id, action.message));
-    // case REMOVE_MESSAGE:
-    //     let nextState = Object.assign({}, defaultState);
-    //     delete nextState[action.message.id];
-    //     return nextState;
 
     default:
       return defaultState;

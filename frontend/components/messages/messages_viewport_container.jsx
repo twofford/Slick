@@ -4,7 +4,6 @@ import MessagesViewport from './messages_viewport';
 import {fetchMessages} from '../../actions/message_actions';
 
 const msp = (state, ownProps) => {
-    // debugger
     return {
         messages: state.entities.messages,
         currentChannelId: ownProps.match.params.channelId

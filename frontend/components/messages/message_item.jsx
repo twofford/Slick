@@ -33,7 +33,6 @@ export default class MessageItem extends React.Component{
 
 
     render(){
-        // debugger
         return(
             
             <div className='message-wrapper'>

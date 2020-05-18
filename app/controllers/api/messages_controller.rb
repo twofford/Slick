@@ -17,21 +17,6 @@ class Api::MessagesController < ApplicationController
         end
     end
 
-    # def create
-    #     #debugger
-    #     @message = Message.new(message_params)
-    #     if @message.save
-    #         @user = User.find_by(id: params[:user_id])
-    #         @channel = Channel.find_by(id: params[:channel_id])
-    #         #debugger
-
-    #         render 'api/channels/messages/show'
-
-    #     else
-    #         render json: {errors: @message.errors.full_messages, status: 401}
-    #     end
-    # end
-
     def show
         @message = Message.find(params[:id])
         render 'api/messages/show'

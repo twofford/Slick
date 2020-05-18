@@ -12,22 +12,18 @@ class Channel extends React.Component{
     }
 
     componentDidMount(){
-        // debugger
         App.cable.subscriptions.create(
             {channel: 'ChatChannel'},
             {
                 received: data => {
                     dispatch(receiveMessage(data));
-                    console.log("data received");
                 },
 
                 speak: function(data) {
-                    console.log("data spoken")
                     return this.perform('speak', data);
                 },
 
                 load: function() {
-                    console.log("data loaded")
                     return this.perform('load')
                 }
             }
