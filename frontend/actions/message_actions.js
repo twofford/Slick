@@ -40,11 +40,13 @@ export const receiveErrors = (errors) => {
 export const fetchMessages = (channelId) => dispatch => (
     MessageApiUtil.getMessages(channelId).then(messages => (dispatch(receiveMessages(messages)))));
 
-// export const fetchMessage = (message) => dispatch => (
-//     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
+export const fetchMessage = (message) => dispatch => (
+    MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
 
 export const createMessage = (message) => {
-    return dispatch => MessageApiUtil.postMessage(message).then(message => dispatch(receiveMessage(message)))};
+    return dispatch => MessageApiUtil.postMessage(message)
+    // .then(message => dispatch(receiveMessage(message)))
+};
 
 export const updateMessage = (message) => dispatch => (
     MessageApiUtil.patchMessage(message).then(message => (

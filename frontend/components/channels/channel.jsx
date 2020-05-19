@@ -32,7 +32,6 @@ class Channel extends React.Component{
     }
 
     render(){
-        // debugger
         return (
             <div>
               <MessagesViewportContainer messages ={this.state}/>

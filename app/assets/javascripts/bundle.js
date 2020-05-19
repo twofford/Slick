@@ -179,7 +179,7 @@ var deleteChannel = function deleteChannel(channel) {
 /*!*********************************************!*\
   !*** ./frontend/actions/message_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_MESSAGES, RECEIVE_MESSAGE, RECEIVE_ERRORS, receiveMessages, receiveMessage, receiveErrors, fetchMessages, createMessage, updateMessage */
+/*! exports provided: RECEIVE_MESSAGES, RECEIVE_MESSAGE, RECEIVE_ERRORS, receiveMessages, receiveMessage, receiveErrors, fetchMessages, fetchMessage, createMessage, updateMessage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -191,6 +191,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveMessage", function() { return receiveMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMessages", function() { return fetchMessages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMessage", function() { return fetchMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMessage", function() { return createMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateMessage", function() { return updateMessage; });
 /* harmony import */ var _util_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/message */ "./frontend/util/message.js");
@@ -228,15 +229,18 @@ var fetchMessages = function fetchMessages(channelId) {
       return dispatch(receiveMessages(messages));
     });
   };
-}; // export const fetchMessage = (message) => dispatch => (
-//     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
-
-var createMessage = function createMessage(message) {
+};
+var fetchMessage = function fetchMessage(message) {
   return function (dispatch) {
-    return _util_message__WEBPACK_IMPORTED_MODULE_0__["postMessage"](message).then(function (message) {
+    return _util_message__WEBPACK_IMPORTED_MODULE_0__["getMessage"](message).then(function (message) {
       return dispatch(receiveMessage(message));
     });
   };
+};
+var createMessage = function createMessage(message) {
+  return function (dispatch) {
+    return _util_message__WEBPACK_IMPORTED_MODULE_0__["postMessage"](message);
+  }; // .then(message => dispatch(receiveMessage(message)))
 };
 var updateMessage = function updateMessage(message) {
   return function (dispatch) {
@@ -446,7 +450,6 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         messages: this.state
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
@@ -1019,6 +1022,7 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   _createClass(MessageItem, [{
     key: "getTimestamp",
     value: function getTimestamp() {
+      // debugger
       var timestamp = new Date(this.props.message.created_at);
       var hours = timestamp.getHours();
       var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -1113,19 +1117,20 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchMessages(this.props.currentChannelId);
+      App.cable.subscriptions.subscriptions[0].load();
     }
   }, {
     key: "render",
     value: function render() {
       var _this = this;
 
-      // debugger
       this.messagesArray = Object.values(this.props.messages);
       this.currentChannelMessages = this.messagesArray.filter(function (message) {
         return message.channel_id == _this.props.currentChannelId;
       });
 
       if (this.props.messages) {
+        // debugger
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "messages-ul"
         }, this.currentChannelMessages.map(function (message) {
@@ -1232,7 +1237,6 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, NewMessageForm);
 
-    // debugger
     _this = _super.call(this, props);
     _this.state = {
       body: '',
@@ -1258,7 +1262,6 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      // debugger
       event.preventDefault(); //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
 
       App.cable.subscriptions.subscriptions[0].speak({

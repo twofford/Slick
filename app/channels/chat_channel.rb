@@ -15,6 +15,7 @@ class ChatChannel < ApplicationCable::Channel
         messages = channel.messages.all
         socket_messages = {messages: messages, type: messages}
         ChatChannel.broadcast_to('chat_channel', socket_messages)
+        debugger
     end
 
     def unsubscribed
