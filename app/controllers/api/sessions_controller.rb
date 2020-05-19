@@ -1,6 +1,6 @@
 class Api::SessionsController < ApplicationController
 
-    #FIX - REMOVE
+    #TEST
     skip_before_action :verify_authenticity_token
 
     def create
@@ -19,7 +19,6 @@ class Api::SessionsController < ApplicationController
         @user = current_user
         if @user
             logout!
-            #render or redirect once frontend routes are established
         else
             render json: ["No user currently logged in"], status: 404
             

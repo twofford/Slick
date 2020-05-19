@@ -142,9 +142,9 @@ var fetchChannels = function fetchChannels() {
     });
   };
 };
-var fetchChannel = function fetchChannel(channel) {
+var fetchChannel = function fetchChannel(channelId) {
   return function (dispatch) {
-    return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["getChannel"](channel).then(function (channel) {
+    return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["getChannel"](channelId).then(function (channel) {
       return dispatch(receiveChannel(channel));
     });
   };
@@ -429,14 +429,11 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   _createClass(Channel, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
       App.cable.subscriptions.create({
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_3__["receiveMessage"])(data)); // debugger
-
-          console.log(data);
+          dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_3__["receiveMessage"])(data));
         },
         speak: function speak(data) {
           return this.perform('speak', data);
@@ -445,11 +442,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
           return this.perform('load');
         }
       });
-    } // componentDidUpdate(){
-    //     debugger
-    //     this.bottom.current.scrollIntoView();
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -457,35 +450,42 @@ var Channel = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         messages: this.state
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
-    } // render(){
-    //     if (this.props.channel) {
-    //         return (
-    //         <div className='messages-wrapper'>
-    //             <div className='messages-header'>
-    //                 <div className='messages-header-left'>
-    //                     <div className='channel-title'># &nbsp; {this.props.channel.title}
-    //                         <i className="far fa-star"></i>
-    //                     </div>
-    //                         <div className='subs-pins-addtopic'>
-    //                             <i className="far fa-user"><span className='subs-pins-addtopic-text'>&nbsp;{this.props.channel.users.length}</span></i>
-    //                             <i className="far fa-flag"><span className='subs-pins-addtopic-text'>&nbsp;10</span></i>
-    //                             <span className='subs-pins-addtopic-text'>Add a topic</span>
-    //                         </div>
-    //                 </div>
-    //                 <div className='messages-header-right'>
-    //                         <i className="far fa-question-circle"></i>
-    //                         <span>&nbsp;Details</span>
-    //                 </div>
-    //             </div>
-    //             <MessagesViewportContainer/>
-    //             {/* <NewMessageFormContainer/> */}
-    //         </div>
-    //         )
-    //     } else {
-    //         return null
-    //     }
-    // }
-
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.props.channel) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "messages-wrapper"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "messages-header"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "messages-header-left"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "channel-title"
+        }, "# \xA0 ", this.props.channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-star"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "subs-pins-addtopic"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-user"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "subs-pins-addtopic-text"
+        }, "\xA0", this.props.channel.users.length)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-flag"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "subs-pins-addtopic-text"
+        }, "\xA010")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "subs-pins-addtopic-text"
+        }, "Add a topic"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "messages-header-right"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-question-circle"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xA0Details"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+      } else {
+        return null;
+      }
+    }
   }]);
 
   return Channel;
@@ -625,8 +625,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       this.props.createChannel(channel);
     }
   }, {
-    key: "hideChannels",
-    value: function hideChannels() {
+    key: "toggleChannels",
+    value: function toggleChannels() {
       var channelsUl = document.getElementById("channels-ul");
 
       if (channelsUl.style.display === "none") {
@@ -634,10 +634,13 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       } else {
         channelsUl.style.display = "none";
       }
+
+      var caret = document.getElementById("channels-caret");
+      caret.classList.toggle("caret-toggled");
     }
   }, {
-    key: "hideDms",
-    value: function hideDms() {
+    key: "toggleDms",
+    value: function toggleDms() {
       var dmsUl = document.getElementById("dms-ul");
 
       if (dmsUl.style.display === "none") {
@@ -645,6 +648,9 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       } else {
         dmsUl.style.display = "none";
       }
+
+      var caret = document.getElementById("dms-caret");
+      caret.classList.toggle("caret-toggled");
     }
   }, {
     key: "render",
@@ -657,11 +663,11 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-toogle"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "channels-carat",
-        className: "fas fa-caret-right"
+        id: "channels-caret",
+        className: "fas fa-caret-down"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "channels-toggle-button",
-        onClick: this.hideChannels
+        onClick: this.toggleChannels
       }, "Channels"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "channels-ul",
         className: "channels-ul"
@@ -676,11 +682,11 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-toogle"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "channels-carat",
-        className: "fas fa-caret-right"
+        id: "dms-caret",
+        className: "fas fa-caret-down"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "dms-toggle-button",
-        onClick: this.hideDms
+        onClick: this.toggleDms
       }, "Direct messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "dms-ul",
         className: "dms-ul"
@@ -959,191 +965,14 @@ var msp = function msp(state) {
 
 /***/ }),
 
-/***/ "./frontend/components/messages/message_item.jsx":
-/*!*******************************************************!*\
-  !*** ./frontend/components/messages/message_item.jsx ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessageItem; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-var MessageItem = /*#__PURE__*/function (_React$Component) {
-  _inherits(MessageItem, _React$Component);
-
-  var _super = _createSuper(MessageItem);
-
-  function MessageItem(props) {
-    var _this;
-
-    _classCallCheck(this, MessageItem);
-
-    _this = _super.call(this, props);
-    _this.getDate = _this.getTimestamp.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(MessageItem, [{
-    key: "getTimestamp",
-    value: function getTimestamp() {
-      var timestamp = new Date(this.props.message.created_at);
-      var hours = timestamp.getHours();
-      var ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      var minutes = timestamp.getMinutes();
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      var timeStr = hours + ':' + minutes + ' ' + ampm;
-      return timeStr;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      // debugger
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "message-avatar",
-        src: avatar
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "username-timestamp"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "username"
-      }, this.props.message.user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "timestamp"
-      }, this.getTimestamp())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message"
-      }, this.props.message.body)));
-    }
-  }]);
-
-  return MessageItem;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-
-
-/***/ }),
-
 /***/ "./frontend/components/messages/messages_viewport.jsx":
 /*!************************************************************!*\
   !*** ./frontend/components/messages/messages_viewport.jsx ***!
   \************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessagesViewport; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _message_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./message_item */ "./frontend/components/messages/message_item.jsx");
-/* harmony import */ var _new_message_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new_message_form_container */ "./frontend/components/messages/new_message_form_container.jsx");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-var MessagesViewport = /*#__PURE__*/function (_React$Component) {
-  _inherits(MessagesViewport, _React$Component);
-
-  var _super = _createSuper(MessagesViewport);
-
-  function MessagesViewport(props) {
-    _classCallCheck(this, MessagesViewport);
-
-    return _super.call(this, props);
-  }
-
-  _createClass(MessagesViewport, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchMessages(this.props.currentChannelId); // // COMMENT THIS BACK IN WHEN YOU'RE DONE STYLING
-      // this.poll = setInterval(() => {
-      //     this.props.fetchMessages(this.props.currentChannelId);
-      // }, 2500);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      clearInterval(this.poll);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      this.messagesArray = Object.values(this.props.messages);
-      this.currentChannelMessages = this.messagesArray.filter(function (message) {
-        return message.channel_id == _this.props.currentChannelId;
-      });
-
-      if (this.props.messages) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "messages-ul"
-        }, this.currentChannelMessages.map(function (message) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi") // <MessageItem key={message.id} message={message}/>
-          ;
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
-      } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "This is the messages viewport");
-      }
-    }
-  }]);
-
-  return MessagesViewport;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/taylorwofford/Desktop/Slick/slick/frontend/components/messages/messages_viewport.jsx: Unexpected token (29:1)\n\n\u001b[0m \u001b[90m 27 | \u001b[39m                    {\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mcurrentChannelMessages\u001b[33m.\u001b[39mmap(message \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 28 | \u001b[39m                        \u001b[36mreturn\u001b[39m(\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 30 | \u001b[39m                            \u001b[33m<\u001b[39m\u001b[33mMessageItem\u001b[39m key\u001b[33m=\u001b[39m{message\u001b[33m.\u001b[39mid} message\u001b[33m=\u001b[39m{message}\u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 31 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 32 | \u001b[39m                            \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\u001b[33mHi\u001b[39m\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n    at Object._raise (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:742:17)\n    at Object.raiseWithData (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:735:17)\n    at Object.raise (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:729:17)\n    at Object.unexpected (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:8757:16)\n    at Object.jsxParseIdentifier (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4388:12)\n    at Object.jsxParseNamespacedName (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4398:23)\n    at Object.jsxParseElementName (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4409:21)\n    at Object.jsxParseOpeningElementAt (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4495:22)\n    at Object.jsxParseElementAt (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4528:33)\n    at Object.jsxParseElement (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4602:17)\n    at Object.parseExprAtom (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4609:19)\n    at Object.parseExprSubscripts (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9602:23)\n    at Object.parseMaybeUnary (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9582:21)\n    at Object.parseExprOps (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9452:23)\n    at Object.parseMaybeConditional (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9425:23)\n    at Object.parseMaybeAssign (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9380:21)\n    at Object.parseParenAndDistinguishExpression (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:10193:28)\n    at Object.parseExprAtom (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9947:21)\n    at Object.parseExprAtom (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:4614:20)\n    at Object.parseExprSubscripts (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9602:23)\n    at Object.parseMaybeUnary (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9582:21)\n    at Object.parseExprOps (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9452:23)\n    at Object.parseMaybeConditional (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9425:23)\n    at Object.parseMaybeAssign (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9380:21)\n    at Object.parseExpression (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:9332:23)\n    at Object.parseReturnStatement (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:11448:28)\n    at Object.parseStatementContent (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:11129:21)\n    at Object.parseStatement (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:11081:17)\n    at Object.parseBlockOrModuleBlockBody (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:11656:25)\n    at Object.parseBlockBody (/Users/taylorwofford/Desktop/Slick/slick/node_modules/@babel/parser/lib/index.js:11642:10)");
 
 /***/ }),
 
@@ -1166,7 +995,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
   return {
     messages: state.entities.messages,
     currentChannelId: ownProps.match.params.channelId
@@ -1233,21 +1061,17 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, NewMessageForm);
 
+    // debugger
     _this = _super.call(this, props);
     _this.state = {
       body: '',
       channel_id: parseInt(_this.props.currentChannelId),
-      user_id: _this.props.currentUser.id
+      user_id: _this.props.currentUser.id,
+      user: _this.props.currentUser
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidUpdate(){
-  //     this.state = Object.assign(this.state, {
-  //         channel_id: parseInt(this.props.currentChannelId),
-  //         user_id: this.props.currentUser.id
-  //     });
-  // }
-
+  }
 
   _createClass(NewMessageForm, [{
     key: "handleInput",
@@ -1255,21 +1079,20 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       return function (event) {
-        _this2.setState(_defineProperty({}, type, event.target.value));
+        var _this2$setState;
+
+        _this2.setState((_this2$setState = {}, _defineProperty(_this2$setState, type, event.target.value), _defineProperty(_this2$setState, "channel_id", parseInt(_this2.props.currentChannelId)), _this2$setState));
       };
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       // debugger
-      event.preventDefault();
+      event.preventDefault(); //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
+
       App.cable.subscriptions.subscriptions[0].speak({
         message: this.state
       });
-      console.log({
-        message: this.state
-      }); // this.setState({body: ''});
-
       var message = Object.assign({}, this.state);
       this.props.createMessage(message);
       $('#message-form')[0].reset();
@@ -2179,7 +2002,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var messagesReducer = function messagesReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  // debugger
   Object.freeze(defaultState);
 
   switch (action.type) {
@@ -2188,10 +2010,6 @@ var messagesReducer = function messagesReducer() {
 
     case _actions_message_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_MESSAGE"]:
       return Object.assign({}, defaultState, _defineProperty({}, action.message.id, action.message));
-    // case REMOVE_MESSAGE:
-    //     let nextState = Object.assign({}, defaultState);
-    //     delete nextState[action.message.id];
-    //     return nextState;
 
     default:
       return defaultState;

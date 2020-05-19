@@ -6,8 +6,6 @@ import {
 
 const messagesReducer = (defaultState = false, action) => {
 
-    // debugger
-
     Object.freeze(defaultState);
 
     switch (action.type) {
@@ -15,10 +13,6 @@ const messagesReducer = (defaultState = false, action) => {
             return action.messages;
         case RECEIVE_MESSAGE:
             return Object.assign({}, defaultState, {[action.message.id]: action.message})
-        // case REMOVE_MESSAGE:
-        //     let nextState = Object.assign({}, defaultState);
-        //     delete nextState[action.message.id];
-        //     return nextState;
         default:
             return defaultState;
     }
