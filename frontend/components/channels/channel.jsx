@@ -12,6 +12,7 @@ class Channel extends React.Component{
     }
 
     componentDidMount(){
+        
         App.cable.subscriptions.create(
             {channel: 'ChatChannel'},
             {
@@ -31,6 +32,7 @@ class Channel extends React.Component{
     }
 
     render(){
+        // debugger
         return (
             <div>
               <MessagesViewportContainer messages ={this.state}/>

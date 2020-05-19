@@ -142,9 +142,9 @@ var fetchChannels = function fetchChannels() {
     });
   };
 };
-var fetchChannel = function fetchChannel(channel) {
+var fetchChannel = function fetchChannel(channelId) {
   return function (dispatch) {
-    return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["getChannel"](channel).then(function (channel) {
+    return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["getChannel"](channelId).then(function (channel) {
       return dispatch(receiveChannel(channel));
     });
   };
@@ -446,6 +446,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         messages: this.state
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
@@ -624,8 +625,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       this.props.createChannel(channel);
     }
   }, {
-    key: "hideChannels",
-    value: function hideChannels() {
+    key: "toggleChannels",
+    value: function toggleChannels() {
       var channelsUl = document.getElementById("channels-ul");
 
       if (channelsUl.style.display === "none") {
@@ -633,10 +634,13 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       } else {
         channelsUl.style.display = "none";
       }
+
+      var caret = document.getElementById("channels-caret");
+      caret.classList.toggle("caret-toggled");
     }
   }, {
-    key: "hideDms",
-    value: function hideDms() {
+    key: "toggleDms",
+    value: function toggleDms() {
       var dmsUl = document.getElementById("dms-ul");
 
       if (dmsUl.style.display === "none") {
@@ -644,6 +648,9 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       } else {
         dmsUl.style.display = "none";
       }
+
+      var caret = document.getElementById("dms-caret");
+      caret.classList.toggle("caret-toggled");
     }
   }, {
     key: "render",
@@ -656,11 +663,11 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-toogle"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "channels-carat",
-        className: "fas fa-caret-right"
+        id: "channels-caret",
+        className: "fas fa-caret-down"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "channels-toggle-button",
-        onClick: this.hideChannels
+        onClick: this.toggleChannels
       }, "Channels"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "channels-ul",
         className: "channels-ul"
@@ -675,11 +682,11 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-toogle"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        id: "channels-carat",
-        className: "fas fa-caret-right"
+        id: "dms-caret",
+        className: "fas fa-caret-down"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "dms-toggle-button",
-        onClick: this.hideDms
+        onClick: this.toggleDms
       }, "Direct messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "dms-ul",
         className: "dms-ul"
@@ -1112,6 +1119,7 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this = this;
 
+      // debugger
       this.messagesArray = Object.values(this.props.messages);
       this.currentChannelMessages = this.messagesArray.filter(function (message) {
         return message.channel_id == _this.props.currentChannelId;
@@ -1224,6 +1232,7 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, NewMessageForm);
 
+    // debugger
     _this = _super.call(this, props);
     _this.state = {
       body: '',
@@ -1241,19 +1250,21 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       return function (event) {
-        _this2.setState(_defineProperty({}, type, event.target.value));
+        var _this2$setState;
+
+        _this2.setState((_this2$setState = {}, _defineProperty(_this2$setState, type, event.target.value), _defineProperty(_this2$setState, "channel_id", parseInt(_this2.props.currentChannelId)), _this2$setState));
       };
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      // debugger
       event.preventDefault(); //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
 
       App.cable.subscriptions.subscriptions[0].speak({
         message: this.state
       });
-      var message = Object.assign({}, this.state); //this persists the message to the database
-
+      var message = Object.assign({}, this.state);
       this.props.createMessage(message);
       $('#message-form')[0].reset();
     }

@@ -4,6 +4,8 @@ export default class NewMessageForm extends React.Component{
 
     constructor(props){
 
+        // debugger
+
         super(props)
 
         this.state = {
@@ -21,11 +23,13 @@ export default class NewMessageForm extends React.Component{
 
     handleInput(type) {
         return (event) => {
-            this.setState({ [type]: event.target.value });
+            this.setState({ [type]: event.target.value, channel_id: parseInt(this.props.currentChannelId) });
         };
     };
 
     handleSubmit(event) {
+
+        // debugger
 
         event.preventDefault();
 
@@ -34,8 +38,6 @@ export default class NewMessageForm extends React.Component{
         App.cable.subscriptions.subscriptions[0].speak({message: this.state});
         
         const message = Object.assign({}, this.state);
-
-        //this persists the message to the database
 
         this.props.createMessage(message);
 

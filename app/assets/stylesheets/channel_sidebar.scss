@@ -6,16 +6,16 @@
     margin: 0;
 }
 
-.fa-caret-right {
+.fa-caret-down {
     transition: 0.5s;
     color: #c3b4c4;
     margin-left: 15px;;
 }
 
-.fa-caret-right:hover {
-    -webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	transform: rotate(90deg);
+.caret-toggled {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 
 .channels-toggle-button {

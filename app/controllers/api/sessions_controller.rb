@@ -19,7 +19,6 @@ class Api::SessionsController < ApplicationController
         @user = current_user
         if @user
             logout!
-            #render or redirect once frontend routes are established
         else
             render json: ["No user currently logged in"], status: 404
             

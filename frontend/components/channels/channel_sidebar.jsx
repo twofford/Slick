@@ -30,7 +30,8 @@ class ChannelSidebar extends React.Component{
         this.props.createChannel(channel);
     };
 
-    hideChannels() {
+    toggleChannels() {
+
         const channelsUl = document.getElementById("channels-ul");
 
         if (channelsUl.style.display === "none") {
@@ -38,9 +39,14 @@ class ChannelSidebar extends React.Component{
         } else {
             channelsUl.style.display = "none";
         }
+
+        const caret = document.getElementById("channels-caret");
+
+        caret.classList.toggle("caret-toggled");
     };
 
-    hideDms() {
+    toggleDms() {
+
         const dmsUl = document.getElementById("dms-ul");
 
         if (dmsUl.style.display === "none") {
@@ -48,6 +54,10 @@ class ChannelSidebar extends React.Component{
         } else {
             dmsUl.style.display = "none";
         }
+
+        const caret = document.getElementById("dms-caret");
+
+        caret.classList.toggle("caret-toggled");
     };
 
     render(){
@@ -60,10 +70,10 @@ class ChannelSidebar extends React.Component{
 
                 <div className='channels-toogle'>
 
-                    <i id='channels-carat' className="fas fa-caret-right"></i>
+                    <i id='channels-caret' className="fas fa-caret-down"></i>
                     
                     <button className='channels-toggle-button'
-                    onClick={this.hideChannels}>Channels</button>
+                    onClick={this.toggleChannels}>Channels</button>
 
                     <ul id='channels-ul' className='channels-ul'>
 
@@ -81,10 +91,10 @@ class ChannelSidebar extends React.Component{
 
                 <div className='channels-toogle'>
 
-                    <i id='channels-carat' className="fas fa-caret-right"></i>
+                    <i id='dms-caret' className="fas fa-caret-down"></i>
 
                     <button className='dms-toggle-button'
-                        onClick={this.hideDms}>Direct messages</button>
+                        onClick={this.toggleDms}>Direct messages</button>
 
                     <ul id='dms-ul' className='dms-ul'>
 
