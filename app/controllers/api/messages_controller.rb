@@ -11,10 +11,7 @@ class Api::MessagesController < ApplicationController
         @message = Message.new(message_params)
 
         if @message.save
-<<<<<<< HEAD
-=======
             ActionCable.server.broadcast "chat", {message: @message}
->>>>>>> master
             render 'api/messages/show'
         else
             render @message.errors.full_messages, status: 422
