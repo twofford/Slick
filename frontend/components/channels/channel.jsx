@@ -26,6 +26,10 @@ class Channel extends React.Component{
 
                 load: function() {
                     return this.perform('load')
+                },
+
+                hear: function() {
+                    return this.perform('hear')
                 }
             }
         );
@@ -65,7 +69,6 @@ class Channel extends React.Component{
                 </div>
                 
                 <MessagesViewportContainer/>
-                {/* <NewMessageFormContainer/> */}
             </div>
             )
         } else {

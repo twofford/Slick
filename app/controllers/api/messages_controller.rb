@@ -10,7 +10,8 @@ class Api::MessagesController < ApplicationController
     def create
         @message = Message.new(message_params)
         if @message.save
-            ActionCable.server.broadcast "chat", {message: @message}
+            # debugger
+            ActionCable.server.broadcast "chat", {"message" => {@message.id => @message}}
             render 'api/messages/show'
         else
             render @message.errors.full_messages, status: 422

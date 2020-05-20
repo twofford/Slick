@@ -21,7 +21,9 @@ export default class NewMessageForm extends React.Component{
 
     handleInput(type) {
         return (event) => {
-            this.setState({ [type]: event.target.value, channel_id: parseInt(this.props.currentChannelId) });
+            this.setState({
+                [type]: event.target.value, 
+                channel_id: parseInt(this.props.currentChannelId) });
         };
     };
 
@@ -31,11 +33,14 @@ export default class NewMessageForm extends React.Component{
 
         //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
 
-        App.cable.subscriptions.subscriptions[0].speak({message: this.state});
+        // App.cable.subscriptions.subscriptions[0].speak({message: this.state});
         
         const message = Object.assign({}, this.state);
 
-        this.props.createMessage(message);
+        //this puts a message in frontend state and persists a message to the database
+        this.props.createMessage(message).then((res) => {
+            App.cable.subscriptions.subscriptions[0].speak({ message: res.message });
+        });
 
         $('#message-form')[0].reset();
         

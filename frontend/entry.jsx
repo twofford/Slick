@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.deleteChannel = ChannelActions.deleteChannel
     //
 
+    //MESSAGE TEST
+
     ReactDOM.render(<Root store={store}/>, root);
 
 });

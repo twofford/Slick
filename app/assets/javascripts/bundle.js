@@ -179,7 +179,7 @@ var deleteChannel = function deleteChannel(channel) {
 /*!*********************************************!*\
   !*** ./frontend/actions/message_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_MESSAGES, RECEIVE_MESSAGE, RECEIVE_ERRORS, receiveMessages, receiveMessage, receiveErrors, fetchMessages, fetchMessage, createMessage, updateMessage */
+/*! exports provided: RECEIVE_MESSAGES, RECEIVE_MESSAGE, RECEIVE_ERRORS, receiveMessages, receiveMessage, receiveErrors, fetchMessages, createMessage, updateMessage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -191,7 +191,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveMessage", function() { return receiveMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMessages", function() { return fetchMessages; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMessage", function() { return fetchMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMessage", function() { return createMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateMessage", function() { return updateMessage; });
 /* harmony import */ var _util_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/message */ "./frontend/util/message.js");
@@ -229,18 +228,15 @@ var fetchMessages = function fetchMessages(channelId) {
       return dispatch(receiveMessages(messages));
     });
   };
-};
-var fetchMessage = function fetchMessage(message) {
+}; // export const fetchMessage = (message) => dispatch => (
+//     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
+
+var createMessage = function createMessage(message) {
   return function (dispatch) {
-    return _util_message__WEBPACK_IMPORTED_MODULE_0__["getMessage"](message).then(function (message) {
+    return _util_message__WEBPACK_IMPORTED_MODULE_0__["postMessage"](message).then(function (message) {
       return dispatch(receiveMessage(message));
     });
   };
-};
-var createMessage = function createMessage(message) {
-  return function (dispatch) {
-    return _util_message__WEBPACK_IMPORTED_MODULE_0__["postMessage"](message);
-  }; // .then(message => dispatch(receiveMessage(message)))
 };
 var updateMessage = function updateMessage(message) {
   return function (dispatch) {
@@ -444,6 +440,9 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         },
         load: function load() {
           return this.perform('load');
+        },
+        hear: function hear() {
+          return this.perform('hear');
         }
       });
     }
@@ -1036,6 +1035,7 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1116,14 +1116,18 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(MessagesViewport, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchMessages(this.props.currentChannelId);
-      App.cable.subscriptions.subscriptions[0].load();
+      this.props.fetchMessages(this.props.currentChannelId); // App.cable.subscriptions.subscriptions[0].load();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {// debugger
     }
   }, {
     key: "render",
     value: function render() {
       var _this = this;
 
+      // debugger
       this.messagesArray = Object.values(this.props.messages);
       this.currentChannelMessages = this.messagesArray.filter(function (message) {
         return message.channel_id == _this.props.currentChannelId;
@@ -1263,12 +1267,15 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault(); //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
+      // App.cable.subscriptions.subscriptions[0].speak({message: this.state});
 
-      App.cable.subscriptions.subscriptions[0].speak({
-        message: this.state
+      var message = Object.assign({}, this.state); //this puts a message in frontend state and persists a message to the database
+
+      this.props.createMessage(message).then(function (res) {
+        App.cable.subscriptions.subscriptions[0].speak({
+          message: res.message
+        });
       });
-      var message = Object.assign({}, this.state);
-      this.props.createMessage(message);
       $('#message-form')[0].reset();
     }
   }, {
@@ -2062,6 +2069,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.createChannel = _actions_channel_actions__WEBPACK_IMPORTED_MODULE_6__["createChannel"];
   window.updateChannel = _actions_channel_actions__WEBPACK_IMPORTED_MODULE_6__["updateChannel"];
   window.deleteChannel = _actions_channel_actions__WEBPACK_IMPORTED_MODULE_6__["deleteChannel"]; //
+  //MESSAGE TEST
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_2__["default"], {
     store: store
@@ -2169,8 +2177,6 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/message_actions */ "./frontend/actions/message_actions.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var messagesReducer = function messagesReducer() {
@@ -2180,12 +2186,15 @@ var messagesReducer = function messagesReducer() {
 
   switch (action.type) {
     case _actions_message_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_MESSAGES"]:
+      // debugger
       return action.messages;
 
     case _actions_message_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_MESSAGE"]:
-      return Object.assign({}, defaultState, _defineProperty({}, action.message.id, action.message));
+      // debugger
+      return Object.assign({}, defaultState, action.message);
 
     default:
+      // debugger
       return defaultState;
   }
 };
@@ -2452,7 +2461,12 @@ var getMessages = function getMessages(channelId) {
   return $.ajax({
     url: "api/channels/".concat(channelId, "/messages")
   });
-};
+}; // export const getMessage = (channelId, messageId) => {
+//     return $.ajax({
+//         url: `api/channels/${channelId}/messages/${messageId}`
+//     })
+// }
+
 var postMessage = function postMessage(message) {
   return $.ajax({
     url: "/api/channels/".concat(message.channel_id, "/messages"),

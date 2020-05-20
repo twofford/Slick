@@ -10,10 +10,13 @@ const messagesReducer = (defaultState = false, action) => {
 
     switch (action.type) {
         case RECEIVE_MESSAGES:
+            // debugger
             return action.messages;
         case RECEIVE_MESSAGE:
-            return Object.assign({}, defaultState, {[action.message.id]: action.message})
+            // debugger
+            return Object.assign({}, defaultState, action.message)
         default:
+            // debugger
             return defaultState;
     }
 }
