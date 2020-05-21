@@ -9,6 +9,8 @@ import {
 
 } from '../../actions/channel_actions';
 
+import { openModal } from '../../actions/modal_actions';
+
 import ChannelSidebar from './channel_sidebar';
 
 const msp = (state, ownProps) => {
@@ -31,7 +33,9 @@ const mdp = dispatch => {
 
         deleteChannel: channel => dispatch(deleteChannel(channel)),
 
-        logout: () => dispatch(logout())
+        logout: () => dispatch(logout()),
+
+        openModal: modal => dispatch(openModal(modal)),
     }
 }
 

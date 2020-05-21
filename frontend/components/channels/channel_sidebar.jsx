@@ -62,6 +62,7 @@ class ChannelSidebar extends React.Component{
 
     render(){
 
+
         this.channelsArray = Object.values(this.props.channels);
 
         return(
@@ -111,7 +112,7 @@ class ChannelSidebar extends React.Component{
 
                 </div>
 
-            <form>
+            {/* <form>
                 <label>Title:
                 <input
                     type="text"
@@ -133,7 +134,9 @@ class ChannelSidebar extends React.Component{
 
                 <button className='logout-button' onClick={this.props.logout}>Log out</button>
 
-            </form>
+            </form> */}
+
+            <button onClick={() => this.props.openModal("addChannel")}>Create new channel</button>
             </div>
 
     )
