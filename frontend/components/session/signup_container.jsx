@@ -7,7 +7,8 @@ const msp = state => {
 }
 
 const mdp = dispatch => ({
-    createNewUser: user => dispatch(createNewUser(user))
+    createNewUser: user => dispatch(createNewUser(user)),
+    login: user => dispatch(login(user))
 })
 
 export default connect(msp, mdp)(SignupForm);

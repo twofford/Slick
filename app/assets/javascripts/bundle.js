@@ -1592,6 +1592,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     value: function handleSubmit(event) {
       event.preventDefault();
       var user = Object.assign({}, this.state);
+      debugger;
       this.props.login(user);
     }
   }, {
@@ -1673,7 +1674,20 @@ var mdp = function mdp(dispatch) {
   return {
     createNewUser: function createNewUser(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["createNewUser"])(user));
-    }
+    },
+    login: function (_login) {
+      function login(_x) {
+        return _login.apply(this, arguments);
+      }
+
+      login.toString = function () {
+        return _login.toString();
+      };
+
+      return login;
+    }(function (user) {
+      return dispatch(login(user));
+    })
   };
 };
 
@@ -1734,6 +1748,7 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
       password: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleDemoLogin = _this.handleDemoLogin.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1752,6 +1767,17 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
       event.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.createNewUser(user);
+    }
+  }, {
+    key: "handleDemoLogin",
+    value: function handleDemoLogin(event) {
+      event.preventDefault();
+      var user = Object.assign({}, {
+        email: 'demo_user@gmail.com',
+        password: 'starwars'
+      });
+      debugger;
+      this.props.login(user);
     }
   }, {
     key: "renderErrors",
@@ -1795,7 +1821,11 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
       }, "Confirm")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "form-image",
         src: createTeam
-      }))));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "demo-login-div"
+      }, "Don't want to create an account? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleDemoLogin
+      }, "Login"), " as a demo user.")));
     }
   }]);
 

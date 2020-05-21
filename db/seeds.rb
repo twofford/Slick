@@ -40,6 +40,13 @@ u4 = User.create!(
     updated_at: '1/1/2020'
 )
 
+u5 = User.create!(
+    email: 'demo_user@gmail.com',
+    password: 'starwars',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
 c1 = Channel.create!(
     title: 'General',
     channel_type: 'public',

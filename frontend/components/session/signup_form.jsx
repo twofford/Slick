@@ -8,6 +8,7 @@ class SignupForm extends React.Component{
             password: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDemoLogin = this.handleDemoLogin.bind(this);
     };
 
     handleInput(type){
@@ -23,6 +24,15 @@ class SignupForm extends React.Component{
         this.props.createNewUser(user);
         
     }
+
+    handleDemoLogin(event) {
+
+        event.preventDefault();
+        const user = Object.assign({}, {email: 'demo_user@gmail.com', password: 'starwars'});
+        debugger
+        this.props.login(user);
+
+    };
 
     renderErrors() {
         return (
@@ -85,7 +95,9 @@ class SignupForm extends React.Component{
                     src={createTeam}></img>
                 </>
 
+                    <div id="demo-login-div">Don't want to create an account? <button onClick={this.handleDemoLogin}>Login</button> as a demo user.</div>
             </div>
+
             </>
         );
     };
