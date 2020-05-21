@@ -1,3 +1,5 @@
+import React from 'react';
+
 class NewChannelForm extends React.Component {
     constructor(props) {
         super(props)

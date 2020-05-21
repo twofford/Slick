@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require modal
  *= require new_message_form
  *= require messages_viewport
  *= require messages
@@ -60,4 +61,13 @@ time, mark, audio, video {
 
 .canvas {
   display: none;
+}
+
+#hella-big {
+  background-color: red;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 500px;
+  width: 500px;
 }
