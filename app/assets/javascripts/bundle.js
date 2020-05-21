@@ -1021,7 +1021,6 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   _createClass(MessageItem, [{
     key: "getTimestamp",
     value: function getTimestamp() {
-      // debugger
       var timestamp = new Date(this.props.message.created_at);
       var hours = timestamp.getHours();
       var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -1035,7 +1034,6 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1116,25 +1114,19 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(MessagesViewport, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchMessages(this.props.currentChannelId); // App.cable.subscriptions.subscriptions[0].load();
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState) {// debugger
+      this.props.fetchMessages(this.props.currentChannelId);
     }
   }, {
     key: "render",
     value: function render() {
       var _this = this;
 
-      // debugger
       this.messagesArray = Object.values(this.props.messages);
       this.currentChannelMessages = this.messagesArray.filter(function (message) {
         return message.channel_id == _this.props.currentChannelId;
       });
 
       if (this.props.messages) {
-        // debugger
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "messages-ul"
         }, this.currentChannelMessages.map(function (message) {
@@ -1592,7 +1584,6 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     value: function handleSubmit(event) {
       event.preventDefault();
       var user = Object.assign({}, this.state);
-      debugger;
       this.props.login(user);
     }
   }, {
@@ -1776,7 +1767,6 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
         email: 'demo_user@gmail.com',
         password: 'starwars'
       });
-      debugger;
       this.props.login(user);
     }
   }, {
@@ -2217,15 +2207,12 @@ var messagesReducer = function messagesReducer() {
 
   switch (action.type) {
     case _actions_message_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_MESSAGES"]:
-      // debugger
       return action.messages;
 
     case _actions_message_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_MESSAGE"]:
-      // debugger
       return Object.assign({}, defaultState, action.message);
 
     default:
-      // debugger
       return defaultState;
   }
 };

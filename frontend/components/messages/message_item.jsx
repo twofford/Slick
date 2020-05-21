@@ -11,8 +11,6 @@ export default class MessageItem extends React.Component{
 
     getTimestamp() {
 
-        // debugger
-
         const timestamp = new Date(this.props.message.created_at)
 
         let hours = timestamp.getHours();
@@ -35,7 +33,6 @@ export default class MessageItem extends React.Component{
 
 
     render(){
-        // debugger
         return(
             
             <div className='message-wrapper'>

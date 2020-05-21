@@ -9,23 +9,15 @@ export default class MessagesViewport extends React.Component{
 
     componentDidMount(){
         this.props.fetchMessages(this.props.currentChannelId);
-        // App.cable.subscriptions.subscriptions[0].load();
-    }
-
-    componentDidUpdate(prevProps, prevState){
-        // debugger
     }
 
     render(){
-
-        // debugger
 
         this.messagesArray = Object.values(this.props.messages)
 
         this.currentChannelMessages = this.messagesArray.filter(message => message.channel_id == this.props.currentChannelId)
 
         if (this.props.messages) {
-            // debugger
             return (
                 <>
                 <ul className='messages-ul'>
