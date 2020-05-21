@@ -95,7 +95,7 @@ class SignupForm extends React.Component{
                     src={createTeam}></img>
                 </>
 
-                    <div id="demo-login-div">Don't want to create an account? <button onClick={this.handleDemoLogin}>Login</button> as a demo user.</div>
+                    <div id="demo-login-div">Don't want to create an account? <a id="demo-login-button" onClick={this.handleDemoLogin}>Login as a demo user.</a></div>
             </div>
 
             </>

@@ -1823,9 +1823,10 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
         src: createTeam
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "demo-login-div"
-      }, "Don't want to create an account? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Don't want to create an account? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        id: "demo-login-button",
         onClick: this.handleDemoLogin
-      }, "Login"), " as a demo user.")));
+      }, "Login as a demo user."))));
     }
   }]);
 
