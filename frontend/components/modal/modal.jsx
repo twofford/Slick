@@ -5,8 +5,6 @@ import NewChannelContainer from './new_channel_container';
 
 function Modal({ modal, closeModal }) {
 
-    debugger
-
     if (!modal) {
         return null;
     }
