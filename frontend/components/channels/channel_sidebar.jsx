@@ -137,6 +137,8 @@ class ChannelSidebar extends React.Component{
             </form> */}
 
             <button onClick={() => this.props.openModal("addChannel")}>Create new channel</button>
+
+            <button className='logout-button' onClick={this.props.logout}>Log out</button>
             </div>
 
     )

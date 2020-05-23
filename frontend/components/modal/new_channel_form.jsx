@@ -35,26 +35,39 @@ class NewChannelForm extends React.Component {
                     <button id="modal-closer" onClick={() => this.props.closeModal()}>&times;</button>
                 </div>
                 <div id="modal-body">
-                    <span>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</span>
+
+                    <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
+                    
+                    <div>Name <br/><input type="text" onChange={this.handleInput('title')} placeholder="# e.g. plan-budget"/></div>
+
+                    <div>Description<span> (optional)</span><br/><input type="text" onChange={this.handleInput('description')} /></div>
+
+                    <span id="description-span">What's this channel about?</span>
+            
+                    <div>Make private<br/>
+                    
+                    <label className="switch">
+                        
+                        <input type="checkbox" onChange={this.handleInput('channel_type')} />
+
+                        <span className="slider round">Slider</span>
+
+                    </label>
+                        
+                        </div>
+
+                    <button onClick={this.handleSubmit}>Submit</button>
+
                 </div>
 
             
             
-            <label>Name</label>
 
-            <input type="text" onChange={this.handleInput('title')}/>
 
-            <label>Description (optional)</label>
             
-            <input type="text" onChange={this.handleInput('description')}/>
 
-            <span>What's this channel about?</span>
 
-            <label>Make private</label>
 
-            <input type="text" onChange={this.handleInput('channel_type')}/>
-
-            <button onClick={this.handleSubmit}>Submit</button>
 
             </div>
         )
