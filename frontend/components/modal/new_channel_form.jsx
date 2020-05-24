@@ -34,29 +34,59 @@ class NewChannelForm extends React.Component {
                     <h1 id="new-channel-form-h1">Create a channel</h1>
                     <button id="modal-closer" onClick={() => this.props.closeModal()}>&times;</button>
                 </div>
+
                 <div id="modal-body">
 
                     <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
                     
-                    <div>Name <br/><input type="text" onChange={this.handleInput('title')} placeholder="# e.g. plan-budget"/></div>
-
-                    <div>Description<span> (optional)</span><br/><input type="text" onChange={this.handleInput('description')} /></div>
-
-                    <span id="description-span">What's this channel about?</span>
-            
-                    <div>Make private<br/>
+                    <div>Name
+                        
+                        <br/>
                     
-                    <label className="switch">
-                        
-                        <input type="checkbox" onChange={this.handleInput('channel_type')} />
+                        <input type="text" onChange={this.handleInput('title')} placeholder="# e.g. plan-budget"/>
+                    
+                    </div>
 
-                        <span className="slider round">Slider</span>
-
-                    </label>
+                    <div>Description
                         
+                        <span> (optional)</span>
+                        
+                        <br/>
+                        
+                        <input type="text" onChange={this.handleInput('description')} />
+                        
+                        <span id="description-span">What's this channel about?</span>
+                        
+                    </div>
+
+
+                    <div id="modal-footer">
+                        
+                        <div>
+
+                            <h4>Make private</h4>
+
+                            <div id="private-description">When a channel is set to private, it can only be viewed or joined by invitation.</div>
+
                         </div>
 
-                    <button onClick={this.handleSubmit}>Submit</button>
+                        <div id="switch-div">
+                    
+                            <label className="switch">
+                                
+                                <input type="checkbox" onChange={this.handleInput('channel_type')} />
+
+                                <span className="slider round"></span>
+
+                            </label>
+
+                        </div>
+                    
+                    </div>
+                        
+                </div>
+
+                    <button className="disabled-button" id="new-channel-submit-button" onClick={this.handleSubmit}>Create</button>
 
                 </div>
 
@@ -69,7 +99,7 @@ class NewChannelForm extends React.Component {
 
 
 
-            </div>
+            
         )
     }
 }
