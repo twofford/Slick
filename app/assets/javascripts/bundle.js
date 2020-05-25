@@ -1523,9 +1523,11 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       title: '',
       description: '',
-      channel_type: ''
+      channel_type: 'public'
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.allowSubmit = _this.allowSubmit.bind(_assertThisInitialized(_this));
+    _this.togglePrivate = _this.togglePrivate.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1539,12 +1541,33 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "allowSubmit",
+    value: function allowSubmit() {
+      this.style = {
+        backgroundColor: '#137959',
+        color: 'white',
+        transition: '0.1s',
+        pointerEvents: 'auto',
+        cursor: 'pointer'
+      };
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
       var channel = Object.assign({}, this.state);
       this.props.createChannel(channel);
       this.props.closeModal();
+    }
+  }, {
+    key: "togglePrivate",
+    value: function togglePrivate() {
+      debugger;
+      this.state.channel_type === 'public' ? this.setState({
+        channel_type: 'private'
+      }) : this.setState({
+        channel_type: 'public'
+      });
     }
   }, {
     key: "render",
@@ -1565,6 +1588,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Channels are where your team communicates. They\u2019re best when organized around a topic \u2014 #marketing, for example."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.handleInput('title'),
+        onInput: this.allowSubmit,
         placeholder: "# e.g. plan-budget"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Description", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " (optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -1581,12 +1605,13 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
         className: "switch"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "checkbox",
-        onChange: this.handleInput('channel_type')
+        onChange: this.togglePrivate
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "slider round"
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "disabled-button",
         id: "new-channel-submit-button",
+        style: this.style,
         onClick: this.handleSubmit
       }, "Create"));
     }

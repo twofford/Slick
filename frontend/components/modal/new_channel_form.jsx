@@ -7,10 +7,14 @@ class NewChannelForm extends React.Component {
         this.state = {
             title: '',
             description: '',
-            channel_type: ''
+            channel_type: 'public'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.allowSubmit = this.allowSubmit.bind(this);
+
+        this.togglePrivate = this.togglePrivate.bind(this);
 
     };
 
@@ -19,6 +23,10 @@ class NewChannelForm extends React.Component {
             this.setState({ [type]: event.target.value });
         };
     };
+    
+    allowSubmit() {
+        this.style = { backgroundColor: '#137959', color: 'white', transition: '0.1s', pointerEvents: 'auto', cursor: 'pointer'}
+    };
 
     handleSubmit(event) {
         event.preventDefault();
@@ -26,6 +34,11 @@ class NewChannelForm extends React.Component {
         this.props.createChannel(channel);
         this.props.closeModal()
     };
+
+    togglePrivate() {
+        debugger
+        this.state.channel_type === 'public' ? this.setState({channel_type: 'private'}) : this.setState({channel_type: 'public'});
+    }
 
     render() {
         return(
@@ -43,7 +56,7 @@ class NewChannelForm extends React.Component {
                         
                         <br/>
                     
-                        <input type="text" onChange={this.handleInput('title')} placeholder="# e.g. plan-budget"/>
+                        <input type="text" onChange={this.handleInput('title')} onInput={this.allowSubmit} placeholder="# e.g. plan-budget"/>
                     
                     </div>
 
@@ -74,7 +87,7 @@ class NewChannelForm extends React.Component {
                     
                             <label className="switch">
                                 
-                                <input type="checkbox" onChange={this.handleInput('channel_type')} />
+                                <input type="checkbox" onChange={this.togglePrivate} />
 
                                 <span className="slider round"></span>
 
@@ -86,7 +99,7 @@ class NewChannelForm extends React.Component {
                         
                 </div>
 
-                    <button className="disabled-button" id="new-channel-submit-button" onClick={this.handleSubmit}>Create</button>
+                    <button className="disabled-button" id="new-channel-submit-button" style={this.style} onClick={this.handleSubmit}>Create</button>
 
                 </div>
 
