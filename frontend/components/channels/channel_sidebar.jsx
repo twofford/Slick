@@ -71,10 +71,16 @@ class ChannelSidebar extends React.Component{
 
                 <div className='channels-toogle'>
 
+                    <div className="channels-header">
+
                     <i id='channels-caret' className="fas fa-caret-down"></i>
                     
                     <button className='channels-toggle-button'
                     onClick={this.toggleChannels}>Channels</button>
+
+                    <a onClick={() => this.props.openModal("addChannel")}><i className="fas fa-plus channel-fa-plus"></i></a>
+
+                    </div>
 
                     <ul id='channels-ul' className='channels-ul'>
 
@@ -92,10 +98,16 @@ class ChannelSidebar extends React.Component{
 
                 <div className='channels-toogle'>
 
-                    <i id='dms-caret' className="fas fa-caret-down"></i>
+                    <div className="channels-header">
 
-                    <button className='dms-toggle-button'
-                        onClick={this.toggleDms}>Direct messages</button>
+                        <i id='dms-caret' className="fas fa-caret-down"></i>
+
+                        <button className='dms-toggle-button' onClick={this.toggleDms}>Direct messages</button>
+
+                        <a onClick={() => this.props.openModal("addChannel")}><i className="fas fa-plus dm-fa-plus"></i></a>
+                    
+                    </div>
+
 
                     <ul id='dms-ul' className='dms-ul'>
 
@@ -136,7 +148,7 @@ class ChannelSidebar extends React.Component{
 
             </form> */}
 
-            <button onClick={() => this.props.openModal("addChannel")}>Create new channel</button>
+            
 
             <button className='logout-button' onClick={this.props.logout}>Log out</button>
             </div>

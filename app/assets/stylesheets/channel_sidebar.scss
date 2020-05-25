@@ -6,10 +6,33 @@
     margin: 0;
 }
 
+.channels-header {
+    display: inline-block;
+}
+
 .fa-caret-down {
     transition: 0.5s;
     color: #c3b4c4;
     margin-left: 15px;;
+}
+
+.fa-plus {
+    color: #c3b4c4;
+    font-weight: 700;
+    padding: 5px;
+}
+
+.channel-fa-plus {
+    margin-left: 120px;
+}
+
+.dm-fa-plus {
+    margin-left: 68px;
+}
+
+.fa-plus:hover {
+    background-color: rgba(255,255,255,0.1);
+    cursor: pointer;
 }
 
 .caret-toggled {
