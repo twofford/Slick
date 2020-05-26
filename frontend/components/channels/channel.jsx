@@ -46,26 +46,49 @@ class Channel extends React.Component{
 
 
     render(){
+        
         if (this.props.channel) {
             return (
-            <div className='messages-wrapper'>
-                <div className='messages-header'>
-                    <div className='messages-header-left'>
-                        <div className='channel-title'># &nbsp; {this.props.channel.title}
-                            <i className="far fa-star"></i>
-                        </div>
-        
-                            <div className='subs-pins-addtopic'>
-                                <i className="far fa-user"><span className='subs-pins-addtopic-text'>&nbsp;{this.props.channel.users.length}</span></i>
-                                <i className="far fa-flag"><span className='subs-pins-addtopic-text'>&nbsp;10</span></i>
-                                <span className='subs-pins-addtopic-text'>Add a topic</span>
-                            </div>
+
+            <div className='channel-wrapper'>
+
+                <div className='channel-header'>
+
+                    <div className='channel-header-left'>
+
+                        <p className='channel-title'>
+                            
+                                <strong>#{this.props.channel.title}</strong>
+                                
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                <i className="far fa-star"></i>
+
+                        </p>
+
+                        <p className='subs-pins-addtopic'>
+
+                            <i className="far fa-user"> </i>
+                            
+                            &nbsp;
+                                     
+                            {this.props.channel.users.length}
+
+                            &nbsp; | &nbsp;
+                                    
+                            {this.props.channel.description}
+                        </p>
+
                     </div>
 
-                    <div className='messages-header-right'>
-                            <i className="far fa-question-circle"></i>
-                            <span>&nbsp;Details</span>
+                    <div className='channel-header-right'>
+                            
+                            <p><i className="far fa-question-circle"></i>
+                            
+                            &nbsp;Details</p>
+
                     </div>
+                    
                 </div>
                 
                 <MessagesViewportContainer/>
