@@ -36,7 +36,6 @@ class NewChannelForm extends React.Component {
     };
 
     togglePrivate() {
-        debugger
         this.state.channel_type === 'public' ? this.setState({channel_type: 'private'}) : this.setState({channel_type: 'public'});
     }
 

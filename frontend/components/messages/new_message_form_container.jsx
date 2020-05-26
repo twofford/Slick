@@ -5,6 +5,7 @@ import { createMessage } from '../../actions/message_actions';
 import NewMessageForm from './new_message_form';
 
 const msp = (state, ownProps) => {
+    
     return {
         currentUser: state.entities.users[state.session.user.id],
         currentChannelId: ownProps.match.params.channelId,

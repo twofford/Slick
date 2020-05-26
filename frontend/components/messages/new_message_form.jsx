@@ -15,9 +15,7 @@ export default class NewMessageForm extends React.Component{
         
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-
-        this.placeholder = `Message #${this.props.channel.title}`;
+        this.handleSubmit = this.handleSubmit.bind(this); 
 
     }
 
@@ -49,7 +47,9 @@ export default class NewMessageForm extends React.Component{
     };
 
     render(){
-        console.log(this.placeholder);
+
+        const placeholder = `Message #${this.props.channel.title}`;
+
         return(
             <div className='message-form-container'>
             <div className='message-form-inner-container'>
@@ -57,7 +57,7 @@ export default class NewMessageForm extends React.Component{
             onSubmit={this.handleSubmit}>
                 <input
                 className='message-form-input'
-                placeholder={this.placeholder}
+                placeholder={placeholder}
                 type="text"
                 onChange={this.handleInput('body')}/>
             </form>

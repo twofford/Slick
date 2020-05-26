@@ -1277,7 +1277,6 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
       user: _this.props.currentUser
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.placeholder = "Message #".concat(_this.props.channel.title);
     return _this;
   }
 
@@ -1310,7 +1309,7 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.placeholder);
+      var placeholder = "Message #".concat(this.props.channel.title);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-form-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1321,7 +1320,7 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "message-form-input",
-        placeholder: this.placeholder,
+        placeholder: placeholder,
         type: "text",
         onChange: this.handleInput('body')
       }))));
@@ -1569,7 +1568,6 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "togglePrivate",
     value: function togglePrivate() {
-      debugger;
       this.state.channel_type === 'public' ? this.setState({
         channel_type: 'private'
       }) : this.setState({
