@@ -68,7 +68,7 @@ c3 = Channel.create!(
     channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
-    description: 'Horses and the amusement to gained thereby'
+    description: 'Horses and the amusement to be gained thereby'
 )
 
 c4 = Channel.create!(

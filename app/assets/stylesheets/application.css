@@ -59,15 +59,6 @@ time, mark, audio, video {
     top: 0;
 }
 
-#hella-big {
-  background-color: red;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  height: 500px;
-  width: 500px;
-}
-
 canvas {
   display: none;
 }

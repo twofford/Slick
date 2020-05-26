@@ -1,20 +1,34 @@
 .message-form-container {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
-.message-form-inner-container {
-    height: 40px;
-    width: 100%;
-}
+// .message-form-inner-container {
+    // height: 40px;
+    // width: 100%;
+    // border: 1px solid black;
+    // border-radius: 4px;
+// }
 
 .message-form {
-    height: 40px;
-    width: 100%;
+    position: fixed;
+    bottom: 10px;
+    left: 280px;
+    width: 1620px;
+    border: 1px solid #989798;
+    border-radius: 4px;
 }
 
 .message-form-input {
-    height: 40px;
+    padding-left: 20px;
+    height: 35px;
+    border: none;
+    font-size: 14px;
     width: 100%;
+    background-color: transparent;
+}
+
+.message-form-input:hover, .message-form-input:focus {
+    outline: none;
 }
