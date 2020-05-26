@@ -1,7 +1,9 @@
 .messages-ul {
-    overflow-y: auto;
+    position: fixed;
+    overflow-y: scroll;
     overflow-x: wrap;
     margin-top: 20px;
+    margin-bottom: 40px;
     width: 100%;
     height: 100%;
 }

@@ -1,17 +1,20 @@
 .message-form-container {
-    position: absolute;
-    bottom: 40px;
-    width: auto;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }
 
 .message-form-inner-container {
+    height: 40px;
     width: 100%;
 }
 
 .message-form {
+    height: 40px;
     width: 100%;
 }
 
 .message-form-input {
+    height: 40px;
     width: 100%;
 }
