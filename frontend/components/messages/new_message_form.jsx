@@ -17,6 +17,8 @@ export default class NewMessageForm extends React.Component{
 
         this.handleSubmit = this.handleSubmit.bind(this);
 
+        this.placeholder = `Message #${this.props.channel.title}`;
+
     }
 
     handleInput(type) {
@@ -47,6 +49,7 @@ export default class NewMessageForm extends React.Component{
     };
 
     render(){
+        console.log(this.placeholder);
         return(
             <div className='message-form-container'>
             <div className='message-form-inner-container'>
@@ -54,7 +57,7 @@ export default class NewMessageForm extends React.Component{
             onSubmit={this.handleSubmit}>
                 <input
                 className='message-form-input'
-                placeholder='Message goes here'
+                placeholder={this.placeholder}
                 type="text"
                 onChange={this.handleInput('body')}/>
             </form>
