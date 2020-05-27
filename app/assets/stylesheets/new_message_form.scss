@@ -1,25 +1,15 @@
 .message-form-container {
     display: flex;
-    // flex-basis: content;
     justify-content: center;
 }
-
-// .message-form-inner-container {
-    // height: 40px;
-    // width: 100%;
-    // border: 1px solid black;
-    // border-radius: 4px;
-// }
 
 .message-form {
     position: fixed;
     bottom: 10px;
-    // left: 280px;
-    // margin-left: auto;
-    // margin-right: auto;
-    width: 80%;
+    width: 85%;
     border: 1px solid #989798;
     border-radius: 4px;
+    background: white;
 }
 
 .message-form-input {
@@ -27,8 +17,8 @@
     height: 35px;
     border: none;
     font-size: 14px;
-    // width: 100%;
     background-color: transparent;
+    width: 100%;
 }
 
 .message-form-input:hover, .message-form-input:focus {

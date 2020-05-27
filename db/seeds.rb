@@ -53,30 +53,57 @@ c1 = Channel.create!(
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Just chattin\' about whatever'
-)
-
+    )
+        
 c2 = Channel.create!(
-    title: 'Private Chat',
-    channel_type: 'private',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020',
-    description: 'Super secret private convo'
-)
-
-c3 = Channel.create!(
     title: 'HorsePlay',
     channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Horses and the amusement to be gained thereby'
-)
+        )
 
-c4 = Channel.create!(
-    title: 'A Group DM With A Very Long Name To Test Text Overflow',
+c3 = Channel.create!(
+    title: 'Jared',
     channel_type: 'private',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
-    description: 'Nothing to see here'
+)
+
+
+c4 = Channel.create!(
+    title: 'Solomon',
+    channel_type: 'private',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+)
+
+c5 = Channel.create!(
+    title: 'Ben',
+    channel_type: 'private',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+)
+
+c6 = Channel.create!(
+    title: 'Elise',
+    channel_type: 'private',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+)
+
+c7 = Channel.create!(
+    title: 'Trudy',
+    channel_type: 'private',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+)
+
+c8 = Channel.create!(
+    title: 'Captain Ron',
+    channel_type: 'private',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
 )
 
 cm1 = ChannelMembership.create!(

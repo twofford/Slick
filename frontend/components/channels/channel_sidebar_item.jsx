@@ -32,7 +32,7 @@ class ChannelSidebarItem extends React.Component{
                 return (
                     <li className='dm-li-current'>
                         
-                        <Link to={`/channels/${this.props.channel.id}`}># {this.props.channel.title}</Link>
+                        <Link to={`/channels/${this.props.channel.id}`}><i className="fas fa-circle white"></i>&nbsp; {this.props.channel.title}</Link>
                     </li>
                 )
             } else {
@@ -40,7 +40,7 @@ class ChannelSidebarItem extends React.Component{
                 return (
                 <li className='dm-li'>
                     
-                        <Link to={`/channels/${this.props.channel.id}`}># {this.props.channel.title}</Link>
+                        <Link to={`/channels/${this.props.channel.id}`}><i className="fas fa-circle"></i>&nbsp; {this.props.channel.title}</Link>
                 </li>
         )}
         }

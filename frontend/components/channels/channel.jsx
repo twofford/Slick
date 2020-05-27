@@ -48,52 +48,84 @@ class Channel extends React.Component{
     render(){
         
         if (this.props.channel) {
+
+            if (this.props.channel.channel_type === "public") {
             return (
 
-            <div className='channel-wrapper'>
+                <div className='channel-wrapper'>
 
-                <div className='channel-header'>
+                    <div className='channel-header'>
 
-                    <div className='channel-header-left'>
+                        <div className='channel-header-left'>
 
-                        <p className='channel-title'>
-                            
-                                <strong>#{this.props.channel.title}</strong>
+                            <p className='channel-title'>
                                 
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                <i className="far fa-star"></i>
-
-                        </p>
-
-                        <p className='subs-pins-addtopic'>
-
-                            <i className="far fa-user"> </i>
-                            
-                            &nbsp;
-                                     
-                            {this.props.channel.users.length}
-
-                            &nbsp; | &nbsp;
+                                    <strong>#{this.props.channel.title}</strong>
                                     
-                            {this.props.channel.description}
-                        </p>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                    </div>
+                                    <i className="far fa-star"></i>
 
-                    <div className='channel-header-right'>
-                            
-                            <p><i className="far fa-question-circle"></i>
-                            
-                            &nbsp;Details</p>
+                            </p>
 
+                            <p className='subs-pins-addtopic'>
+
+                                <i className="far fa-user"> </i>
+                                
+                                &nbsp;
+                                        
+                                {this.props.channel.users.length}
+
+                                &nbsp; | &nbsp;
+                                        
+                                {this.props.channel.description}
+                            </p>
+
+                        </div>
+
+                        <div className='channel-header-right'>
+                                
+                                <p><i className="far fa-question-circle"></i>
+                                
+                                &nbsp;Details</p>
+
+                        </div>
+                        
                     </div>
                     
+                    <MessagesViewportContainer/>
                 </div>
-                
-                <MessagesViewportContainer/>
-            </div>
             )
+            } else {
+                return (
+                    <div className='channel-wrapper'>
+
+                        <div className='channel-header'>
+
+                            <div className='channel-header-left'>
+
+                                <p className='channel-title'>
+
+                                    <strong>greendot{this.props.channel.title}</strong>
+
+                                </p>
+
+                            </div>
+
+                            <div className='channel-header-right'>
+
+                                <p><i className="far fa-question-circle"></i>
+
+                                &nbsp;Details</p>
+
+                            </div>
+
+                        </div>
+
+                        <MessagesViewportContainer />
+                    </div>
+                )
+            }
         } else {
             return null
         }
