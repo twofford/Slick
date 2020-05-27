@@ -1,7 +1,7 @@
 .message-form-container {
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: flex;
+    // flex-basis: content;
+    justify-content: center;
 }
 
 // .message-form-inner-container {
@@ -14,8 +14,10 @@
 .message-form {
     position: fixed;
     bottom: 10px;
-    left: 280px;
-    width: 1620px;
+    // left: 280px;
+    // margin-left: auto;
+    // margin-right: auto;
+    width: 80%;
     border: 1px solid #989798;
     border-radius: 4px;
 }
@@ -25,7 +27,7 @@
     height: 35px;
     border: none;
     font-size: 14px;
-    width: 100%;
+    // width: 100%;
     background-color: transparent;
 }
 

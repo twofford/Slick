@@ -1310,24 +1310,18 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var placeholder = "Message #".concat(this.props.channel.title);
-      return (
-        /*#__PURE__*/
-        // <div className='message-form-container'>
-
-        /* <div className='message-form-inner-container'> */
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          id: "message-form",
-          className: "message-form",
-          onSubmit: this.handleSubmit
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "message-form-input",
-          placeholder: placeholder,
-          type: "text",
-          onChange: this.handleInput('body')
-        })) // </div>
-        // </div>
-
-      );
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "message-form-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        id: "message-form",
+        className: "message-form",
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "message-form-input",
+        placeholder: placeholder,
+        type: "text",
+        onChange: this.handleInput('body')
+      })));
     }
   }]);
 
