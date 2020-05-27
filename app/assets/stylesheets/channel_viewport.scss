@@ -25,7 +25,9 @@
 .channel-title {
     font-size: 14px;
     display: inline-flex;
+    flex-direction: row;
     align-items: center;
+    font-weight: bold;
 }
 
 .subs-pins-addtopic {
