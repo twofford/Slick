@@ -106,7 +106,7 @@ class Channel extends React.Component{
 
                                 <p className='channel-title'>
 
-                                    <i className="fas fa-circle">&nbsp;</i>{this.props.channel.title}
+                                    <i className="fas fa-circle green">&nbsp;&nbsp;</i>{this.props.channel.title}
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 

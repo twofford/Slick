@@ -7,6 +7,29 @@
     margin: 0;
 }
 
+.workspace-box {
+    color: #ffffff;
+    padding-left: 15px;
+    padding-top: 20px;
+    border-bottom: 1px solid rgb(82,38,83);
+    font-weight: 700;
+    height: 48.45px;
+}
+
+.workspace-box:hover {
+    background-color: #350D36
+}
+
+.fa-chevron-down {
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: normal;
+}
+
 .channels-header {
     display: inline-block;
 }

@@ -1,6 +1,7 @@
 .message-form-container {
     display: flex;
     justify-content: center;
+    flex-direction: row;
 }
 
 .message-form {
@@ -23,4 +24,8 @@
 
 .message-form-input:hover, .message-form-input:focus {
     outline: none;
+}
+
+.message-form-input::placeholder {
+    color: #989898;
 }

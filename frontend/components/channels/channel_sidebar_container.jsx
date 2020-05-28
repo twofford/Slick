@@ -15,7 +15,7 @@ import ChannelSidebar from './channel_sidebar';
 
 const msp = (state, ownProps) => {
     return {
-        currentUser: state.session.user.id,
+        currentUser: state.entities.users[state.session.user.id],
         channels: state.entities.channels,
         currentChannelId: ownProps.match.params.channelId
     }

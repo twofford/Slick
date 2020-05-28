@@ -66,8 +66,16 @@ class ChannelSidebar extends React.Component{
         this.channelsArray = Object.values(this.props.channels);
 
         return(
-
+            
             <div className='channels-wrapper'>
+
+                <div className="workspace-box">
+
+                    <p>Your Workspace&nbsp;&nbsp;<i className="fas fa-chevron-down"></i></p>
+                    
+                    <div className="user-name"><i className="fas fa-circle"/>&nbsp;{this.props.currentUser.email}</div>
+
+                </div>
 
                 <div className='channels-toogle'>
 
