@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+import {logout} from '../../actions/session_actions';
 
 import ChannelViewport from './channel_viewport';
 
@@ -9,4 +10,10 @@ const msp = state => {
     channels: state.entities.channels
 }}
 
-export default connect(msp,null)(ChannelViewport);
+const mdp = dispatch => {
+    return {
+        logout: () => dispatch(logout())
+    }
+}
+
+export default connect(msp,mdp)(ChannelViewport);

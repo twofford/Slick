@@ -10,10 +10,24 @@ class ChannelViewport extends React.Component{
 
     render(){
         return(
+            <>
+            <div className='search-bar'>
+
+                <div className='search-inner-div'>
+                    <i className="fas fa-search"></i>
+                    &nbsp;&nbsp;
+                    <a>Search Your Workspace</a>
+                </div>
+                    <p className="logout" onClick={this.props.logout}>
+                        <i className="fas fa-sign-out-alt"></i>
+                        &nbsp;Sign Out
+                    </p>
+            </div>
             <div className='channel-viewport'>
                 <ChannelSidebarContainer/>
                 <ChannelContainer/>
             </div>
+            </>
         )
     }
 }

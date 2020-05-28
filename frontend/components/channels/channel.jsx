@@ -85,9 +85,9 @@ class Channel extends React.Component{
 
                         <div className='channel-header-right'>
                                 
-                            <p><i className="fas fa-sign-out-alt"></i>
+                            {/* <p><i className="fas fa-sign-out-alt"></i>
                                 
-                                &nbsp;Sign Out</p>
+                                &nbsp;Sign Out</p> */}
 
                         </div>
                         
@@ -118,9 +118,9 @@ class Channel extends React.Component{
 
                             <div className='channel-header-right'>
 
-                                <p><i className="fas fa-sign-out-alt"></i>
+                                {/* <p><i className="fas fa-sign-out-alt"></i>
 
-                                &nbsp;Sign Out</p>
+                                &nbsp;Sign Out</p> */}
 
                             </div>
 
