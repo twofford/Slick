@@ -85,9 +85,9 @@ class Channel extends React.Component{
 
                         <div className='channel-header-right'>
                                 
-                                <p><i className="far fa-question-circle"></i>
+                            <p><i className="fas fa-sign-out-alt"></i>
                                 
-                                &nbsp;Details</p>
+                                &nbsp;Sign Out</p>
 
                         </div>
                         
@@ -104,7 +104,7 @@ class Channel extends React.Component{
 
                             <div className='channel-header-left'>
 
-                                <p className='channel-title'>
+                                <p className='dm-title'>
 
                                     <i className="fas fa-circle green">&nbsp;&nbsp;</i>{this.props.channel.title}
 
@@ -118,9 +118,9 @@ class Channel extends React.Component{
 
                             <div className='channel-header-right'>
 
-                                <p><i className="far fa-question-circle"></i>
+                                <p><i className="fas fa-sign-out-alt"></i>
 
-                                &nbsp;Details</p>
+                                &nbsp;Sign Out</p>
 
                             </div>
 

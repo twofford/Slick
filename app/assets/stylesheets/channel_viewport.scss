@@ -6,6 +6,7 @@
 
 .channel-header {
     width: 100%;
+    height: 69.44px;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
@@ -14,16 +15,30 @@
 }
 
 .channel-header-left {
-    margin: 20px 0px 10px 20px;
+    margin: 20px 20px 20px 20px;
 }
 
 .channel-header-right {
     margin-right: 20px;
-    color: gray;
+    padding: 10px 20px 10px 20px;
+    // color: gray;
 }
+
+// .channel-header-right:hover {
+//     background-color: green;
+// }
 
 .channel-title {
     font-size: 14px;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.dm-title {
+    font-size: 18px;
     display: inline-flex;
     flex-direction: row;
     align-items: center;

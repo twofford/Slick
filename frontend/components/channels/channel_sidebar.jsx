@@ -158,7 +158,7 @@ class ChannelSidebar extends React.Component{
 
             
 
-            <button className='logout-button' onClick={this.props.logout}>Log out</button>
+            
             </div>
 
     )
