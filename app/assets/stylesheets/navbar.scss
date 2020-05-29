@@ -27,9 +27,14 @@
     display: inline-block;
     padding-left: 15px;
     padding-right: 15px;
+    // font-size: 16px;
 }
 
-.navbar-li:hover {
+.navbar-icon {
+    font-size: 20px;
+}
+
+.navbar-li a:hover {
     text-decoration: underline;
     color: #4c9689;
 }

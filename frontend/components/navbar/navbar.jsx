@@ -21,11 +21,10 @@ const Navbar = ({currentUser, logout}) => {
             <div className='navbar-div'>
                 <ul className='navbar-ul'>
                     <li><img className="navbar-logo" src={slackLogo}></img></li>
-                    <li className='navbar-li navbar-hideable'>Why Slick?</li>
-                    <li className='navbar-li navbar-hideable'>Solutions</li>
-                    <li className='navbar-li navbar-hideable'>Resources</li>
-                    <li className='navbar-li navbar-hideable'>Enterprise</li>
-                    <li className='navbar-li navbar-hideable'>Pricing</li>
+                    <li className='navbar-li navbar-hideable navbar-icon'><a href="https://www.linkedin.com/in/taylor-wofford-931b3695/" target="_blank"><i class="fab fa-linkedin-in"/></a></li>
+                    <li className='navbar-li navbar-hideable navbar-icon'><a href="https://github.com/twofford" target="_blank"><i class="fab fa-github"></i></a></li>
+                    <li className='navbar-li navbar-hideable navbar-icon'><a href="https://angel.co/u/taylor-wofford" target="_blank"><i class="fab fa-angellist"></i></a></li>
+                    <li className='navbar-li navbar-hideable'><a href="https://twofford.github.io/" target="_blank">About me</a></li>
                
                 <ul className='navbar-button-ul navbar-hideable'>
                     <li className='navbar-form-li'><Link to='/login'>Sign in</Link></li>
