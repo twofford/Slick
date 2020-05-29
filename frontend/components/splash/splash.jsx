@@ -17,8 +17,8 @@ class Splash extends React.Component{
                     <p className='splash-1-left-p-1'>WORK FROM HOME</p>
                     <h1 className='splash-1-left-h1'>Slick brings the team together, wherever you are</h1>
                     <p className='splash-1-left-p-2'>With all of your communication and tools in one place, remote teams will stay productive no matter where you're working from.</p>
-                    <button className='splash-1-left-button-1'>LEARN MORE</button>
-                    <button className='splash-1-left-button-2'>CONTACT US</button>
+                        <button className='splash-1-left-button-1'><a href="https://twofford.github.io/" target="_blank">LEARN MORE</a></button>
+                        <button className='splash-1-left-button-2'><a href="https://twofford.github.io/" target="_blank">CONTACT US</a></button>
                 </div>
 
                 <img

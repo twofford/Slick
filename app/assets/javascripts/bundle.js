@@ -2246,9 +2246,15 @@ var Splash = /*#__PURE__*/function (_React$Component) {
         className: "splash-1-left-p-2"
       }, "With all of your communication and tools in one place, remote teams will stay productive no matter where you're working from."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "splash-1-left-button-1"
-      }, "LEARN MORE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "https://twofford.github.io/",
+        target: "_blank"
+      }, "LEARN MORE")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "splash-1-left-button-2"
-      }, "CONTACT US")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "https://twofford.github.io/",
+        target: "_blank"
+      }, "CONTACT US"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "splash-1-img",
         src: splash1
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

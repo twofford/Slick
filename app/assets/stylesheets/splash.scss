@@ -33,6 +33,7 @@
     margin-bottom: 2rem;
 }
 
+
 .splash-1-left-button-1 {
     font-weight: 700;
     background-color: #611f69;
@@ -43,6 +44,11 @@
     border-radius: 4px;
     cursor: pointer;
     transition: .3s;
+}
+
+.splash-1-left-button-1 a {
+    color: white;
+    text-decoration: none;
 }
 
 .splash-1-left-button-1:hover {
@@ -62,6 +68,10 @@
     border-radius: 4px;
     padding: 19px 40px 19px 40px;
     transition: box-shadow 420ms;
+}
+
+.splash-1-left-button-2 a {
+    text-decoration: none;
 }
 
 .splash-1-left-button-2:hover {
