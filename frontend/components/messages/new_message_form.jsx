@@ -30,14 +30,9 @@ export default class NewMessageForm extends React.Component{
     handleSubmit(event) {
 
         event.preventDefault();
-
-        //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
-
-        // App.cable.subscriptions.subscriptions[0].speak({message: this.state});
-        
+ 
         const message = Object.assign({}, this.state);
 
-        //this puts a message in frontend state and persists a message to the database
         this.props.createMessage(message).then((res) => {
             App.cable.subscriptions.subscriptions[0].speak({ message: res.message });
         });
