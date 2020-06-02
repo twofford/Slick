@@ -19,12 +19,11 @@ Slick is a lightweight clone of [Slack](https://www.slack.com), a popular chat a
 - Cookies keep users logged in even if they navigate away from the site
 
 ### Chat
-- Users can write and view messages in semi-real time via AJAX polling
+- Users can write and view messages in real time
 - Users only see messages for the channel they're currently in
 
 ## Future Improvements
 ### Signup/Login
-- Users should only be able to sign up with a valid email address
 - Users should be able to choose a display name in addition to their email
 - Users should be able to choose an avatar or be assigned one randomly
 ### Messages
@@ -32,7 +31,5 @@ Slick is a lightweight clone of [Slack](https://www.slack.com), a popular chat a
 - Users should be able to reply to specific messages
 ### Workspaces
 - Implement workspaces
-### Websockets
-- Integrate WebSockets
 
 For additional information, see the [design docs](https://github.com/twofford/Slick/wiki).
