@@ -19,7 +19,7 @@ export default class MessagesViewport extends React.Component{
 
         if (this.props.messages) {
             return (
-                <div>
+                <>
                 <ul className='messages-ul'>
 
                     {this.currentChannelMessages.map(message => {
@@ -30,10 +30,10 @@ export default class MessagesViewport extends React.Component{
                     })}
                 </ul>
                 <NewMessageFormContainer/>
-                </div>
+                </>
             )
         } else {
-            return <div>This is the messages viewport</div>;
+            return null;
         }
     }
 }

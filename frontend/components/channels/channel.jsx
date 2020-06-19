@@ -83,16 +83,13 @@ class Channel extends React.Component{
                         </div>
 
                         <div className='channel-header-right'>
-                                
-                            {/* <p><i className="fas fa-sign-out-alt"></i>
-                                
-                                &nbsp;Sign Out</p> */}
 
                         </div>
                         
                     </div>
                     
                     <MessagesViewportContainer/>
+
                 </div>
             )
             } else {
@@ -116,10 +113,6 @@ class Channel extends React.Component{
                             </div>
 
                             <div className='channel-header-right'>
-
-                                {/* <p><i className="fas fa-sign-out-alt"></i>
-
-                                &nbsp;Sign Out</p> */}
 
                             </div>
 
