@@ -39,7 +39,6 @@ class Channel extends React.Component{
         return (
             <div>
               <MessagesViewportContainer messages ={this.state}/>
-              <NewMessageFormContainer/>  
             </div>
         )
     }

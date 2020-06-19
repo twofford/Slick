@@ -482,7 +482,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         messages: this.state
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      }));
     }
   }, {
     key: "render",
@@ -1209,7 +1209,7 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
       });
 
       if (this.props.messages) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "messages-ul"
         }, this.currentChannelMessages.map(function (message) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_message_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -1340,11 +1340,8 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      event.preventDefault(); //this calls the speak function, passing in an object with key message and value this.state -- this.state is whatever the user entered into the text input
-      // App.cable.subscriptions.subscriptions[0].speak({message: this.state});
-
-      var message = Object.assign({}, this.state); //this puts a message in frontend state and persists a message to the database
-
+      event.preventDefault();
+      var message = Object.assign({}, this.state);
       this.props.createMessage(message).then(function (res) {
         App.cable.subscriptions.subscriptions[0].speak({
           message: res.message
