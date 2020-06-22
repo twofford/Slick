@@ -27,7 +27,7 @@ class ChannelSidebarItem extends React.Component{
                 )}
 
         } else {
-
+            
             if (this.props.currentChannelId == this.props.channel.id) {
                 return (
                     <li className='dm-li-current'>

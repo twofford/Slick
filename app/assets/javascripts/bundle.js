@@ -345,6 +345,37 @@ var logout = function logout() {
 
 /***/ }),
 
+/***/ "./frontend/actions/user_actions.js":
+/*!******************************************!*\
+  !*** ./frontend/actions/user_actions.js ***!
+  \******************************************/
+/*! exports provided: RECEIVE_USERS, receiveUsers, fetchUsers */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USERS", function() { return RECEIVE_USERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUsers", function() { return receiveUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsers", function() { return fetchUsers; });
+/* harmony import */ var _util_user_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/user_util */ "./frontend/util/user_util.js");
+
+var RECEIVE_USERS = 'RECEIVE_USERS';
+var receiveUsers = function receiveUsers(users) {
+  return {
+    type: RECEIVE_USERS,
+    users: users
+  };
+};
+var fetchUsers = function fetchUsers() {
+  return function (dispatch) {
+    return Object(_util_user_util__WEBPACK_IMPORTED_MODULE_0__["getUsers"])().then(function (users) {
+      return dispatch(receiveUsers(users));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/components/app.jsx":
 /*!*************************************!*\
   !*** ./frontend/components/app.jsx ***!
@@ -2398,12 +2429,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _util_session_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util/session_util */ "./frontend/util/session_util.js");
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/channel_actions */ "./frontend/actions/channel_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _util_user_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./util/user_util */ "./frontend/util/user_util.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
  //TEST
+
+
 
 
 
@@ -2448,8 +2483,10 @@ document.addEventListener('DOMContentLoaded', function () {
   window.createChannel = _actions_channel_actions__WEBPACK_IMPORTED_MODULE_6__["createChannel"];
   window.updateChannel = _actions_channel_actions__WEBPACK_IMPORTED_MODULE_6__["updateChannel"];
   window.deleteChannel = _actions_channel_actions__WEBPACK_IMPORTED_MODULE_6__["deleteChannel"]; //
-  //MESSAGE TEST
+  //USERS TEST
 
+  window.getUsers = _util_user_util__WEBPACK_IMPORTED_MODULE_8__["getUsers"];
+  window.fetchUsers = _actions_user_actions__WEBPACK_IMPORTED_MODULE_7__["fetchUsers"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_2__["default"], {
     store: store
   }), root);
@@ -2772,16 +2809,22 @@ var userErrorsReducer = function userErrorsReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
 var usersReducer = function usersReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  debugger;
   Object.freeze(defaultState);
 
   switch (action.type) {
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_USERS"]:
+      return action.users;
+
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));
 
@@ -3021,6 +3064,24 @@ var deleteSession = function deleteSession() {
   return $.ajax({
     url: '/api/session/',
     method: 'DELETE'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/user_util.js":
+/*!************************************!*\
+  !*** ./frontend/util/user_util.js ***!
+  \************************************/
+/*! exports provided: getUsers */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return getUsers; });
+var getUsers = function getUsers() {
+  return $.ajax({
+    url: '/api/users'
   });
 };
 

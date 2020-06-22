@@ -8,6 +8,8 @@ import configureStore from './store/store';
 import {receiveCurrentUser, logoutCurrentUser, createNewUser, login, logout} from './actions/session_actions';
 import {postUser, postSession, deleteSession} from './util/session_util';
 import * as ChannelActions from './actions/channel_actions';
+import {fetchUsers} from './actions/user_actions';
+import {getUsers} from './util/user_util';
 //TEST
 
 
@@ -52,7 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.deleteChannel = ChannelActions.deleteChannel
     //
 
-    //MESSAGE TEST
+    //USERS TEST
+    window.getUsers = getUsers;
+    window.fetchUsers = fetchUsers;
 
     ReactDOM.render(<Root store={store}/>, root);
 

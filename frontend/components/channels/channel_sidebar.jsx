@@ -131,33 +131,6 @@ class ChannelSidebar extends React.Component{
                     </ul>
 
                 </div>
-
-            {/* <form>
-                <label>Title:
-                <input
-                    type="text"
-                    onChange={this.handleInput('title')}
-                />
-                </label>
-
-                <label>Channel type:
-                <input
-                    type="text"
-                    onChange={this.handleInput('channel_type')}
-                />
-
-                <button
-                    onClick={this.handleSubmit}>
-                        Submit
-                </button>
-                </label>
-
-                <button className='logout-button' onClick={this.props.logout}>Log out</button>
-
-            </form> */}
-
-            
-
             
             </div>
 
