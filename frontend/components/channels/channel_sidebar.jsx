@@ -16,6 +16,7 @@ class ChannelSidebar extends React.Component{
 
     componentDidMount(){
         this.props.fetchChannels();
+        this.props.fetchUsers();
     };
 
     handleInput(type) {

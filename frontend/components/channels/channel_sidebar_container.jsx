@@ -8,6 +8,7 @@ import {
     deleteChannel
 
 } from '../../actions/channel_actions';
+import {fetchUsers} from '../../actions/user_actions';
 
 import { openModal } from '../../actions/modal_actions';
 
@@ -36,6 +37,8 @@ const mdp = dispatch => {
         logout: () => dispatch(logout()),
 
         openModal: modal => dispatch(openModal(modal)),
+
+        fetchUsers: () => dispatch(fetchUsers())
     }
 }
 

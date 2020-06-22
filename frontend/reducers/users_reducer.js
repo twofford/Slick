@@ -3,8 +3,6 @@ import {RECEIVE_USERS} from '../actions/user_actions';
 
 const usersReducer = (defaultState = {}, action) => {
 
-    debugger
-
     Object.freeze(defaultState);
 
     switch (action.type) {
