@@ -2,9 +2,10 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
-    // position: fixed;
-    bottom: 1%;
+    position: relative;
+    top: 80%;
     width: 100%;
+    background: white;
 }
 
 .message-form {
