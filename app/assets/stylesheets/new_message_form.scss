@@ -2,24 +2,25 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
+    // position: fixed;
+    bottom: 1%;
+    width: 100%;
 }
 
 .message-form {
-    position: fixed;
-    bottom: 10px;
-    width: 85%;
+    width: 95%;
     border: 1px solid #989798;
     border-radius: 4px;
     background: white;
 }
 
 .message-form-input {
-    padding-left: 20px;
+    // padding-left: 20px;
     height: 35px;
     border: none;
     font-size: 14px;
     background-color: transparent;
-    width: 100%;
+    // width: 100%;
 }
 
 .message-form-input:hover, .message-form-input:focus {

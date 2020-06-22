@@ -29,7 +29,7 @@ export default class MessagesViewport extends React.Component{
                         )
                     })}
                 </ul>
-                <NewMessageFormContainer/>
+                {/* <NewMessageFormContainer/> */}
                 </>
             )
         } else {

@@ -476,14 +476,14 @@ var Channel = /*#__PURE__*/function (_React$Component) {
           return this.perform('hear');
         }
       });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        messages: this.state
-      }));
-    }
+    } // render(){
+    //     return (
+    //         <div>
+    //           <MessagesViewportContainer messages ={this.state}/>
+    //         </div>
+    //     )
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -505,7 +505,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
             className: "far fa-user"
           }, " "), "\xA0", this.props.channel.users.length, "\xA0 | \xA0", this.props.channel.description)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-header-right"
-          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
         } else {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-wrapper"
@@ -521,7 +521,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
             className: "far fa-star"
           }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-header-right"
-          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
         }
       } else {
         return null;
@@ -1216,7 +1216,7 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
             key: message.id,
             message: message
           });
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+        })));
       } else {
         return null;
       }

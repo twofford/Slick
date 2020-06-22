@@ -35,13 +35,13 @@ class Channel extends React.Component{
         );
     }
 
-    render(){
-        return (
-            <div>
-              <MessagesViewportContainer messages ={this.state}/>
-            </div>
-        )
-    }
+    // render(){
+    //     return (
+    //         <div>
+    //           <MessagesViewportContainer messages ={this.state}/>
+    //         </div>
+    //     )
+    // }
 
 
     render(){
@@ -89,7 +89,7 @@ class Channel extends React.Component{
                     </div>
                     
                     <MessagesViewportContainer/>
-
+                    <NewMessageFormContainer/>
                 </div>
             )
             } else {
@@ -119,6 +119,7 @@ class Channel extends React.Component{
                         </div>
 
                         <MessagesViewportContainer />
+                        <NewMessageFormContainer />
                     </div>
                 )
             }
