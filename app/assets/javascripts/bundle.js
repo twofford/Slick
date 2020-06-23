@@ -1607,7 +1607,8 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       title: '',
       description: '',
-      channel_type: 'public'
+      channel_type: 'public',
+      users: ['bigbossfan@shadowmoses.gov', 'tnook@islandmail.com']
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.allowSubmit = _this.allowSubmit.bind(_assertThisInitialized(_this));

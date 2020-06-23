@@ -13,7 +13,9 @@ class Api::ChannelsController < ApplicationController
             @channel.users << User.all
             render 'api/channels/show'
         elsif @channel.save && @channel.channel_type == 'private'
-            @channel.users << User.all #fix this so not all users gets added to private channels
+            params[:channel][:users].each do |user|
+                @channel.users << User.find_by(email: user)
+            end
             render 'api/channels/show'
         else
             render json: {errors: @channel.errors.full_messages, status: 422}
@@ -39,7 +41,7 @@ class Api::ChannelsController < ApplicationController
     end
 
     def channel_params
-        params.require(:channel).permit(:title, :channel_type, :description, :topic, :user_id)
+        params.require(:channel).permit(:title, :channel_type, :description, :topic, :user_id, :users)
     end
 
 end

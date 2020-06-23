@@ -7,7 +7,8 @@ class NewChannelForm extends React.Component {
         this.state = {
             title: '',
             description: '',
-            channel_type: 'public'
+            channel_type: 'public',
+            users: ['bigbossfan@shadowmoses.gov', 'tnook@islandmail.com']
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);

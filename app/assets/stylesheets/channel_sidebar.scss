@@ -1,10 +1,21 @@
 .channels-wrapper {
     position: sticky;
+    overflow-y: auto;
     left: 0px;
     top: 0px;
     background-color: #3F0D40;
     height: 100%;
     margin: 0;
+}
+
+.channels-wrapper::-webkit-scrollbar {
+    background: #3F0D40;
+    width: 12px;
+}
+
+.channels-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(207, 195, 207, 0.5);
+    border-radius: 10px;
 }
 
 .workspace-box {
