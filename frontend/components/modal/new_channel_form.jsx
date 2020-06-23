@@ -8,10 +8,12 @@ class NewChannelForm extends React.Component {
             title: '',
             description: '',
             channel_type: 'public',
-            users: ['bigbossfan@shadowmoses.gov', 'tnook@islandmail.com']
+            users: []
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.handleUserInput = this.handleUserInput.bind(this);
 
         this.allowSubmit = this.allowSubmit.bind(this);
 
@@ -24,6 +26,12 @@ class NewChannelForm extends React.Component {
             this.setState({ [type]: event.target.value });
         };
     };
+
+    handleUserInput() {
+        return (event) => {
+            this.state.users.push(event.target.value);
+        }
+    }
     
     allowSubmit() {
         this.style = { backgroundColor: '#137959', color: 'white', transition: '0.1s', pointerEvents: 'auto', cursor: 'pointer'}
@@ -71,7 +79,6 @@ class NewChannelForm extends React.Component {
                         <span id="description-span">What's this channel about?</span>
                         
                     </div>
-
 
                     <div id="modal-footer">
                         

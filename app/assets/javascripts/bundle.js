@@ -780,7 +780,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         onClick: this.toggleDms
       }, "Direct messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: function onClick() {
-          return _this3.props.openModal("addChannel");
+          return _this3.props.openModal("addDM");
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-plus dm-fa-plus"
@@ -1464,6 +1464,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _new_channel_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./new_channel_container */ "./frontend/components/modal/new_channel_container.jsx");
+/* harmony import */ var _new_dm_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./new_dm_container */ "./frontend/components/modal/new_dm_container.jsx");
+
 
 
 
@@ -1482,6 +1484,10 @@ function Modal(_ref) {
   switch (modal) {
     case "addChannel":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_channel_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+      break;
+
+    case "addDM":
+      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_dm_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
       break;
 
     default:
@@ -1608,9 +1614,10 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       title: '',
       description: '',
       channel_type: 'public',
-      users: ['bigbossfan@shadowmoses.gov', 'tnook@islandmail.com']
+      users: []
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleUserInput = _this.handleUserInput.bind(_assertThisInitialized(_this));
     _this.allowSubmit = _this.allowSubmit.bind(_assertThisInitialized(_this));
     _this.togglePrivate = _this.togglePrivate.bind(_assertThisInitialized(_this));
     return _this;
@@ -1623,6 +1630,15 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
 
       return function (event) {
         _this2.setState(_defineProperty({}, type, event.target.value));
+      };
+    }
+  }, {
+    key: "handleUserInput",
+    value: function handleUserInput() {
+      var _this3 = this;
+
+      return function (event) {
+        _this3.state.users.push(event.target.value);
       };
     }
   }, {
@@ -1656,7 +1672,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
@@ -1665,7 +1681,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       }, "Create a channel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
-          return _this3.props.closeModal();
+          return _this4.props.closeModal();
         }
       }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-body"
@@ -1705,6 +1721,126 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (NewChannelForm);
+
+/***/ }),
+
+/***/ "./frontend/components/modal/new_dm_container.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/modal/new_dm_container.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _new_dm_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new_dm_form */ "./frontend/components/modal/new_dm_form.jsx");
+/* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
+
+
+
+
+var msp = function msp(state) {
+  return {
+    channels: state.entities.channels
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    createChannel: function createChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["default"])(channel));
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["default"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_new_dm_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/modal/new_dm_form.jsx":
+/*!***************************************************!*\
+  !*** ./frontend/components/modal/new_dm_form.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var NewDMForm = /*#__PURE__*/function (_React$Component) {
+  _inherits(NewDMForm, _React$Component);
+
+  var _super = _createSuper(NewDMForm);
+
+  function NewDMForm(props) {
+    var _this;
+
+    _classCallCheck(this, NewDMForm);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      title: '',
+      description: '',
+      channel_type: 'private',
+      users: []
+    }; //bindings go here
+
+    return _this;
+  }
+
+  _createClass(NewDMForm, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "modal-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        id: "new-channel-form-h1"
+      }, "Create a channel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "modal-closer",
+        onClick: function onClick() {
+          return _this2.props.closeModal();
+        }
+      }, "\xD7")));
+    }
+  }]);
+
+  return NewDMForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (NewDMForm);
 
 /***/ }),
 

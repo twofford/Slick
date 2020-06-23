@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { closeModal } from '../../actions/modal_actions';
 import NewChannelContainer from './new_channel_container';
+import NewDMContainer from './new_dm_container';
 
 function Modal({ modal, closeModal }) {
 
@@ -13,7 +14,10 @@ function Modal({ modal, closeModal }) {
 
     switch (modal) {
         case "addChannel":
-            component = <NewChannelContainer />;
+            component = <NewChannelContainer/>;
+            break;
+        case "addDM":
+            component = <NewDMContainer/>
             break;
         default:
             return null;

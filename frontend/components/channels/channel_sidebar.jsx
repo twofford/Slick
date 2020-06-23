@@ -113,7 +113,7 @@ class ChannelSidebar extends React.Component{
 
                         <button className='dms-toggle-button' onClick={this.toggleDms}>Direct messages</button>
 
-                        <a onClick={() => this.props.openModal("addChannel")}><i className="fas fa-plus dm-fa-plus"></i></a>
+                        <a onClick={() => this.props.openModal("addDM")}><i className="fas fa-plus dm-fa-plus"></i></a>
                     
                     </div>
 
