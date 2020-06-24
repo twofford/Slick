@@ -1,6 +1,5 @@
 import React from 'react';
 import MessageItem from './message_item'
-import NewMessageFormContainer from './new_message_form_container';
 
 export default class MessagesViewport extends React.Component{
     constructor(props){
@@ -29,7 +28,6 @@ export default class MessagesViewport extends React.Component{
                         )
                     })}
                 </ul>
-                {/* <NewMessageFormContainer/> */}
                 </>
             )
         } else {

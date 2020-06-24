@@ -1192,7 +1192,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _message_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./message_item */ "./frontend/components/messages/message_item.jsx");
-/* harmony import */ var _new_message_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new_message_form_container */ "./frontend/components/messages/new_message_form_container.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1214,7 +1213,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -1737,6 +1735,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _new_dm_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new_dm_form */ "./frontend/components/modal/new_dm_form.jsx");
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+
 
 
 
@@ -1744,17 +1744,21 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(state) {
   return {
-    channels: state.entities.channels
+    channels: state.entities.channels,
+    users: state.entities.users
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
     createChannel: function createChannel(channel) {
-      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["default"])(channel));
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["createChannel"])(channel));
+    },
+    fetchUsers: function fetchUsers() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUsers"])());
     },
     closeModal: function closeModal() {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["default"])());
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     }
   };
 };
@@ -1814,26 +1818,78 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       description: '',
       channel_type: 'private',
       users: []
-    }; //bindings go here
-
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.formatTitle = _this.formatTitle.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(NewDMForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchUsers();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      console.log(this.state.users);
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      this.state.title = this.formatTitle(this.state.users);
+      var channel = Object.assign({}, this.state);
+      this.props.createChannel(channel); // debugger
+    }
+  }, {
+    key: "formatTitle",
+    value: function formatTitle(users) {
+      if (users.length > 0) {
+        return users.join(", ");
+      } else return users[0];
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
+      this.usersArray = Object.values(this.props.users);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         id: "new-channel-form-h1"
-      }, "Create a channel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Direct Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
           return _this2.props.closeModal();
         }
-      }, "\xD7")));
+      }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "These users are in the DM", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "users-in-dm-ul",
+        onClick: function onClick(e) {// const usersNotInDMUl = document.getElementById("users-not-in-dm-ul");
+          // const target = e.target;
+          // target.parentNode.removeChild(target);
+          // usersNotInDMUl.appendChild(target);
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "These users are not in the DM", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "users-not-in-dm-ul",
+        onClick: function onClick(e) {
+          var usersInDMUl = document.getElementById("users-in-dm-ul");
+          var target = e.target;
+          target.parentNode.removeChild(target);
+          usersInDMUl.appendChild(target);
+        }
+      }, this.usersArray.map(function (user) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          onClick: function onClick() {
+            if (!_this2.state.users.includes(user.email)) {
+              _this2.state.users.push(user.email);
+            }
+          }
+        }, user.email);
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleSubmit
+      }, "Submit"));
     }
   }]);
 
@@ -1893,21 +1949,21 @@ var Navbar = function Navbar(_ref) {
       href: "https://www.linkedin.com/in/taylor-wofford-931b3695/",
       target: "_blank"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      "class": "fab fa-linkedin-in"
+      className: "fab fa-linkedin-in"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "navbar-li navbar-hideable navbar-icon"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "https://github.com/twofford",
       target: "_blank"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      "class": "fab fa-github"
+      className: "fab fa-github"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "navbar-li navbar-hideable navbar-icon"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: "https://angel.co/u/taylor-wofford",
       target: "_blank"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      "class": "fab fa-angellist"
+      className: "fab fa-angellist"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "navbar-li navbar-hideable"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
