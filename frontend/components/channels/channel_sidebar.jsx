@@ -122,7 +122,19 @@ class ChannelSidebar extends React.Component{
 
                         {this.channelsArray.map(channel => {
 
-                            if (channel.channel_type === 'private') {
+                            let users = channel.users;
+
+                            console.log(users);
+
+                            let userIds = [];
+
+                            users.forEach(user => userIds.push(user.id));
+
+                            const currentUserIsMember = userIds.includes(this.props.currentUser.id);
+
+                            console.log(currentUserIsMember);
+                            
+                            if (channel.channel_type === 'private' && currentUserIsMember) {
                                 return <ChannelSidebarItem
                                 key={channel.id}
                                 channel={channel} currentChannelId={this.props.currentChannelId} />

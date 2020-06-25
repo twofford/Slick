@@ -22,6 +22,7 @@ class NewDMForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         this.state.title = this.formatTitle(this.state.users);
+        this.state.users = [...new Set(this.state.users)];
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel);
         this.props.closeModal();
