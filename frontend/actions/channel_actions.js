@@ -9,6 +9,7 @@ import * as ChannelApiUtil from '../util/channel_util';
 export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS';
 export const RECEIVE_CHANNEL = 'RECEIVE_CHANNEL';
 export const REMOVE_CHANNEL = 'REMOVE_CHANNEL';
+export const RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 
 //
 
@@ -22,6 +23,7 @@ export const receiveChannels = (channels) => {
 }
 
 export const receiveChannel = (channel) => {
+    // debugger
     return {
         type: RECEIVE_CHANNEL,
         channel
@@ -35,6 +37,14 @@ export const removeChannel = (channel) => {
     }
 }
 
+export const receiveErrors = (errors) => {
+    // debugger
+    return {
+        type: RECEIVE_ERRORS,
+        errors
+    }
+}
+
 //THUNK ACTION CREATORS//
 
 export const fetchChannels = () => dispatch => (
@@ -45,7 +55,11 @@ export const fetchChannel = (channelId) => dispatch => (
     dispatch(receiveChannel(channel))
 )));
 
-export const createChannel = (channel) => dispatch => ChannelApiUtil.postChannel(channel).then(channel => dispatch(receiveChannel(channel)), errors => dispatch(receiveErrors(errors.responseJSON)));
+export const createChannel = (channel) => dispatch => {
+
+return (ChannelApiUtil.postChannel(channel).then(channel => dispatch(receiveChannel(channel)), errors => {
+    // debugger
+    return(dispatch(receiveErrors(errors)))}))};
 
 export const updateChannel = (channel) => dispatch => (
     ChannelApiUtil.patchChannel(channel).then(channel => (

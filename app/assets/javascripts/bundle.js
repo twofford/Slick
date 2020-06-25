@@ -90,7 +90,7 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/channel_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CHANNELS, RECEIVE_CHANNEL, REMOVE_CHANNEL, receiveChannels, receiveChannel, removeChannel, fetchChannels, fetchChannel, createChannel, updateChannel, deleteChannel */
+/*! exports provided: RECEIVE_CHANNELS, RECEIVE_CHANNEL, REMOVE_CHANNEL, RECEIVE_ERRORS, receiveChannels, receiveChannel, removeChannel, receiveErrors, fetchChannels, fetchChannel, createChannel, updateChannel, deleteChannel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,9 +98,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CHANNELS", function() { return RECEIVE_CHANNELS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CHANNEL", function() { return RECEIVE_CHANNEL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_CHANNEL", function() { return REMOVE_CHANNEL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ERRORS", function() { return RECEIVE_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveChannels", function() { return receiveChannels; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveChannel", function() { return receiveChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeChannel", function() { return removeChannel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchChannels", function() { return fetchChannels; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchChannel", function() { return fetchChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createChannel", function() { return createChannel; });
@@ -113,7 +115,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_CHANNELS = 'RECEIVE_CHANNELS';
 var RECEIVE_CHANNEL = 'RECEIVE_CHANNEL';
-var REMOVE_CHANNEL = 'REMOVE_CHANNEL'; //
+var REMOVE_CHANNEL = 'REMOVE_CHANNEL';
+var RECEIVE_ERRORS = 'RECEIVE_ERRORS'; //
 //REGULAR ACTION CREATORS//
 
 var receiveChannels = function receiveChannels(channels) {
@@ -123,6 +126,7 @@ var receiveChannels = function receiveChannels(channels) {
   };
 };
 var receiveChannel = function receiveChannel(channel) {
+  // debugger
   return {
     type: RECEIVE_CHANNEL,
     channel: channel
@@ -132,6 +136,13 @@ var removeChannel = function removeChannel(channel) {
   return {
     type: REMOVE_CHANNEL,
     channel: channel
+  };
+};
+var receiveErrors = function receiveErrors(errors) {
+  // debugger
+  return {
+    type: RECEIVE_ERRORS,
+    errors: errors
   };
 }; //THUNK ACTION CREATORS//
 
@@ -154,7 +165,8 @@ var createChannel = function createChannel(channel) {
     return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["postChannel"](channel).then(function (channel) {
       return dispatch(receiveChannel(channel));
     }, function (errors) {
-      return dispatch(receiveErrors(errors.responseJSON));
+      // debugger
+      return dispatch(receiveErrors(errors));
     });
   };
 };
@@ -789,13 +801,11 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         className: "dms-ul"
       }, this.channelsArray.map(function (channel) {
         var users = channel.users;
-        console.log(users);
         var userIds = [];
         users.forEach(function (user) {
           return userIds.push(user.id);
         });
         var currentUserIsMember = userIds.includes(_this3.props.currentUser.id);
-        console.log(currentUserIsMember);
 
         if (channel.channel_type === 'private' && currentUserIsMember) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -2715,6 +2725,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ "./frontend/reducers/channel_errors_reducer.js":
+/*!*****************************************************!*\
+  !*** ./frontend/reducers/channel_errors_reducer.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/channel_actions */ "./frontend/actions/channel_actions.js");
+
+
+var channelErrorsReducer = function channelErrorsReducer() {
+  var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(defaultState);
+
+  switch (action.type) {
+    case _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ERRORS"]:
+      return action.errors;
+
+    default:
+      return defaultState;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (channelErrorsReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/channels_reducer.js":
 /*!***********************************************!*\
   !*** ./frontend/reducers/channels_reducer.js ***!
@@ -2793,12 +2833,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_errors_reducer */ "./frontend/reducers/session_errors_reducer.js");
 /* harmony import */ var _user_errors_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user_errors_reducer */ "./frontend/reducers/user_errors_reducer.js");
+/* harmony import */ var _channel_errors_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./channel_errors_reducer */ "./frontend/reducers/channel_errors_reducer.js");
+
 
 
 
 var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  user: _user_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  user: _user_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  channel: _channel_errors_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (errorsReducer);
 
@@ -2947,6 +2990,7 @@ var _nullSession = {
 var sessionReducer = function sessionReducer() {
   var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _nullSession;
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  // debugger
   Object.freeze(defaultState);
 
   switch (action.type) {
