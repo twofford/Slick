@@ -1745,7 +1745,8 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(state) {
   return {
     channels: state.entities.channels,
-    users: state.entities.users
+    users: state.entities.users,
+    currentUser: state.session.user.id
   };
 };
 
@@ -1830,17 +1831,13 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       this.props.fetchUsers();
     }
   }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      console.log(this.state.users);
-    }
-  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
       this.state.title = this.formatTitle(this.state.users);
       var channel = Object.assign({}, this.state);
-      this.props.createChannel(channel); // debugger
+      this.props.createChannel(channel);
+      this.props.closeModal();
     }
   }, {
     key: "formatTitle",
@@ -1855,6 +1852,9 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       this.usersArray = Object.values(this.props.users);
+      this.usersArray = this.usersArray.filter(function (user) {
+        return _this2.props.currentUser !== user.id;
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {

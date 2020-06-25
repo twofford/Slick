@@ -15,6 +15,7 @@ class Api::ChannelsController < ApplicationController
         elsif @channel.save && @channel.channel_type === 'private'
             params[:channel][:users].each do |user|
                 @channel.users << User.find_by(email: user)
+                @channel.users << current_user
             end
             render 'api/channels/show'
         else

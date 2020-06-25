@@ -19,16 +19,12 @@ class NewDMForm extends React.Component {
         this.props.fetchUsers();
     }
 
-    componentWillUnmount() {
-        console.log(this.state.users);
-    }
-
     handleSubmit(event) {
         event.preventDefault();
         this.state.title = this.formatTitle(this.state.users);
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel);
-        // debugger
+        this.props.closeModal();
     }
 
     formatTitle(users) {
@@ -38,7 +34,10 @@ class NewDMForm extends React.Component {
     }
 
     render() {
+        
         this.usersArray = Object.values(this.props.users);
+
+        this.usersArray = this.usersArray.filter(user => this.props.currentUser !== user.id);
 
         return(
             <div>

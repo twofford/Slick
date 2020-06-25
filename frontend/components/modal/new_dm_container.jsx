@@ -7,7 +7,8 @@ import { fetchUsers } from '../../actions/user_actions';
 const msp = state => {
     return {
         channels: state.entities.channels,
-        users: state.entities.users
+        users: state.entities.users,
+        currentUser: state.session.user.id
     }
 }
 
