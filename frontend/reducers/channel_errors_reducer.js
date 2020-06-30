@@ -1,11 +1,11 @@
-import { RECEIVE_ERRORS } from '../actions/channel_actions';
+import { RECEIVE_CHANNEL_ERRORS } from '../actions/channel_actions';
 
 const channelErrorsReducer = (defaultState = [], action) => {
 
     Object.freeze(defaultState);
 
     switch (action.type) {
-        case RECEIVE_ERRORS:
+        case RECEIVE_CHANNEL_ERRORS:
             return action.errors;
         default:
             return defaultState;

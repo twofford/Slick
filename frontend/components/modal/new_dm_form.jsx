@@ -25,6 +25,7 @@ class NewDMForm extends React.Component {
         this.state.users = [...new Set(this.state.users)];
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel);
+        this.renderErrors();
         this.props.closeModal();
     }
 
@@ -32,6 +33,20 @@ class NewDMForm extends React.Component {
         if (users.length > 0) {
             return users.join(", ");
         } else return users[0];
+    }
+
+    renderErrors() {
+        return (
+            <>
+                <ul className='errors-ul'>
+                    {this.props.errors.map((error, i) => (
+                        <li className='error' key={`error-${i}`}>
+                            {error}
+                        </li>
+                    ))}
+                </ul>
+            </>
+        );
     }
 
     render() {
@@ -76,6 +91,7 @@ class NewDMForm extends React.Component {
                     )}
                 </ul>
                 </div>
+                
                 <button onClick={this.handleSubmit}>Submit</button>
             </div>
         )

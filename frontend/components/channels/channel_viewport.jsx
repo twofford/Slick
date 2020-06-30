@@ -11,6 +11,7 @@ class ChannelViewport extends React.Component{
     render(){
         return(
             <>
+            <div id='logged-in-container'>
             <div className='search-bar'>
 
                 <div className='search-inner-div'>
@@ -26,6 +27,7 @@ class ChannelViewport extends React.Component{
             <div className='channel-viewport'>
                 <ChannelSidebarContainer/>
                 <ChannelContainer/>
+            </div>
             </div>
             </>
         )
