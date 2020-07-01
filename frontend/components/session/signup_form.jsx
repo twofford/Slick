@@ -28,7 +28,7 @@ class SignupForm extends React.Component{
     handleDemoLogin(event) {
 
         event.preventDefault();
-        const user = Object.assign({}, {email: 'demo_user@gmail.com', password: 'starwars'});
+        const user = Object.assign({}, {email: 'DemoDude', password: 'starwars'});
         this.props.login(user);
 
     };

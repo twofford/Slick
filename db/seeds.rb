@@ -13,35 +13,70 @@ Message.delete_all
 UserMessage.delete_all
 
 u1 = User.create!(
-    email: 'bigbossfan@shadowmoses.gov',
+    email: 'Solid Snake',
     password: 'password',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
 u1 = User.create!(
-    email: 'tnook@islandmail.com',
+    email: 'Tom Nook',
     password: 'password',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
 u3 = User.create!(
-    email: 'i<3princesszelda@hyruleisp.com',
+    email: 'Link',
     password: '12345678',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
 u4 = User.create!(
-    email: 'wario_rulez@mushroomkingdom.org',
+    email: 'Waluigi',
     password: '12345678',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
 u5 = User.create!(
-    email: 'demo_user@gmail.com',
+    email: 'DemoDude',
+    password: 'starwars',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+u6 = User.create!(
+    email: 'Taylor',
+    password: 'starwars',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+u7 = User.create!(
+    email: 'Elise',
+    password: 'starwars',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+u8 = User.create!(
+    email: 'Captain Ron',
+    password: 'starwars',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+u9 = User.create!(
+    email: 'Trudy',
+    password: 'starwars',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+u10 = User.create!(
+    email: 'Bill',
     password: 'starwars',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
@@ -53,7 +88,7 @@ c1 = Channel.create!(
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Just chattin\' about whatever'
-    )
+)
         
 c2 = Channel.create!(
     title: 'HorsePlay',
@@ -61,49 +96,55 @@ c2 = Channel.create!(
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Horses and the amusement to be gained thereby'
-        )
+)
 
 c3 = Channel.create!(
-    title: 'Jared',
-    channel_type: 'private',
+    title: 'Gamin\'',
+    channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
+    description: 'Bideo games'
 )
 
 
 c4 = Channel.create!(
-    title: 'Solomon',
-    channel_type: 'private',
+    title: 'Star Wars',
+    channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
+    description: 'We talk about Star Wars here.'
 )
 
 c5 = Channel.create!(
-    title: 'Ben',
-    channel_type: 'private',
+    title: 'Star Trek',
+    channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
+    description: 'We talk about Star Trek here.'
 )
 
 c6 = Channel.create!(
-    title: 'Elise',
-    channel_type: 'private',
+    title: 'TV',
+    channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
+    description: 'The revolution will be televised.'
 )
 
 c7 = Channel.create!(
-    title: 'Trudy',
-    channel_type: 'private',
+    title: 'Movies',
+    channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
+    description: 'We talk about movies here.'
 )
 
 c8 = Channel.create!(
-    title: 'Captain Ron',
-    channel_type: 'private',
+    title: 'Books',
+    channel_type: 'public',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
+    description: 'We talk about books here.'
 )
 
 cm1 = ChannelMembership.create!(
@@ -121,14 +162,14 @@ cm2 = ChannelMembership.create!(
 )
 
 cm3 = ChannelMembership.create!(
-    user_id: User.first.id,
+    user_id: User.third.id,
     channel_id: Channel.second.id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
 cm4 = ChannelMembership.create!(
-    user_id: User.second.id,
+    user_id: User.fourth.id,
     channel_id: Channel.second.id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
@@ -150,16 +191,18 @@ m2 = Message.create!(
     updated_at: '1/1/2020'
 )
 
-um1 = UserMessage.create!(
-    user_id: User.first.id,
-    message_id: Message.first.id,
+m3 = Message.create!(
+    user_id: User.third.id,
+    channel_id: Channel.second.id,
+    body: 'I like horses.',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
-um2 = UserMessage.create!(
-    user_id: User.second.id,
-    message_id: Message.second.id,
+m4 = Message.create!(
+    user_id: User.fourth.id,
+    channel_id: Channel.second.id,
+    body: 'I also like horses!',
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )

@@ -25,7 +25,8 @@ class NewDMForm extends React.Component {
         this.state.users = [...new Set(this.state.users)];
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel);
-        this.renderErrors();
+        if (this.props.errors) {
+            this.renderErrors()};
         this.props.closeModal();
     }
 
@@ -36,6 +37,7 @@ class NewDMForm extends React.Component {
     }
 
     renderErrors() {
+        
         return (
             <>
                 <ul className='errors-ul'>

@@ -1870,7 +1870,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       this.state.users = _toConsumableArray(new Set(this.state.users));
       var channel = Object.assign({}, this.state);
       this.props.createChannel(channel);
-      this.renderErrors();
+
+      if (this.props.errors) {
+        this.renderErrors();
+      }
+
+      ;
       this.props.closeModal();
     }
   }, {
@@ -2392,7 +2397,7 @@ var SignupForm = /*#__PURE__*/function (_React$Component) {
     value: function handleDemoLogin(event) {
       event.preventDefault();
       var user = Object.assign({}, {
-        email: 'demo_user@gmail.com',
+        email: 'DemoDude',
         password: 'starwars'
       });
       this.props.login(user);
@@ -3065,7 +3070,7 @@ var userErrorsReducer = function userErrorsReducer() {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return [];
 
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ERRORS"]:
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SESSION_ERRORS"]:
       return action.errors;
 
     default:
