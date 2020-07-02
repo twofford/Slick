@@ -90,7 +90,7 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/channel_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CHANNELS, RECEIVE_CHANNEL, REMOVE_CHANNEL, RECEIVE_CHANNEL_ERRORS, receiveChannels, receiveChannel, removeChannel, receiveErrors, fetchChannels, fetchChannel, createChannel, updateChannel, deleteChannel */
+/*! exports provided: RECEIVE_CHANNELS, RECEIVE_CHANNEL, REMOVE_CHANNEL, RECEIVE_CHANNEL_ERRORS, CLEAR_CHANNEL_ERRORS, receiveChannels, receiveChannel, removeChannel, receiveErrors, clearErrors, fetchChannels, fetchChannel, createChannel, updateChannel, deleteChannel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,10 +99,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CHANNEL", function() { return RECEIVE_CHANNEL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_CHANNEL", function() { return REMOVE_CHANNEL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CHANNEL_ERRORS", function() { return RECEIVE_CHANNEL_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_CHANNEL_ERRORS", function() { return CLEAR_CHANNEL_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveChannels", function() { return receiveChannels; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveChannel", function() { return receiveChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeChannel", function() { return removeChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveErrors", function() { return receiveErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearErrors", function() { return clearErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchChannels", function() { return fetchChannels; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchChannel", function() { return fetchChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createChannel", function() { return createChannel; });
@@ -110,14 +112,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteChannel", function() { return deleteChannel; });
 /* harmony import */ var _util_channel_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/channel_util */ "./frontend/util/channel_util.js");
 //AJAX REQUESTS//
- //
-//TYPE CONSTANTS//
+ //TYPE CONSTANTS//
 
 var RECEIVE_CHANNELS = 'RECEIVE_CHANNELS';
 var RECEIVE_CHANNEL = 'RECEIVE_CHANNEL';
 var REMOVE_CHANNEL = 'REMOVE_CHANNEL';
-var RECEIVE_CHANNEL_ERRORS = 'RECEIVE_CHANNEL_ERRORS'; //
-//REGULAR ACTION CREATORS//
+var RECEIVE_CHANNEL_ERRORS = 'RECEIVE_CHANNEL_ERRORS';
+var CLEAR_CHANNEL_ERRORS = 'CLEAR_CHANNEL_ERRORS'; //REGULAR ACTION CREATORS//
 
 var receiveChannels = function receiveChannels(channels) {
   return {
@@ -142,6 +143,11 @@ var receiveErrors = function receiveErrors(errors) {
     type: RECEIVE_CHANNEL_ERRORS,
     errors: errors
   };
+};
+var clearErrors = function clearErrors() {
+  return {
+    type: CLEAR_CHANNEL_ERRORS
+  };
 }; //THUNK ACTION CREATORS//
 
 var fetchChannels = function fetchChannels() {
@@ -163,11 +169,10 @@ var createChannel = function createChannel(channel) {
     return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["postChannel"](channel).then(function (channel) {
       return dispatch(receiveChannel(channel));
     }, function (errors) {
-      return dispatch(receiveErrors(errors));
+      return dispatch(receiveErrors(errors.responseJSON));
     });
   };
-}; // export const createChannel = channel => dispatch => ChannelApiUtil.postChannel(channel).then(channel => dispatch(receiveChannel(channel)), errors => {return dispatch(receiveErrors(errors.responseJSON))});
-
+};
 var updateChannel = function updateChannel(channel) {
   return function (dispatch) {
     return _util_channel_util__WEBPACK_IMPORTED_MODULE_0__["patchChannel"](channel).then(function (channel) {
@@ -181,7 +186,7 @@ var deleteChannel = function deleteChannel(channel) {
       return dispatch(removeChannel(channel));
     });
   };
-}; //
+};
 
 /***/ }),
 
@@ -1048,6 +1053,17 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "logged-in-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_searchbar_searchbar_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-bar"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-inner-div"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-search"
+      }), "\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Search Your Workspace")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "logout",
+        onClick: this.props.logout
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-sign-out-alt"
+      }), "\xA0Sign Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channel-viewport"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_container__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
     }
@@ -1757,7 +1773,8 @@ var msp = function msp(state) {
     channels: state.entities.channels,
     users: state.entities.users,
     currentUser: state.session.user.id,
-    errors: state.errors.channel
+    errors: state.errors.channel,
+    currentUserEmail: state.session.user.email
   };
 };
 
@@ -1771,6 +1788,9 @@ var mdp = function mdp(dispatch) {
     },
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
     }
   };
 };
@@ -1851,7 +1871,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
   _createClass(NewDMForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchUsers();
+      this.props.clearErrors();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.clearErrors();
     }
   }, {
     key: "handleSubmit",
@@ -1861,32 +1886,24 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       this.state.users = _toConsumableArray(new Set(this.state.users));
       var channel = Object.assign({}, this.state);
       this.props.createChannel(channel);
-
-      if (this.props.errors) {
-        this.renderErrors();
-      }
-
-      ;
-      this.props.closeModal();
+      this.props.clearErrors();
     }
   }, {
     key: "formatTitle",
     value: function formatTitle(users) {
       if (users.length > 0) {
         return users.join(", ");
-      } else return users[0];
+      } else return users[0] || this.state.title;
     }
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "errors-ul"
-      }, this.props.errors.map(function (error, i) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "error",
           key: "error-".concat(i)
         }, error);
-      })));
+      }));
     }
   }, {
     key: "render",
@@ -1931,7 +1948,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         }, user.email);
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleSubmit
-      }, "Submit"));
+      }, "Submit"), this.renderErrors());
     }
   }]);
 
@@ -2113,6 +2130,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Searchbar; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2139,6 +2157,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Searchbar = /*#__PURE__*/function (_React$Component) {
   _inherits(Searchbar, _React$Component);
 
@@ -2153,7 +2172,6 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       searchValue: ''
     };
-    _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2169,9 +2187,33 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      var _this3 = this;
+
+      this.usersArray = Object.values(this.props.users);
+      this.filteredUsersArray = this.usersArray.filter(function (user) {
+        return user.id != _this3.props.users[_this3.props.currentUser.id].id;
+      }).sort();
+      this.channelsArray = Object.values(this.props.channels);
+      this.publicChannelsArray = this.channelsArray.filter(function (channel) {
+        return channel.channel_type === 'public';
+      }).sort();
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: function onSubmit() {
+          return event.preventDefault();
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.handleInput('searchValue')
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "People", this.filteredUsersArray.map(function (user) {
+        if (user.email.toLowerCase().startsWith(_this3.state.searchValue)) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, user.email);
+        } else return null;
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "Channels", this.publicChannelsArray.map(function (channel) {
+        if (channel.title.toLowerCase().startsWith(_this3.state.searchValue)) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            to: "/channels/".concat(channel.id)
+          }, channel.title));
+        } else return null;
       })));
     }
   }]);
@@ -2867,6 +2909,9 @@ var channelErrorsReducer = function channelErrorsReducer() {
     case _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CHANNEL_ERRORS"]:
       return action.errors;
 
+    case _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_CHANNEL_ERRORS"]:
+      return [];
+
     default:
       return defaultState;
   }
@@ -3269,7 +3314,7 @@ var getChannels = function getChannels() {
   });
 };
 var getChannel = function getChannel(channelId) {
-  return $.ajax({
+  $.ajax({
     url: "/api/channels/".concat(channelId)
   });
 };

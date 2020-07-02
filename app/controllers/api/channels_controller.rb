@@ -9,7 +9,6 @@ class Api::ChannelsController < ApplicationController
 
     def create
         @channel = Channel.new(channel_params)
-
         if @channel.save && @channel.channel_type == 'public'
             @channel.users << User.all
             render 'api/channels/show'

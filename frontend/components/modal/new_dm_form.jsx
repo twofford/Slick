@@ -16,7 +16,11 @@ class NewDMForm extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchUsers();
+        this.props.clearErrors();
+    }
+
+    componentWillUnmount(){
+        this.props.clearErrors();
     }
 
     handleSubmit(event) {
@@ -25,34 +29,29 @@ class NewDMForm extends React.Component {
         this.state.users = [...new Set(this.state.users)];
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel);
-        if (this.props.errors) {
-            this.renderErrors()};
-        this.props.closeModal();
+        this.props.clearErrors();
     }
 
     formatTitle(users) {
         if (users.length > 0) {
             return users.join(", ");
-        } else return users[0];
+        } else return users[0] || this.state.title;
     }
 
     renderErrors() {
-        
         return (
-            <>
-                <ul className='errors-ul'>
-                    {this.props.errors.map((error, i) => (
-                        <li className='error' key={`error-${i}`}>
-                            {error}
-                        </li>
-                    ))}
-                </ul>
-            </>
+            <ul>
+                {this.props.errors.map((error, i) => (
+                    <li className='error' key={`error-${i}`}>
+                        {error}
+                    </li>
+                ))}
+            </ul>
         );
     }
 
     render() {
-        
+ 
         this.usersArray = Object.values(this.props.users);
 
         this.usersArray = this.usersArray.filter(user => this.props.currentUser !== user.id);
@@ -95,6 +94,7 @@ class NewDMForm extends React.Component {
                 </div>
                 
                 <button onClick={this.handleSubmit}>Submit</button>
+                {this.renderErrors()}
             </div>
         )
     }

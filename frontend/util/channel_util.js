@@ -1,11 +1,11 @@
 export const getChannels = () => {
     return $.ajax ({
-        url: '/api/channels'
+        url: '/api/channels',
     })
 }
 
 export const getChannel = (channelId) => {
-    return $.ajax ({
+    $.ajax ({
         url: `/api/channels/${channelId}`
     })
 }

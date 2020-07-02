@@ -1,4 +1,4 @@
-import { RECEIVE_CHANNEL_ERRORS } from '../actions/channel_actions';
+import { RECEIVE_CHANNEL_ERRORS, CLEAR_CHANNEL_ERRORS } from '../actions/channel_actions';
 
 const channelErrorsReducer = (defaultState = [], action) => {
 
@@ -7,6 +7,8 @@ const channelErrorsReducer = (defaultState = [], action) => {
     switch (action.type) {
         case RECEIVE_CHANNEL_ERRORS:
             return action.errors;
+        case CLEAR_CHANNEL_ERRORS:
+            return [];
         default:
             return defaultState;
     }
