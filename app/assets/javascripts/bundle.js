@@ -1892,29 +1892,32 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.clearErrors();
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.props.clearErrors();
-    }
+    } // componentWillUnmount(){
+    //     this.props.clearErrors();
+    // }
+
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      var _this2 = this;
+
       event.preventDefault();
       this.state.title = this.formatTitle(this.state.users);
       this.state.users = _toConsumableArray(new Set(this.state.users));
       var channel = Object.assign({}, this.state);
-      this.props.createChannel(channel); // debugger
-
-      this.props.clearErrors();
+      this.props.createChannel(channel).then(function () {
+        if (!_this2.props.errors.channel) {
+          _this2.props.closeModal();
+        }
+      });
     }
   }, {
     key: "formatTitle",
     value: function formatTitle(users) {
       if (users.length > 0) {
-        return users.join(", ");
-      } else return users[0] || this.state.title;
+        var allUsers = users.concat(this.props.users[this.props.currentUser].email);
+        return allUsers.sort().join(", ");
+      } else return this.state.title;
     }
   }, {
     key: "renderErrors",
@@ -1929,11 +1932,11 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.usersArray = Object.values(this.props.users);
       this.usersArray = this.usersArray.filter(function (user) {
-        return _this2.props.currentUser !== user.id;
+        return _this3.props.currentUser !== user.id;
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
@@ -1942,7 +1945,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }, "Direct Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
-          return _this2.props.closeModal();
+          return _this3.props.closeModal();
         }
       }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "These users are in the DM", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "users-in-dm-ul",
@@ -1962,8 +1965,8 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }, this.usersArray.map(function (user) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           onClick: function onClick() {
-            if (!_this2.state.users.includes(user.email)) {
-              _this2.state.users.push(user.email);
+            if (!_this3.state.users.includes(user.email)) {
+              _this3.state.users.push(user.email);
             }
           }
         }, user.email);
@@ -2210,21 +2213,13 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var currentUserId = this.props.currentUser.id; // this.usersArray = Object.values(this.props.users);
-      // this.filteredUsersArray = this.usersArray.filter(user =>
-      //     user.id != this.props.users[this.props.currentUser.id].id
-      // ).sort()
-
+      var currentUserId = this.props.currentUser.id;
       var channelsArray = Object.values(this.props.channels);
       var filteredChannelsArray = channelsArray.filter(function (channel) {
         return channel.users.map(function (user) {
           return user.id;
         }).includes(currentUserId);
-      }); // this.publicChannelsArray = this.channelsArray.filter(channel => 
-      // channel.channel_type === 'public'
-      // ).sort()
-      //can you only use the channels array? just return all channels, public and private?
-
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {

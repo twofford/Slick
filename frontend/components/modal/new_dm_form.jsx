@@ -19,24 +19,27 @@ class NewDMForm extends React.Component {
         this.props.clearErrors();
     }
 
-    componentWillUnmount(){
-        this.props.clearErrors();
-    }
+    // componentWillUnmount(){
+    //     this.props.clearErrors();
+    // }
 
     handleSubmit(event) {
         event.preventDefault();
         this.state.title = this.formatTitle(this.state.users);
         this.state.users = [...new Set(this.state.users)];
         const channel = Object.assign({}, this.state);
-        this.props.createChannel(channel);
-        // debugger
-        this.props.clearErrors();
+        this.props.createChannel(channel).then(() => {
+            if (!this.props.errors.channel) {
+                this.props.closeModal();
+            }
+        });
     }
 
     formatTitle(users) {
         if (users.length > 0) {
-            return users.join(", ");
-        } else return users[0] || this.state.title;
+            const allUsers = users.concat(this.props.users[this.props.currentUser].email);
+            return allUsers.sort().join(", ")
+        } else return this.state.title;
     }
 
     renderErrors() {
