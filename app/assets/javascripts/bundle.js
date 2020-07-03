@@ -2210,14 +2210,20 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      this.usersArray = Object.values(this.props.users);
-      this.filteredUsersArray = this.usersArray.filter(function (user) {
-        return user.id != _this3.props.users[_this3.props.currentUser.id].id;
-      }).sort();
-      this.channelsArray = Object.values(this.props.channels);
-      this.publicChannelsArray = this.channelsArray.filter(function (channel) {
-        return channel.channel_type === 'public';
-      }).sort(); //can you only use the channels array? just return all channels, public and private?
+      var currentUserId = this.props.currentUser.id; // this.usersArray = Object.values(this.props.users);
+      // this.filteredUsersArray = this.usersArray.filter(user =>
+      //     user.id != this.props.users[this.props.currentUser.id].id
+      // ).sort()
+
+      var channelsArray = Object.values(this.props.channels);
+      var filteredChannelsArray = channelsArray.filter(function (channel) {
+        return channel.users.map(function (user) {
+          return user.id;
+        }).includes(currentUserId);
+      }); // this.publicChannelsArray = this.channelsArray.filter(channel => 
+      // channel.channel_type === 'public'
+      // ).sort()
+      //can you only use the channels array? just return all channels, public and private?
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
@@ -2231,11 +2237,7 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.handleInput('searchValue')
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "People", this.filteredUsersArray.map(function (user) {
-        if (user.email.toLowerCase().startsWith(_this3.state.searchValue)) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, user.email);
-        } else return null;
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "Channels", this.publicChannelsArray.map(function (channel) {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "Channels", filteredChannelsArray.map(function (channel) {
         if (channel.title.toLowerCase().startsWith(_this3.state.searchValue)) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             onClick: function onClick() {
