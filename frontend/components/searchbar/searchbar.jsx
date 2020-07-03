@@ -31,9 +31,12 @@ export default class Searchbar extends React.Component {
         this.publicChannelsArray = this.channelsArray.filter(channel => 
         channel.channel_type === 'public'
         ).sort()
+
+        //can you only use the channels array? just return all channels, public and private?
         
         return(
             <div>
+                <button id="modal-closer" onClick={() => this.props.closeModal()}>&times;</button>
                 <form onSubmit={() => event.preventDefault()}>
                     <input type='text' onChange={this.handleInput('searchValue')}></input>
                 </form>
@@ -47,7 +50,7 @@ export default class Searchbar extends React.Component {
                 <ul>Channels
                     {this.publicChannelsArray.map(channel => {
                         if (channel.title.toLowerCase().startsWith(this.state.searchValue)) {
-                            return <li><Link to={`/channels/${channel.id}`}>{channel.title}</Link></li>
+                            return <li onClick={() => this.props.closeModal()}><Link to={`/channels/${channel.id}`}>{channel.title}</Link></li>
                         } else return null;
                     })}
                 </ul>

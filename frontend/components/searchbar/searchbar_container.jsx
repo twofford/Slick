@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import Searchbar from './searchbar';
+import { closeModal } from '../../actions/modal_actions';
 
 const msp = state => {
     return {
@@ -10,8 +11,11 @@ const msp = state => {
     }
 }
 
-// const mdp = dispatch => {
+const mdp = dispatch => {
+    return{
+        closeModal: () => dispatch(closeModal())
+    }
 
-// }
+}
 
-export default connect(msp,null)(Searchbar);
+export default connect(msp,mdp)(Searchbar);

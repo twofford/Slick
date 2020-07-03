@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {logout} from '../../actions/session_actions';
-
+import {openModal} from '../../actions/modal_actions';
 import ChannelViewport from './channel_viewport';
 
 const msp = state => {
@@ -12,6 +12,7 @@ const msp = state => {
 
 const mdp = dispatch => {
     return {
+        openModal: modal => dispatch(openModal(modal)),
         logout: () => dispatch(logout())
     }
 }

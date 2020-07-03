@@ -1,6 +1,5 @@
 .channels-wrapper {
     position: sticky;
-    // overflow-y: auto;
     left: 0px;
     top: 0px;
     background-color: #3F0D40;
@@ -29,7 +28,6 @@
 
 .workspace-box:hover {
     background-color: #350D36;
-    // cursor: pointer;
 }
 
 .fa-chevron-down {
@@ -83,6 +81,7 @@
 .fa-plus:hover {
     background-color: rgba(255,255,255,0.1);
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .caret-toggled {
@@ -95,7 +94,6 @@
     background-color: #3F0D40;
     color: #c3b4c4;
     border: none;
-    // font-family: 'Lato', sans-serif;
     font-weight: 500;
     font-weight: 500;
     font-size: 15px;

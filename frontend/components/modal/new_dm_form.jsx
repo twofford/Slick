@@ -29,6 +29,7 @@ class NewDMForm extends React.Component {
         this.state.users = [...new Set(this.state.users)];
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel);
+        // debugger
         this.props.clearErrors();
     }
 

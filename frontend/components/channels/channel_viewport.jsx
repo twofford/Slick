@@ -13,13 +13,12 @@ class ChannelViewport extends React.Component{
         return(
             <>
             <div id='logged-in-container'>
-            <SearchbarContainer/>
             <div className='search-bar'>
 
-                <div className='search-inner-div'>
+                    <div onClick={() => this.props.openModal("search")}className='search-inner-div'>
                     <i className="fas fa-search"></i>
                     &nbsp;&nbsp;
-                    <a>Search Your Workspace</a>
+                    <p>Search Your Workspace</p>
                 </div>
                     <p className="logout" onClick={this.props.logout}>
                         <i className="fas fa-sign-out-alt"></i>

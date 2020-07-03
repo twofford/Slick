@@ -47,40 +47,6 @@ u5 = User.create!(
     updated_at: '1/1/2020'
 )
 
-u6 = User.create!(
-    email: 'Taylor',
-    password: 'starwars',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020'
-)
-
-u7 = User.create!(
-    email: 'Elise',
-    password: 'starwars',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020'
-)
-
-u8 = User.create!(
-    email: 'Captain Ron',
-    password: 'starwars',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020'
-)
-
-u9 = User.create!(
-    email: 'Trudy',
-    password: 'starwars',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020'
-)
-
-u10 = User.create!(
-    email: 'Bill',
-    password: 'starwars',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020'
-)
 
 c1 = Channel.create!(
     title: 'General',
@@ -123,30 +89,6 @@ c5 = Channel.create!(
     description: 'We talk about Star Trek here.'
 )
 
-c6 = Channel.create!(
-    title: 'TV',
-    channel_type: 'public',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020',
-    description: 'The revolution will be televised.'
-)
-
-c7 = Channel.create!(
-    title: 'Movies',
-    channel_type: 'public',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020',
-    description: 'We talk about movies here.'
-)
-
-c8 = Channel.create!(
-    title: 'Books',
-    channel_type: 'public',
-    created_at: '1/1/2020',
-    updated_at: '1/1/2020',
-    description: 'We talk about books here.'
-)
-
 cm1 = ChannelMembership.create!(
     user_id: User.first.id,
     channel_id: Channel.first.id,
@@ -155,22 +97,169 @@ cm1 = ChannelMembership.create!(
 )
 
 cm2 = ChannelMembership.create!(
+    user_id: User.first.id,
+    channel_id: Channel.second.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm3 = ChannelMembership.create!(
+    user_id: User.first.id,
+    channel_id: Channel.third.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm4 = ChannelMembership.create!(
+    user_id: User.first.id,
+    channel_id: Channel.fourth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm5 = ChannelMembership.create!(
+    user_id: User.first.id,
+    channel_id: Channel.fifth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm6 = ChannelMembership.create!(
     user_id: User.second.id,
     channel_id: Channel.first.id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
-cm3 = ChannelMembership.create!(
+cm7 = ChannelMembership.create!(
+    user_id: User.second.id,
+    channel_id: Channel.second.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm8 = ChannelMembership.create!(
+    user_id: User.second.id,
+    channel_id: Channel.third.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm9 = ChannelMembership.create!(
+    user_id: User.second.id,
+    channel_id: Channel.fourth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm10 = ChannelMembership.create!(
+    user_id: User.second.id,
+    channel_id: Channel.fifth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm11 = ChannelMembership.create!(
+    user_id: User.third.id,
+    channel_id: Channel.first.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm12 = ChannelMembership.create!(
     user_id: User.third.id,
     channel_id: Channel.second.id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )
 
-cm4 = ChannelMembership.create!(
+cm13 = ChannelMembership.create!(
+    user_id: User.third.id,
+    channel_id: Channel.third.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm14 = ChannelMembership.create!(
+    user_id: User.third.id,
+    channel_id: Channel.fourth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm15 = ChannelMembership.create!(
+    user_id: User.third.id,
+    channel_id: Channel.fifth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm16 = ChannelMembership.create!(
+    user_id: User.fourth.id,
+    channel_id: Channel.first.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm17 = ChannelMembership.create!(
     user_id: User.fourth.id,
     channel_id: Channel.second.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm18 = ChannelMembership.create!(
+    user_id: User.fourth.id,
+    channel_id: Channel.third.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm19 = ChannelMembership.create!(
+    user_id: User.fourth.id,
+    channel_id: Channel.fourth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm20 = ChannelMembership.create!(
+    user_id: User.fourth.id,
+    channel_id: Channel.fifth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm21 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.first.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm22 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.second.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm23 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.third.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm24 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.fourth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm25 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.fifth.id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )

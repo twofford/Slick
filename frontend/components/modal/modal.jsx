@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { closeModal } from '../../actions/modal_actions';
 import NewChannelContainer from './new_channel_container';
 import NewDMContainer from './new_dm_container';
+import SearchbarContainer from '../searchbar/searchbar_container';
 
 function Modal({ modal, closeModal }) {
 
@@ -11,20 +12,27 @@ function Modal({ modal, closeModal }) {
     }
 
     let component;
+    let modalClass;
 
     switch (modal) {
         case "addChannel":
             component = <NewChannelContainer/>;
+            modalClass = "modal-background"
             break;
         case "addDM":
-            component = <NewDMContainer/>
+            component = <NewDMContainer/>;
+            modalClass = "modal-background";
+            break;
+        case "search":
+            component = <SearchbarContainer/>;
+            modalClass = "search-modal-background";
             break;
         default:
             return null;
     }
 
     return (
-        <div className="modal-background" onClick={closeModal}>
+        <div className={modalClass} onClick={closeModal}>
             <div className="modal-child" onClick={(e) => e.stopPropagation()}>
                 {component}
             </div>

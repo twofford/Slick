@@ -1050,15 +1050,20 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelViewport, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "logged-in-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_searchbar_searchbar_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-bar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: function onClick() {
+          return _this.props.openModal("search");
+        },
         className: "search-inner-div"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-search"
-      }), "\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "Search Your Workspace")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }), "\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Search Your Workspace")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "logout",
         onClick: this.props.logout
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1087,7 +1092,9 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _channel_viewport__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./channel_viewport */ "./frontend/components/channels/channel_viewport.jsx");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _channel_viewport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./channel_viewport */ "./frontend/components/channels/channel_viewport.jsx");
+
 
 
 
@@ -1102,13 +1109,16 @@ var msp = function msp(state) {
 
 var mdp = function mdp(dispatch) {
   return {
+    openModal: function openModal(modal) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openModal"])(modal));
+    },
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logout"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_channel_viewport__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_channel_viewport__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -1489,6 +1499,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _new_channel_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./new_channel_container */ "./frontend/components/modal/new_channel_container.jsx");
 /* harmony import */ var _new_dm_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./new_dm_container */ "./frontend/components/modal/new_dm_container.jsx");
+/* harmony import */ var _searchbar_searchbar_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../searchbar/searchbar_container */ "./frontend/components/searchbar/searchbar_container.jsx");
+
 
 
 
@@ -1504,14 +1516,22 @@ function Modal(_ref) {
   }
 
   var component;
+  var modalClass;
 
   switch (modal) {
     case "addChannel":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_channel_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+      modalClass = "modal-background";
       break;
 
     case "addDM":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_dm_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      modalClass = "modal-background";
+      break;
+
+    case "search":
+      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_searchbar_searchbar_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+      modalClass = "search-modal-background";
       break;
 
     default:
@@ -1519,7 +1539,7 @@ function Modal(_ref) {
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "modal-background",
+    className: modalClass,
     onClick: closeModal
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "modal-child",
@@ -1885,7 +1905,8 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       this.state.title = this.formatTitle(this.state.users);
       this.state.users = _toConsumableArray(new Set(this.state.users));
       var channel = Object.assign({}, this.state);
-      this.props.createChannel(channel);
+      this.props.createChannel(channel); // debugger
+
       this.props.clearErrors();
     }
   }, {
@@ -2196,8 +2217,14 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
       this.channelsArray = Object.values(this.props.channels);
       this.publicChannelsArray = this.channelsArray.filter(function (channel) {
         return channel.channel_type === 'public';
-      }).sort();
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }).sort(); //can you only use the channels array? just return all channels, public and private?
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "modal-closer",
+        onClick: function onClick() {
+          return _this3.props.closeModal();
+        }
+      }, "\xD7"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: function onSubmit() {
           return event.preventDefault();
         }
@@ -2210,7 +2237,11 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
         } else return null;
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "Channels", this.publicChannelsArray.map(function (channel) {
         if (channel.title.toLowerCase().startsWith(_this3.state.searchValue)) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            onClick: function onClick() {
+              return _this3.props.closeModal();
+            }
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             to: "/channels/".concat(channel.id)
           }, channel.title));
         } else return null;
@@ -2236,6 +2267,8 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _searchbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./searchbar */ "./frontend/components/searchbar/searchbar.jsx");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 
 
 
@@ -2246,11 +2279,17 @@ var msp = function msp(state) {
     channels: state.entities.channels,
     messages: state.entities.messages
   };
-}; // const mdp = dispatch => {
-// }
+};
 
+var mdp = function mdp(dispatch) {
+  return {
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
+    }
+  };
+};
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, null)(_searchbar__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_searchbar__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
