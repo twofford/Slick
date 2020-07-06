@@ -8,13 +8,21 @@ class ChannelSidebarItem extends React.Component{
 
     render(){
 
-        if (this.props.channel.channel_type === 'public'){
+        let prefix;
+
+        if (this.props.channel.channel_type === 'public') {
+            prefix = "#";
+        } else {
+            prefix = <i class="fas fa-lock"></i>;
+        }
+
+        if (this.props.channel.channel_or_dm === 'channel'){
 
             if (this.props.currentChannelId == this.props.channel.id){
                 return (
                     <li className='channel-li-current'>
                         
-                        <Link to={`/channels/${this.props.channel.id}`}># {this.props.channel.title}</Link>
+                        <Link to={`/channels/${this.props.channel.id}`}>{prefix} {this.props.channel.title}</Link>
                     </li>
                 )
             } else {
@@ -26,7 +34,7 @@ class ChannelSidebarItem extends React.Component{
                     </li>
                 )}
 
-        } else {
+        } else { //rewrite this so it uses channel_or_dm instead of channel_type
 
             let channelDisplayTitleArray = this.props.channel.title.split(",");
 

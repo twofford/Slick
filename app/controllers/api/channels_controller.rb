@@ -9,13 +9,18 @@ class Api::ChannelsController < ApplicationController
 
     def create
         @channel = Channel.new(channel_params)
-        if @channel.save && @channel.channel_type == 'public'
-            @channel.users << User.all
-            render 'api/channels/show'
-        elsif @channel.save && @channel.channel_type == 'private'
-            params[:channel][:users].each do |user|
+        if @channel.save
+            if @channel.channel_or_dm == 'channel'
+                if @channel.channel_type == 'public'
+                    @channel.users << User.all
+                elsif @channel.channel_type == 'private'
+                    @channel.users << current_user
+                end
+            elsif @channel.channel_or_dm == 'dm'
+                params[:channel][:users].each do |user|
                 @channel.users << User.find_by(email: user)
                 @channel.users << current_user
+                end
             end
             render 'api/channels/show'
         else
@@ -42,7 +47,7 @@ class Api::ChannelsController < ApplicationController
     end
 
     def channel_params
-        params.require(:channel).permit(:title, :channel_type, :description, :topic, :user_id, :users)
+        params.require(:channel).permit(:title, :channel_type, :description, :topic, :user_id, :users, :channel_or_dm)
     end
 
 end

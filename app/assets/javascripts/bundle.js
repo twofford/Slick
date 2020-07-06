@@ -951,13 +951,23 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebarItem, [{
     key: "render",
     value: function render() {
+      var prefix;
+
       if (this.props.channel.channel_type === 'public') {
+        prefix = "#";
+      } else {
+        prefix = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          "class": "fas fa-lock"
+        });
+      }
+
+      if (this.props.channel.channel_or_dm === 'channel') {
         if (this.props.currentChannelId == this.props.channel.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "channel-li-current"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             to: "/channels/".concat(this.props.channel.id)
-          }, "# ", this.props.channel.title));
+          }, prefix, " ", this.props.channel.title));
         } else {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "channel-li"
@@ -966,6 +976,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
           }, "# ", this.props.channel.title));
         }
       } else {
+        //rewrite this so it uses channel_or_dm instead of channel_type
         var channelDisplayTitleArray = this.props.channel.title.split(",");
         channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
         var channelDisplayTitle = channelDisplayTitleArray.join(", ");
@@ -1661,7 +1672,8 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       title: '',
       description: '',
       channel_type: 'public',
-      users: []
+      users: [],
+      channel_or_dm: 'channel'
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleUserInput = _this.handleUserInput.bind(_assertThisInitialized(_this));

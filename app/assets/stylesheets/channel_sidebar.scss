@@ -172,9 +172,6 @@
 }
 
 .dm-li {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     padding-left: 25px;
     padding-right: 15px;
     color: #c3b4c4;
@@ -199,9 +196,6 @@
     line-height: 28px;
     color: #c3b4c4;
     text-decoration: none;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
 }
 
 .dm-li-current a {
@@ -210,9 +204,6 @@
     line-height: 28px;
     color: #ffffff;
     text-decoration: none;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
 }
 
 .dm-li:hover {

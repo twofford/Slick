@@ -51,6 +51,7 @@ u5 = User.create!(
 c1 = Channel.create!(
     title: 'General',
     channel_type: 'public',
+    channel_or_dm: 'channel',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Just chattin\' about whatever'
@@ -59,6 +60,7 @@ c1 = Channel.create!(
 c2 = Channel.create!(
     title: 'HorsePlay',
     channel_type: 'public',
+    channel_or_dm: 'channel',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Horses and the amusement to be gained thereby'
@@ -67,6 +69,7 @@ c2 = Channel.create!(
 c3 = Channel.create!(
     title: 'Gamin\'',
     channel_type: 'public',
+    channel_or_dm: 'channel',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'Bideo games'
@@ -76,6 +79,7 @@ c3 = Channel.create!(
 c4 = Channel.create!(
     title: 'Star Wars',
     channel_type: 'public',
+    channel_or_dm: 'channel',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'We talk about Star Wars here.'
@@ -84,6 +88,7 @@ c4 = Channel.create!(
 c5 = Channel.create!(
     title: 'Star Trek',
     channel_type: 'public',
+    channel_or_dm: 'channel',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
     description: 'We talk about Star Trek here.'
