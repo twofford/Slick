@@ -522,14 +522,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
           return this.perform('hear');
         }
       });
-    } // render(){
-    //     return (
-    //         <div>
-    //           <MessagesViewportContainer messages ={this.state}/>
-    //         </div>
-    //     )
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -553,6 +546,10 @@ var Channel = /*#__PURE__*/function (_React$Component) {
             className: "channel-header-right"
           })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
         } else {
+          var channelDisplayTitleArray = this.props.channel.title.split(",");
+          channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
+          var channelDisplayTitle = channelDisplayTitleArray.join(", ");
+          console.log(channelDisplayTitle);
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-wrapper"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -563,7 +560,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
             className: "dm-title"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-circle green"
-          }, "\xA0\xA0"), this.props.channel.title, "\xA0\xA0\xA0\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          }, "\xA0\xA0"), channelDisplayTitle, "\xA0\xA0\xA0\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "far fa-star"
           }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-header-right"
@@ -604,7 +601,7 @@ var msp = function msp(state, ownProps) {
   return {
     users: state.entities.users,
     channel: state.entities.channels[ownProps.match.params.channelId],
-    currentUser: state.entities.users[state.session.id]
+    currentUser: state.entities.users[state.session.user.id]
   };
 };
 
@@ -780,7 +777,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: channel.id,
             channel: channel,
-            currentChannelId: _this3.props.currentChannelId
+            currentChannelId: _this3.props.currentChannelId,
+            currentUser: _this3.props.currentUser
           });
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -814,7 +812,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: channel.id,
             channel: channel,
-            currentChannelId: _this3.props.currentChannelId
+            currentChannelId: _this3.props.currentChannelId,
+            currentUser: _this3.props.currentUser
           });
         }
       }))));
@@ -967,6 +966,10 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
           }, "# ", this.props.channel.title));
         }
       } else {
+        var channelDisplayTitleArray = this.props.channel.title.split(",");
+        channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
+        var channelDisplayTitle = channelDisplayTitleArray.join(", ");
+
         if (this.props.currentChannelId == this.props.channel.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "dm-li-current"
@@ -974,7 +977,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
             to: "/channels/".concat(this.props.channel.id)
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-circle white"
-          }), "\xA0 ", this.props.channel.title));
+          }), "\xA0 ", channelDisplayTitle));
         } else {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "dm-li"
@@ -982,7 +985,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
             to: "/channels/".concat(this.props.channel.id)
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-circle"
-          }), "\xA0 ", this.props.channel.title));
+          }), "\xA0 ", channelDisplayTitle));
         }
       }
     }
@@ -1892,10 +1895,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.clearErrors();
-    } // componentWillUnmount(){
-    //     this.props.clearErrors();
-    // }
-
+    }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {

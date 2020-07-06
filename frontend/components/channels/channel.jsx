@@ -35,15 +35,6 @@ class Channel extends React.Component{
         );
     }
 
-    // render(){
-    //     return (
-    //         <div>
-    //           <MessagesViewportContainer messages ={this.state}/>
-    //         </div>
-    //     )
-    // }
-
-
     render(){
         
         if (this.props.channel) {
@@ -93,6 +84,15 @@ class Channel extends React.Component{
                 </div>
             )
             } else {
+
+                let channelDisplayTitleArray = this.props.channel.title.split(",");
+
+                channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
+
+                const channelDisplayTitle = channelDisplayTitleArray.join(", ");
+
+                console.log(channelDisplayTitle);
+
                 return (
                     <div className='channel-wrapper'>
 
@@ -102,7 +102,7 @@ class Channel extends React.Component{
 
                                 <p className='dm-title'>
 
-                                    <i className="fas fa-circle green">&nbsp;&nbsp;</i>{this.props.channel.title}
+                                    <i className="fas fa-circle green">&nbsp;&nbsp;</i>{channelDisplayTitle}
 
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 

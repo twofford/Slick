@@ -19,10 +19,6 @@ class NewDMForm extends React.Component {
         this.props.clearErrors();
     }
 
-    // componentWillUnmount(){
-    //     this.props.clearErrors();
-    // }
-
     handleSubmit(event) {
         event.preventDefault();
         this.state.title = this.formatTitle(this.state.users);

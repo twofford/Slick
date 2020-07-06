@@ -16,7 +16,7 @@ const msp = (state, ownProps) => {
     return {
         users: state.entities.users,
         channel: state.entities.channels[ownProps.match.params.channelId],
-        currentUser: state.entities.users[state.session.id]
+        currentUser: state.entities.users[state.session.user.id]
     }
 };
 

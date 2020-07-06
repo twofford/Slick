@@ -98,7 +98,8 @@ class ChannelSidebar extends React.Component{
                             if (channel.channel_type === 'public') {
                                 return <ChannelSidebarItem 
                                 key={channel.id}
-                                channel={channel} currentChannelId={this.props.currentChannelId}/>
+                                channel={channel} currentChannelId={this.props.currentChannelId}
+                                currentUser={this.props.currentUser}/>
                         }})}
 
                     </ul>
@@ -133,7 +134,8 @@ class ChannelSidebar extends React.Component{
                             if (channel.channel_type === 'private' && currentUserIsMember) {
                                 return <ChannelSidebarItem
                                 key={channel.id}
-                                channel={channel} currentChannelId={this.props.currentChannelId} />
+                                channel={channel} currentChannelId={this.props.currentChannelId}
+                                currentUser={this.props.currentUser}/>
                             }
                         })}
 

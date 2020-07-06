@@ -27,12 +27,19 @@ class ChannelSidebarItem extends React.Component{
                 )}
 
         } else {
+
+            let channelDisplayTitleArray = this.props.channel.title.split(",");
+
+            channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email),1);
+
+            const channelDisplayTitle = channelDisplayTitleArray.join(", ");
+
             
             if (this.props.currentChannelId == this.props.channel.id) {
                 return (
                     <li className='dm-li-current'>
                         
-                        <Link to={`/channels/${this.props.channel.id}`}><i className="fas fa-circle white"></i>&nbsp; {this.props.channel.title}</Link>
+                        <Link to={`/channels/${this.props.channel.id}`}><i className="fas fa-circle white"></i>&nbsp; {channelDisplayTitle}</Link>
                     </li>
                 )
             } else {
@@ -40,7 +47,7 @@ class ChannelSidebarItem extends React.Component{
                 return (
                 <li className='dm-li'>
                     
-                        <Link to={`/channels/${this.props.channel.id}`}><i className="fas fa-circle"></i>&nbsp; {this.props.channel.title}</Link>
+                        <Link to={`/channels/${this.props.channel.id}`}><i className="fas fa-circle"></i>&nbsp; {channelDisplayTitle}</Link>
                 </li>
         )}
         }
