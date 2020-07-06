@@ -91,8 +91,6 @@ class Channel extends React.Component{
 
                 const channelDisplayTitle = channelDisplayTitleArray.join(", ");
 
-                console.log(channelDisplayTitle);
-
                 return (
                     <div className='channel-wrapper'>
 

@@ -30,7 +30,7 @@ class ChannelSidebarItem extends React.Component{
                 return (
                     <li className='channel-li'>
                         
-                        <Link to={`/channels/${this.props.channel.id}`}># {this.props.channel.title}</Link>
+                        <Link to={`/channels/${this.props.channel.id}`}>{prefix} {this.props.channel.title}</Link>
                     </li>
                 )}
 

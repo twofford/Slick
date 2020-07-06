@@ -95,10 +95,11 @@ class ChannelSidebar extends React.Component{
 
                         {this.channelsArray.map(channel => {
 
-                            if (channel.channel_type === 'public') {
+                            if (channel.channel_or_dm === 'channel') {
                                 return <ChannelSidebarItem 
                                 key={channel.id}
-                                channel={channel} currentChannelId={this.props.currentChannelId}
+                                channel={channel}
+                                currentChannelId={this.props.currentChannelId}
                                 currentUser={this.props.currentUser}/>
                         }})}
 
@@ -131,10 +132,11 @@ class ChannelSidebar extends React.Component{
 
                             const currentUserIsMember = userIds.includes(this.props.currentUser.id);
                             
-                            if (channel.channel_type === 'private' && currentUserIsMember) {
+                            if (channel.channel_or_dm === 'dm' && currentUserIsMember) {
                                 return <ChannelSidebarItem
                                 key={channel.id}
-                                channel={channel} currentChannelId={this.props.currentChannelId}
+                                channel={channel}
+                                currentChannelId={this.props.currentChannelId}
                                 currentUser={this.props.currentUser}/>
                             }
                         })}

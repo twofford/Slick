@@ -549,7 +549,6 @@ var Channel = /*#__PURE__*/function (_React$Component) {
           var channelDisplayTitleArray = this.props.channel.title.split(",");
           channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
           var channelDisplayTitle = channelDisplayTitleArray.join(", ");
-          console.log(channelDisplayTitle);
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-wrapper"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -773,7 +772,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         id: "channels-ul",
         className: "channels-ul"
       }, this.channelsArray.map(function (channel) {
-        if (channel.channel_type === 'public') {
+        if (channel.channel_or_dm === 'channel') {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: channel.id,
             channel: channel,
@@ -808,7 +807,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         });
         var currentUserIsMember = userIds.includes(_this3.props.currentUser.id);
 
-        if (channel.channel_type === 'private' && currentUserIsMember) {
+        if (channel.channel_or_dm === 'dm' && currentUserIsMember) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: channel.id,
             channel: channel,
@@ -973,7 +972,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
             className: "channel-li"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             to: "/channels/".concat(this.props.channel.id)
-          }, "# ", this.props.channel.title));
+          }, prefix, " ", this.props.channel.title));
         }
       } else {
         //rewrite this so it uses channel_or_dm instead of channel_type
@@ -1895,6 +1894,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       title: '',
       description: '',
+      channel_or_dm: 'dm',
       channel_type: 'private',
       users: []
     };
@@ -1914,8 +1914,8 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       event.preventDefault();
-      this.state.title = this.formatTitle(this.state.users);
       this.state.users = _toConsumableArray(new Set(this.state.users));
+      this.state.title = this.formatTitle(this.state.users);
       var channel = Object.assign({}, this.state);
       this.props.createChannel(channel).then(function () {
         if (!_this2.props.errors.channel) {

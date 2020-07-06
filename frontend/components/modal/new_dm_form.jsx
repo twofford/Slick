@@ -7,6 +7,7 @@ class NewDMForm extends React.Component {
         this.state = {
             title: '',
             description: '',
+            channel_or_dm: 'dm',
             channel_type: 'private',
             users: []
         }
@@ -21,8 +22,8 @@ class NewDMForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.state.title = this.formatTitle(this.state.users);
         this.state.users = [...new Set(this.state.users)];
+        this.state.title = this.formatTitle(this.state.users);
         const channel = Object.assign({}, this.state);
         this.props.createChannel(channel).then(() => {
             if (!this.props.errors.channel) {
