@@ -527,7 +527,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       if (this.props.channel) {
-        if (this.props.channel.channel_type === "public") {
+        if (this.props.channel.channel_or_dm === "channel") {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-wrapper"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

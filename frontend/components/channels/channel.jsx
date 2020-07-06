@@ -39,7 +39,7 @@ class Channel extends React.Component{
         
         if (this.props.channel) {
 
-            if (this.props.channel.channel_type === "public") {
+            if (this.props.channel.channel_or_dm === "channel") {
             return (
 
                 <div className='channel-wrapper'>
