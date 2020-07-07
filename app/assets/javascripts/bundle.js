@@ -741,7 +741,16 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      this.channelsArray = Object.values(this.props.channels);
+      this.channelsArray = Object.values(this.props.channels).sort(function (a, b) {
+        var aTitle = a.title.toUpperCase();
+        var bTitle = b.title.toUpperCase();
+
+        if (aTitle < bTitle) {
+          return -1;
+        } else if (aTitle > bTitle) {
+          return 1;
+        } else return 0;
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -772,7 +781,12 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         id: "channels-ul",
         className: "channels-ul"
       }, this.channelsArray.map(function (channel) {
-        if (channel.channel_or_dm === 'channel') {
+        var userIds = channel.users.map(function (user) {
+          return user.id;
+        });
+        var currentUserIsMember = userIds.includes(_this3.props.currentUser.id);
+
+        if (channel.channel_or_dm === 'channel' && currentUserIsMember) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: channel.id,
             channel: channel,
@@ -800,10 +814,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         id: "dms-ul",
         className: "dms-ul"
       }, this.channelsArray.map(function (channel) {
-        var users = channel.users;
-        var userIds = [];
-        users.forEach(function (user) {
-          return userIds.push(user.id);
+        var userIds = channel.users.map(function (user) {
+          return user.id;
         });
         var currentUserIsMember = userIds.includes(_this3.props.currentUser.id);
 
@@ -956,7 +968,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
         prefix = "#";
       } else {
         prefix = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          "class": "fas fa-lock"
+          className: "fas fa-lock"
         });
       }
 
@@ -975,7 +987,6 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
           }, prefix, " ", this.props.channel.title));
         }
       } else {
-        //rewrite this so it uses channel_or_dm instead of channel_type
         var channelDisplayTitleArray = this.props.channel.title.split(",");
         channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
         var channelDisplayTitle = channelDisplayTitleArray.join(", ");

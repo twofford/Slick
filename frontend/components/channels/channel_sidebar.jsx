@@ -62,9 +62,16 @@ class ChannelSidebar extends React.Component{
     };
 
     render(){
-
-
-        this.channelsArray = Object.values(this.props.channels);
+        
+        this.channelsArray = Object.values(this.props.channels).sort((a,b) => {
+            const aTitle = a.title.toUpperCase();
+            const bTitle = b.title.toUpperCase();
+            if (aTitle < bTitle) {
+                return -1;
+            } else if (aTitle > bTitle) {
+                return 1;
+            } else return 0;
+        });
 
         return(
             
@@ -95,7 +102,11 @@ class ChannelSidebar extends React.Component{
 
                         {this.channelsArray.map(channel => {
 
-                            if (channel.channel_or_dm === 'channel') {
+                            let userIds = channel.users.map(user => user.id);
+
+                            const currentUserIsMember = userIds.includes(this.props.currentUser.id);
+
+                            if (channel.channel_or_dm === 'channel' && currentUserIsMember) {
                                 return <ChannelSidebarItem 
                                 key={channel.id}
                                 channel={channel}
@@ -124,11 +135,7 @@ class ChannelSidebar extends React.Component{
 
                         {this.channelsArray.map(channel => {
 
-                            let users = channel.users;
-
-                            let userIds = [];
-
-                            users.forEach(user => userIds.push(user.id));
+                            let userIds = channel.users.map(user => user.id);
 
                             const currentUserIsMember = userIds.includes(this.props.currentUser.id);
                             

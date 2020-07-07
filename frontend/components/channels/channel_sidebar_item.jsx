@@ -13,7 +13,7 @@ class ChannelSidebarItem extends React.Component{
         if (this.props.channel.channel_type === 'public') {
             prefix = "#";
         } else {
-            prefix = <i class="fas fa-lock"></i>;
+            prefix = <i className="fas fa-lock"></i>;
         }
 
         if (this.props.channel.channel_or_dm === 'channel'){
@@ -34,7 +34,7 @@ class ChannelSidebarItem extends React.Component{
                     </li>
                 )}
 
-        } else { //rewrite this so it uses channel_or_dm instead of channel_type
+        } else {
 
             let channelDisplayTitleArray = this.props.channel.title.split(",");
 
