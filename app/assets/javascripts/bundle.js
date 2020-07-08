@@ -403,16 +403,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbar/navbar_container */ "./frontend/components/navbar/navbar_container.jsx");
-/* harmony import */ var _session_signup_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session/signup_container */ "./frontend/components/session/signup_container.jsx");
-/* harmony import */ var _session_login_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session/login_container */ "./frontend/components/session/login_container.jsx");
-/* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.jsx");
-/* harmony import */ var _channels_channel_viewport_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./channels/channel_viewport_container */ "./frontend/components/channels/channel_viewport_container.jsx");
-/* harmony import */ var _util_route__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/route */ "./frontend/util/route.jsx");
-/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
+/* harmony import */ var _session_signup_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session/signup_container */ "./frontend/components/session/signup_container.jsx");
+/* harmony import */ var _session_login_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session/login_container */ "./frontend/components/session/login_container.jsx");
+/* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.jsx");
+/* harmony import */ var _channels_channel_viewport_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./channels/channel_viewport_container */ "./frontend/components/channels/channel_viewport_container.jsx");
+/* harmony import */ var _util_route__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/route */ "./frontend/util/route.jsx");
+/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
 
  //COMPONENTS//
-
 
 
 
@@ -422,21 +420,21 @@ __webpack_require__.r(__webpack_exports__);
  //
 
 var App = function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_8__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
     exact: true,
     path: "/",
-    component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
+    component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
     exact: true,
     path: "/login",
-    component: _session_login_container__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
+    component: _session_login_container__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
     exact: true,
     path: "/signup",
-    component: _session_signup_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_7__["ProtectedRoute"], {
+    component: _session_signup_container__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route__WEBPACK_IMPORTED_MODULE_6__["ProtectedRoute"], {
     path: "/channels/:channelId",
-    component: _channels_channel_viewport_container__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _channels_channel_viewport_container__WEBPACK_IMPORTED_MODULE_5__["default"]
   }));
 };
 
@@ -1541,21 +1539,25 @@ function Modal(_ref) {
 
   var component;
   var modalClass;
+  var modalBackgroundClass;
 
   switch (modal) {
     case "addChannel":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_channel_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
-      modalClass = "modal-background";
+      modalClass = "modal-child";
+      modalBackgroundClass = "modal-background";
       break;
 
     case "addDM":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_dm_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
-      modalClass = "modal-background";
+      modalClass = "modal-child";
+      modalBackgroundClass = "modal-background";
       break;
 
     case "search":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_searchbar_searchbar_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
-      modalClass = "search-modal-background";
+      modalClass = "search-modal-child";
+      modalBackgroundClass = "search-modal-background";
       break;
 
     default:
@@ -1563,10 +1565,10 @@ function Modal(_ref) {
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: modalClass,
+    className: modalBackgroundClass,
     onClick: closeModal
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "modal-child",
+    className: modalClass,
     onClick: function onClick(e) {
       return e.stopPropagation();
     }
@@ -2237,33 +2239,81 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       var currentUserId = this.props.currentUser.id;
-      var channelsArray = Object.values(this.props.channels);
+      var channelsArray = Object.values(this.props.channels); //maybe use this for a code snippet
+
       var filteredChannelsArray = channelsArray.filter(function (channel) {
         return channel.users.map(function (user) {
           return user.id;
         }).includes(currentUserId);
+      }).sort(function (a, b) {
+        var aTitle = a.title.toUpperCase();
+        var bTitle = b.title.toUpperCase();
+
+        if (aTitle < bTitle) {
+          return -1;
+        } else if (aTitle > bTitle) {
+          return 1;
+        } else return 0;
       });
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        id: "modal-closer",
-        onClick: function onClick() {
-          return _this3.props.closeModal();
-        }
-      }, "\xD7"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      var filteredMessagesArray = Object.values(this.props.messages).filter(function (message) {
+        return filteredChannelsArray.map(function (channel) {
+          return channel.id;
+        }).includes(message.channel_id);
+      });
+      console.log(filteredMessagesArray);
+      var placeholderMessages = ["Search for something. Anything. You have the window open now anyway.", "Search the Log of All Conversation and Knowledge", "Search all across Slick", "Surely that's around here somewhere...", "What do you want to search for today?", "Delve into your archives, seize upon the answers. Rejoice.", "Type what you want to search for. Slick will do the rest.", "Input search. Beep boop."];
+
+      var randomNum = function randomNum(max) {
+        return Math.floor(Math.random() * max + 1);
+      };
+
+      var placeholderText = placeholderMessages[randomNum(placeholderMessages.length - 1)];
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        id: "search-form",
         onSubmit: function onSubmit() {
           return event.preventDefault();
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-search gray"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "search-input",
+        placeholder: placeholderText,
         type: "text",
         onChange: this.handleInput('searchValue')
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, "Channels", filteredChannelsArray.map(function (channel) {
-        if (channel.title.toLowerCase().startsWith(_this3.state.searchValue)) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "search-modal-closer",
+        onClick: function onClick() {
+          return _this3.props.closeModal();
+        }
+      }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filteredChannelsArray.map(function (channel) {
+        var prefix;
+
+        if (channel.channel_or_dm === 'channel') {
+          if (channel.channel_type === 'public') {
+            prefix = '#';
+          } else prefix = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-lock"
+          });
+        } else prefix = '#';
+
+        if (channel.title.toLowerCase().startsWith(_this3.state.searchValue) && _this3.state.searchValue != "") {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             onClick: function onClick() {
               return _this3.props.closeModal();
-            }
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            },
+            className: "search-li",
             to: "/channels/".concat(channel.id)
-          }, channel.title));
+          }, "Channel: ", prefix, channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+        } else return null;
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filteredMessagesArray.map(function (message) {
+        if (message.body.toLowerCase().startsWith(_this3.state.searchValue) && _this3.state.searchValue != "") {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            onClick: function onClick() {
+              return _this3.props.closeModal();
+            },
+            className: "search-li",
+            to: "/channels/".concat(message.channel_id)
+          }, "Message: ", message.body, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
         } else return null;
       })));
     }

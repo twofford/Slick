@@ -29,6 +29,74 @@
   border: 1px solid #ddd;
 }
 
+.search-modal-child {
+  position: absolute;
+  top: 1%;
+  left: 25%;
+  background: white;
+  width: 50%;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+#search-form {
+  flex-direction: row;
+  justify-content: center;
+  border-bottom: 1px solid #DDDDDD;
+  padding-bottom: 5px;
+}
+
+.gray {
+  color: #636162;
+  margin-left: 30px;
+}
+
+.search-li {
+  display: flex;
+  list-style: none;
+  padding-left: 5px;
+  margin-bottom: 5px;
+  width: inherit;
+  text-decoration: none;
+}
+
+.search-li:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.search-li:hover {
+  background: #1164A3;
+  color: white;
+}
+
+#search-input {
+  margin-left:20px;
+  width: 85%;
+  border: none;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+}
+
+#search-input:focus {
+  outline: none;
+}
+
+.search-modal-closer {
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: #636162;
+}
+
+.search-modal-closer:active {
+  outline: none;
+}
+
+.search-modal-closer:hover {
+  cursor: pointer;
+}
+
 #modal-header {
   display: inline-flex;
   align-items: center;

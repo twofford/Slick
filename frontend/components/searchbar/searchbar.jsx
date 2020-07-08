@@ -24,25 +24,79 @@ export default class Searchbar extends React.Component {
                 
         const channelsArray = Object.values(this.props.channels);
 
+        //maybe use this for a code snippet
         const filteredChannelsArray = channelsArray.filter(channel => {
-            return channel.users.map(user => user.id).includes(currentUserId);
-        })
+            return channel.users.map(user => user.id).includes(currentUserId)
+            }).sort((a,b) => {
+            const aTitle = a.title.toUpperCase();
+            const bTitle = b.title.toUpperCase();
+            if (aTitle < bTitle) {
+                return -1;
+            } else if (aTitle > bTitle) {
+                return 1;
+            } else return 0;
+        });
+
+        const filteredMessagesArray = Object.values(this.props.messages).filter(message => {
+            return filteredChannelsArray.map(channel => channel.id).includes(message.channel_id);
+        });
+
+        console.log(filteredMessagesArray)
+
+        const placeholderMessages = [
+            "Search for something. Anything. You have the window open now anyway.",
+            "Search the Log of All Conversation and Knowledge",
+            "Search all across Slick",
+            "Surely that's around here somewhere...",
+            "What do you want to search for today?",
+            "Delve into your archives, seize upon the answers. Rejoice.",
+            "Type what you want to search for. Slick will do the rest.",
+            "Input search. Beep boop."
+        ]
+
+        const randomNum = (max) => {
+            return Math.floor(Math.random() * max + 1)
+        }
+
+        const placeholderText = placeholderMessages[randomNum(placeholderMessages.length - 1)]
         
         return(
-            <div>
-                <button id="modal-closer" onClick={() => this.props.closeModal()}>&times;</button>
-                <form onSubmit={() => event.preventDefault()}>
-                    <input type='text' onChange={this.handleInput('searchValue')}></input>
+                <>
+                <form id="search-form" onSubmit={() => event.preventDefault()}>
+                    <i className="fas fa-search gray"></i>
+                    <input id="search-input" placeholder={placeholderText} type='text' onChange={this.handleInput('searchValue')}></input>
+                    <a className="search-modal-closer" onClick={() => this.props.closeModal()}>&times;</a>
                 </form>
         
-                <ul>Channels
+                <ul>
                     {filteredChannelsArray.map(channel => {
-                        if (channel.title.toLowerCase().startsWith(this.state.searchValue)) {
-                            return <li onClick={() => this.props.closeModal()}><Link to={`/channels/${channel.id}`}>{channel.title}</Link></li>
+
+                        let prefix;
+
+                        if (channel.channel_or_dm === 'channel') {
+                            if (channel.channel_type === 'public') {
+                                prefix = '#';
+                            } else prefix = <i className="fas fa-lock"></i>;
+                        } else prefix = '#';
+
+                        if (channel.title.toLowerCase().startsWith(this.state.searchValue) && this.state.searchValue != "") {
+                            return (
+                                <Link
+                                onClick={() => this.props.closeModal()}
+                            className="search-li" to={`/channels/${channel.id}`}>Channel: {prefix}{channel.title}<br></br></Link>
+                            )} else return null;
+                    })}
+                </ul>
+                <ul>
+                    {filteredMessagesArray.map(message => {
+                        if (message.body.toLowerCase().startsWith(this.state.searchValue) && this.state.searchValue != "") {
+                            return (
+                            <Link onClick={() => this.props.closeModal()} className="search-li" to={`/channels/${message.channel_id}`}>Message: {message.body}<br></br></Link>
+                            )
                         } else return null;
                     })}
                 </ul>
-            </div>
+                </>
         )
     }
 

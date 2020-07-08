@@ -13,27 +13,31 @@ function Modal({ modal, closeModal }) {
 
     let component;
     let modalClass;
+    let modalBackgroundClass;
 
     switch (modal) {
         case "addChannel":
             component = <NewChannelContainer/>;
-            modalClass = "modal-background"
+            modalClass = "modal-child";
+            modalBackgroundClass = "modal-background"
             break;
         case "addDM":
             component = <NewDMContainer/>;
-            modalClass = "modal-background";
+            modalClass = "modal-child";
+            modalBackgroundClass = "modal-background";
             break;
         case "search":
             component = <SearchbarContainer/>;
-            modalClass = "search-modal-background";
+            modalClass = "search-modal-child"
+            modalBackgroundClass = "search-modal-background";
             break;
         default:
             return null;
     }
 
     return (
-        <div className={modalClass} onClick={closeModal}>
-            <div className="modal-child" onClick={(e) => e.stopPropagation()}>
+        <div className={modalBackgroundClass} onClick={closeModal}>
+            <div className={modalClass} onClick={(e) => e.stopPropagation()}>
                 {component}
             </div>
         </div>
