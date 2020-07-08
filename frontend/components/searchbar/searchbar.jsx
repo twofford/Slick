@@ -21,11 +21,9 @@ export default class Searchbar extends React.Component {
     render(){
 
         const currentUserId = this.props.currentUser.id
-                
-        const channelsArray = Object.values(this.props.channels);
 
         //maybe use this for a code snippet
-        const filteredChannelsArray = channelsArray.filter(channel => {
+        const filteredChannelsArray = Object.values(this.props.channels).filter(channel => {
             return channel.users.map(user => user.id).includes(currentUserId)
             }).sort((a,b) => {
             const aTitle = a.title.toUpperCase();
@@ -41,7 +39,6 @@ export default class Searchbar extends React.Component {
             return filteredChannelsArray.map(channel => channel.id).includes(message.channel_id);
         });
 
-        console.log(filteredMessagesArray)
 
         const placeholderMessages = [
             "Search for something. Anything. You have the window open now anyway.",
@@ -83,15 +80,22 @@ export default class Searchbar extends React.Component {
                             return (
                                 <Link
                                 onClick={() => this.props.closeModal()}
-                            className="search-li" to={`/channels/${channel.id}`}>Channel: {prefix}{channel.title}<br></br></Link>
+                            className="search-li" to={`/channels/${channel.id}`}>{prefix}{channel.title}<br></br></Link>
                             )} else return null;
                     })}
                 </ul>
                 <ul>
                     {filteredMessagesArray.map(message => {
+
+                        console.log(message);
+
+                        const messageUser = this.props.users[message.user.id]
+
+                        const messageChannel = this.props.channels[message.channel_id];
+
                         if (message.body.toLowerCase().startsWith(this.state.searchValue) && this.state.searchValue != "") {
                             return (
-                            <Link onClick={() => this.props.closeModal()} className="search-li" to={`/channels/${message.channel_id}`}>Message: {message.body}<br></br></Link>
+                            <Link onClick={() => this.props.closeModal()} className="search-li" to={`/channels/${message.channel_id}`}>{messageUser.email}: "{message.body}" -- in {messageChannel.title}<br></br></Link>
                             )
                         } else return null;
                     })}

@@ -3,13 +3,13 @@
     justify-content: center;
     flex-direction: row;
     position: relative;
-    top: 80%;
+    top: 88%;
     width: 100%;
     background: white;
 }
 
 .message-form {
-    width: 95%;
+    width: 98%;
     border: 1px solid #989798;
     border-radius: 4px;
     background: white;
@@ -20,7 +20,9 @@
     height: 35px;
     border: none;
     font-size: 14px;
+    font-family: 'Lato', sans-serif;
     background-color: transparent;
+    width: 80%;
 }
 
 .message-form-input:hover, .message-form-input:focus {

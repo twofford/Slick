@@ -41,7 +41,6 @@ class ChannelSidebarItem extends React.Component{
             channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email),1);
 
             const channelDisplayTitle = channelDisplayTitleArray.join(", ");
-
             
             if (this.props.currentChannelId == this.props.channel.id) {
                 return (

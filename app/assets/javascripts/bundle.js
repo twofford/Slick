@@ -1072,25 +1072,9 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelViewport, [{
     key: "render",
     value: function render() {
-      var _this = this;
-
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "logged-in-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "search-bar"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        onClick: function onClick() {
-          return _this.props.openModal("search");
-        },
-        className: "search-inner-div"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-search"
-      }), "\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Search Your Workspace")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "logout",
-        onClick: this.props.logout
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-sign-out-alt"
-      }), "\xA0Sign Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channel-viewport"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_container__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
     }
@@ -1445,7 +1429,17 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var placeholder = "Message #".concat(this.props.channel.title);
+      var placeholder;
+
+      if (this.props.channel.channel_or_dm === 'channel') {
+        placeholder = "Message #".concat(this.props.channel.title);
+      } else {
+        var channelDisplayTitleArray = this.props.channel.title.split(",");
+        channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
+        var channelDisplayTitle = channelDisplayTitleArray.join(", ");
+        placeholder = "Message".concat(channelDisplayTitle);
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-form-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -2238,10 +2232,9 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var currentUserId = this.props.currentUser.id;
-      var channelsArray = Object.values(this.props.channels); //maybe use this for a code snippet
+      var currentUserId = this.props.currentUser.id; //maybe use this for a code snippet
 
-      var filteredChannelsArray = channelsArray.filter(function (channel) {
+      var filteredChannelsArray = Object.values(this.props.channels).filter(function (channel) {
         return channel.users.map(function (user) {
           return user.id;
         }).includes(currentUserId);
@@ -2260,7 +2253,6 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
           return channel.id;
         }).includes(message.channel_id);
       });
-      console.log(filteredMessagesArray);
       var placeholderMessages = ["Search for something. Anything. You have the window open now anyway.", "Search the Log of All Conversation and Knowledge", "Search all across Slick", "Surely that's around here somewhere...", "What do you want to search for today?", "Delve into your archives, seize upon the answers. Rejoice.", "Type what you want to search for. Slick will do the rest.", "Input search. Beep boop."];
 
       var randomNum = function randomNum(max) {
@@ -2303,9 +2295,13 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
             },
             className: "search-li",
             to: "/channels/".concat(channel.id)
-          }, "Channel: ", prefix, channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+          }, prefix, channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
         } else return null;
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filteredMessagesArray.map(function (message) {
+        console.log(message);
+        var messageUser = _this3.props.users[message.user.id];
+        var messageChannel = _this3.props.channels[message.channel_id];
+
         if (message.body.toLowerCase().startsWith(_this3.state.searchValue) && _this3.state.searchValue != "") {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
             onClick: function onClick() {
@@ -2313,7 +2309,7 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
             },
             className: "search-li",
             to: "/channels/".concat(message.channel_id)
-          }, "Message: ", message.body, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+          }, messageUser.email, ": \"", message.body, "\" -- in ", messageChannel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
         } else return null;
       })));
     }

@@ -43,7 +43,19 @@ export default class NewMessageForm extends React.Component{
 
     render(){
 
-        const placeholder = `Message #${this.props.channel.title}`;
+        let placeholder;
+
+        if (this.props.channel.channel_or_dm === 'channel') {
+            placeholder = `Message #${this.props.channel.title}`;
+        } else {
+            let channelDisplayTitleArray = this.props.channel.title.split(",");
+
+            channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
+
+            const channelDisplayTitle = channelDisplayTitleArray.join(", ");
+
+            placeholder = `Message${channelDisplayTitle}`;
+        }
 
         return(
             <div className='message-form-container'>
