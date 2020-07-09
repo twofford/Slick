@@ -1,7 +1,9 @@
 import React from 'react';
 
 class NewDMForm extends React.Component {
+
     constructor(props) {
+
         super(props)
 
         this.state = {
@@ -9,28 +11,56 @@ class NewDMForm extends React.Component {
             description: '',
             channel_or_dm: 'dm',
             channel_type: 'private',
-            users: []
+            users: [],
+            searchValue: ''
         }
         
         this.handleSubmit = this.handleSubmit.bind(this);
+
         this.formatTitle = this.formatTitle.bind(this);
+
+        // this.selectUser = this.selectUser.bind(this);
+        
     }
 
     componentDidMount() {
         this.props.clearErrors();
     }
 
+    // selectUser(userEmail) {
+    //     this.state.users.push(userEmail);
+    //     const dmIncludedUsers = document.getElementById("dm-included-users");
+    //     const userTag = document.createElement("span");
+    //     userTag.innerHTML = userEmail;
+    //     dmIncludedUsers.append(userTag);
+    //     const target = document.getElementById(userEmail);
+    //     target.parentNode.removeChild(target);
+    //     document.getElementById("dm-search-input").value = "";
+    // }
+
     handleSubmit(event) {
         event.preventDefault();
+
         this.state.users = [...new Set(this.state.users)];
+
         this.state.title = this.formatTitle(this.state.users);
+
         const channel = Object.assign({}, this.state);
+
         this.props.createChannel(channel).then(() => {
             if (!this.props.errors.channel) {
                 this.props.closeModal();
             }
         });
     }
+
+    handleInput(type) {
+        return (event) => {
+            this.setState({
+                [type]: event.target.value,
+            });
+        };
+    };
 
     formatTitle(users) {
         if (users.length > 0) {
@@ -51,11 +81,10 @@ class NewDMForm extends React.Component {
         );
     }
 
+
     render() {
  
-        this.usersArray = Object.values(this.props.users);
-
-        this.usersArray = this.usersArray.filter(user => this.props.currentUser !== user.id);
+        const usersArray = Object.values(this.props.users).filter(user => this.props.currentUser !== user.id);
 
         return(
             <div>
@@ -63,13 +92,46 @@ class NewDMForm extends React.Component {
                     <h1 id="new-channel-form-h1">Direct Messages</h1>
                     <button id="modal-closer" onClick={() => this.props.closeModal()}>&times;</button>
                 </div>
+
+                <br/>
+
+                <span id="fake-search-box">
+
+                    <span id="dm-included-users"></span>
+
+                    <input id="dm-search-input"
+                    type="text"
+                    placeholder="Find or start a conversation"
+                    onChange={this.handleInput('searchValue')}/>
+
+                </span>
+
+                <button onClick={this.handleSubmit}>Go</button>
+
+                <ul id="search-results-ul">
+                    {usersArray.map(user => {
+                        if (user.email.toLowerCase().startsWith(this.state.searchValue) && !this.state.users.includes(user.email) && this.state.searchValue !== "") {
+                            
+                            return (
+                            <li id={user.email} key={user.id}
+                            onClick={() => {
+                                this.state.users.push(user.email);
+                                document.getElementById("dm-included-users").innerHTML += user.email;
+                                document.getElementById(`${user.email}`).style = "display: none;";
+                                document.getElementById("dm-search-input").value = "";
+                            }}>{user.email}</li>
+                            )
+                        } else return null;
+                    })}
+                </ul>
+                {this.renderErrors()}
                 
-                <div>These users are in the DM
+                {/* <div>These users are in the DM
                 <ul id="users-in-dm-ul" onClick={(e) => {
-                    // const usersNotInDMUl = document.getElementById("users-not-in-dm-ul");
-                    // const target = e.target;
-                    // target.parentNode.removeChild(target);
-                    // usersNotInDMUl.appendChild(target);
+                    const usersNotInDMUl = document.getElementById("users-not-in-dm-ul");
+                    const target = e.target;
+                    target.parentNode.removeChild(target);
+                    usersNotInDMUl.appendChild(target);
                 }}>
 
                 </ul>
@@ -95,7 +157,8 @@ class NewDMForm extends React.Component {
                 </div>
                 
                 <button onClick={this.handleSubmit}>Submit</button>
-                {this.renderErrors()}
+                {this.renderErrors()} */}
+
             </div>
         )
     }

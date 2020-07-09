@@ -37,6 +37,7 @@ export default class MessageItem extends React.Component{
             
             <div className='message-wrapper'>
                 <div>
+                    {/* <i class="fas fa-user"></i> */}
                     <img className='message-avatar' src={avatar}/>
                 </div>
                 <div className='message-container'>

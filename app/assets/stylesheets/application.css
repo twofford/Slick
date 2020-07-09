@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require new_dm_form
  *= require modal
  *= require new_message_form
  *= require messages_viewport

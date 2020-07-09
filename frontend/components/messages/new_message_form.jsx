@@ -67,7 +67,7 @@ export default class NewMessageForm extends React.Component{
                 placeholder={placeholder}
                 type="text"
                 onChange={this.handleInput('body')}/>
-                {/* <i className="fas fa-paper-plane"></i> */}
+                <i className="fas fa-paper-plane"></i>
             </form>
             </div>
 

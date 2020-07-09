@@ -13,7 +13,7 @@ class ChannelViewport extends React.Component{
         return(
             <>
             <div id='logged-in-container'>
-            {/* <div className='search-bar'>
+            <div className='search-bar'>
 
                     <div onClick={() => this.props.openModal("search")}className='search-inner-div'>
                     <i className="fas fa-search"></i>
@@ -24,7 +24,7 @@ class ChannelViewport extends React.Component{
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp;Sign Out
                     </p>
-            </div> */}
+            </div>
             <div className='channel-viewport'>
                 <ChannelSidebarContainer/>
                 <ChannelContainer/>
