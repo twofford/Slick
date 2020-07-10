@@ -1821,6 +1821,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 
@@ -1854,7 +1856,7 @@ var mdp = function mdp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_new_dm_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_new_dm_form__WEBPACK_IMPORTED_MODULE_1__["default"])));
 
 /***/ }),
 
@@ -1869,6 +1871,7 @@ var mdp = function mdp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1907,6 +1910,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var NewDMForm = /*#__PURE__*/function (_React$Component) {
   _inherits(NewDMForm, _React$Component);
 
@@ -1927,8 +1931,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       searchValue: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.formatTitle = _this.formatTitle.bind(_assertThisInitialized(_this)); // this.selectUser = this.selectUser.bind(this);
-
+    _this.formatTitle = _this.formatTitle.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1936,17 +1939,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.clearErrors();
-    } // selectUser(userEmail) {
-    //     this.state.users.push(userEmail);
-    //     const dmIncludedUsers = document.getElementById("dm-included-users");
-    //     const userTag = document.createElement("span");
-    //     userTag.innerHTML = userEmail;
-    //     dmIncludedUsers.append(userTag);
-    //     const target = document.getElementById(userEmail);
-    //     target.parentNode.removeChild(target);
-    //     document.getElementById("dm-search-input").value = "";
-    // }
-
+    }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
@@ -1956,9 +1949,10 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       this.state.users = _toConsumableArray(new Set(this.state.users));
       this.state.title = this.formatTitle(this.state.users);
       var channel = Object.assign({}, this.state);
-      this.props.createChannel(channel).then(function () {
+      this.props.createChannel(channel).then(function (channel) {
         if (!_this2.props.errors.channel) {
-          _this2.props.closeModal();
+          _this2.props.closeModal(); // this.props.history.push(`/api/channels/${channel.channel.id}`)
+
         }
       });
     }
@@ -2006,18 +2000,28 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this4.props.closeModal();
         }
-      }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "fake-search-box-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "fake-search-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "dm-included-users"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onFocus: function onFocus() {
+          document.getElementById("fake-search-box").style = "box-shadow: 0 0 0 4px #bee2f1;";
+        },
+        onBlur: function onBlur() {
+          document.getElementById("fake-search-box").style = "box-shadow: none;";
+        },
         id: "dm-search-input",
         type: "text",
+        autoComplete: "off",
         placeholder: "Find or start a conversation",
-        onChange: this.handleInput('searchValue')
+        onChange: this.handleInput("searchValue")
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "search-button",
         onClick: this.handleSubmit
-      }, "Go"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, "Go")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "search-results-ul"
       }, usersArray.map(function (user) {
         if (user.email.toLowerCase().startsWith(_this4.state.searchValue) && !_this4.state.users.includes(user.email) && _this4.state.searchValue !== "") {

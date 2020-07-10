@@ -3,6 +3,7 @@ import NewDMForm from './new_dm_form';
 import { createChannel, clearErrors } from '../../actions/channel_actions';
 import { closeModal } from '../../actions/modal_actions';
 import { fetchUsers } from '../../actions/user_actions';
+import { withRouter } from 'react-router-dom';
 
 const msp = state => {
     return {
@@ -24,4 +25,4 @@ const mdp = dispatch => {
     }
 }
 
-export default connect(msp, mdp)(NewDMForm);
+export default withRouter(connect(msp, mdp)(NewDMForm));
