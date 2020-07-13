@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 class NewDMForm extends React.Component {
 
@@ -18,8 +17,7 @@ class NewDMForm extends React.Component {
         
         this.handleSubmit = this.handleSubmit.bind(this);
 
-        this.formatTitle = this.formatTitle.bind(this);
-        
+        this.formatTitle = this.formatTitle.bind(this);        
     }
 
     componentDidMount() {
@@ -42,8 +40,6 @@ class NewDMForm extends React.Component {
                 // this.props.history.push(`/api/channels/${channel.channel.id}`)
             }
         });
-
-    
     }
 
     handleInput(type) {
@@ -73,25 +69,39 @@ class NewDMForm extends React.Component {
         );
     }
 
+    componentDidUpdate(){
+      console.log(this.state.users);
+    }
 
     render() {
  
         const usersArray = Object.values(this.props.users).filter(user => this.props.currentUser !== user.id);
 
+
         return (
           <div>
             <div id="modal-header">
-              <h1 id="new-channel-form-h1">Direct Messages</h1>
+              <h1 id="new-dm-form-h1">Direct Messages</h1>
               <button id="modal-closer" onClick={() => this.props.closeModal()}>
                 &times;
               </button>
             </div>
 
-            <br />
-
             <div id ="fake-search-box-container">
               <div id="fake-search-box">
-                <span id="dm-included-users"></span>
+              <span id="dm-included-users">
+                {this.state.users.map((user, index) => {
+                  return <span key={index} className="user-tag">{user}<button onClick={() => {
+                    const usersCopy = [...this.state.users];
+                    const toBeDeletedIndex = usersCopy.indexOf(user);
+                    usersCopy.splice(toBeDeletedIndex, 1);
+                    this.setState(
+                      {users: usersCopy}
+                    )
+                  }}>
+                      Button</button></span>
+                })}
+              </span>
 
                 <input
                   onFocus={() => {
@@ -103,6 +113,7 @@ class NewDMForm extends React.Component {
                   id="dm-search-input"
                   type="text"
                   autoComplete="off"
+                  autoFocus
                   placeholder="Find or start a conversation"
                   onChange={this.handleInput("searchValue")}
                 />
@@ -114,7 +125,9 @@ class NewDMForm extends React.Component {
             </div>
 
             <ul id="search-results-ul">
+              
               {usersArray.map((user) => {
+
                 if (
                   user.email.toLowerCase().startsWith(this.state.searchValue) &&
                   !this.state.users.includes(user.email) &&
@@ -125,13 +138,16 @@ class NewDMForm extends React.Component {
                       id={user.email}
                       key={user.id}
                       onClick={() => {
-                        this.state.users.push(user.email);
-                        document.getElementById(
-                          "dm-included-users"
-                        ).innerHTML += user.email;
+                        this.setState(state => {
+                          const newUsers = state.users.concat(user.email);
+                          return {users: newUsers, searchValue: ''};
+                        })
+
                         document.getElementById(`${user.email}`).style =
                           "display: none;";
+
                         document.getElementById("dm-search-input").value = "";
+
                       }}
                     >
                       {user.email}

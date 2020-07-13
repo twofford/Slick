@@ -1562,7 +1562,7 @@ function Modal(_ref) {
 
     case "addDM":
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_dm_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
-      modalClass = "modal-child";
+      modalClass = "dm-modal-child";
       modalBackgroundClass = "modal-background";
       break;
 
@@ -1871,7 +1871,6 @@ var mdp = function mdp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1907,7 +1906,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -1984,6 +1982,11 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }));
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      console.log(this.state.users);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
@@ -1994,19 +1997,35 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-        id: "new-channel-form-h1"
+        id: "new-dm-form-h1"
       }, "Direct Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
           return _this4.props.closeModal();
         }
-      }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "fake-search-box-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "fake-search-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "dm-included-users"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, this.state.users.map(function (user, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          key: index,
+          className: "user-tag"
+        }, user, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            var usersCopy = _toConsumableArray(_this4.state.users);
+
+            var toBeDeletedIndex = usersCopy.indexOf(user);
+            usersCopy.splice(toBeDeletedIndex, 1);
+
+            _this4.setState({
+              users: usersCopy
+            });
+          }
+        }, "Button"));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onFocus: function onFocus() {
           document.getElementById("fake-search-box").style = "box-shadow: 0 0 0 4px #bee2f1;";
         },
@@ -2016,6 +2035,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         id: "dm-search-input",
         type: "text",
         autoComplete: "off",
+        autoFocus: true,
         placeholder: "Find or start a conversation",
         onChange: this.handleInput("searchValue")
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2029,9 +2049,14 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
             id: user.email,
             key: user.id,
             onClick: function onClick() {
-              _this4.state.users.push(user.email);
+              _this4.setState(function (state) {
+                var newUsers = state.users.concat(user.email);
+                return {
+                  users: newUsers,
+                  searchValue: ''
+                };
+              });
 
-              document.getElementById("dm-included-users").innerHTML += user.email;
               document.getElementById("".concat(user.email)).style = "display: none;";
               document.getElementById("dm-search-input").value = "";
             }

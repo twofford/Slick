@@ -23,7 +23,7 @@ function Modal({ modal, closeModal }) {
             break;
         case "addDM":
             component = <NewDMContainer/>;
-            modalClass = "modal-child";
+            modalClass = "dm-modal-child";
             modalBackgroundClass = "modal-background";
             break;
         case "search":
