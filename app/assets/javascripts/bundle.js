@@ -455,7 +455,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../messages/messages_viewport_container */ "./frontend/components/messages/messages_viewport_container.jsx");
 /* harmony import */ var _messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../messages/new_message_form_container */ "./frontend/components/messages/new_message_form_container.jsx");
-/* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/message_actions */ "./frontend/actions/message_actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -482,7 +481,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var Channel = /*#__PURE__*/function (_React$Component) {
   _inherits(Channel, _React$Component);
 
@@ -497,18 +495,19 @@ var Channel = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       messages: []
     };
-    _this.bottom = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
 
   _createClass(Channel, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       App.cable.subscriptions.create({
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_3__["receiveMessage"])(data));
+          _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
           return this.perform('speak', data);
@@ -586,9 +585,11 @@ var Channel = /*#__PURE__*/function (_React$Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
+/* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/message_actions */ "./frontend/actions/message_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
+
 
 
 
@@ -618,11 +619,14 @@ var mdp = function mdp(dispatch) {
     },
     deleteChannel: function deleteChannel(channel) {
       return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__["deleteChannel"])(channel));
+    },
+    receiveMessage: function receiveMessage(message) {
+      return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_1__["receiveMessage"])(message));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_3__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_4__["default"])));
 
 /***/ }),
 
@@ -1984,7 +1988,16 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      console.log(this.state.users);
+      document.getElementById("dm-search-input").focus();
+      var searchButton = document.getElementById("search-button");
+
+      if (this.state.users.length != 0) {
+        searchButton.classList.add("enabled-button");
+        searchButton.classList.remove("disabled-button");
+      } else {
+        searchButton.classList.add("disabled-button");
+        searchButton.classList.remove("enabled-button");
+      }
     }
   }, {
     key: "render",
@@ -2013,7 +2026,13 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           key: index,
           className: "user-tag"
-        }, user, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "avatar",
+          src: avatar
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "dm-user-name"
+        }, user), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "dm-button",
           onClick: function onClick() {
             var usersCopy = _toConsumableArray(_this4.state.users);
 
@@ -2024,7 +2043,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
               users: usersCopy
             });
           }
-        }, "Button"));
+        }, "\xD7"));
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onFocus: function onFocus() {
           document.getElementById("fake-search-box").style = "box-shadow: 0 0 0 4px #bee2f1;";
@@ -2040,6 +2059,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         onChange: this.handleInput("searchValue")
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "search-button",
+        className: "disabled-button",
         onClick: this.handleSubmit
       }, "Go")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "search-results-ul"

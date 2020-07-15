@@ -4,7 +4,9 @@ import {
     createChannel,
     updateChannel,
     deleteChannel
-} from '../../actions/channel_actions'
+} from '../../actions/channel_actions';
+
+import { receiveMessage } from '../../actions/message_actions';
 
 import {withRouter} from 'react-router-dom';
 
@@ -30,7 +32,10 @@ const mdp = dispatch => (
 
         updateChannel: channel => dispatch(updateChannel(channel)),
 
-        deleteChannel: channel => dispatch(deleteChannel(channel))
+        deleteChannel: channel => dispatch(deleteChannel(channel)),
+
+        receiveMessage: message => dispatch(receiveMessage(message))
+
     }
 )
 

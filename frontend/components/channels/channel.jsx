@@ -2,22 +2,20 @@ import React from 'react';
 import MessagesViewportContainer from '../messages/messages_viewport_container';
 import NewMessageFormContainer from '../messages/new_message_form_container';
 
-import {receiveMessage} from '../../actions/message_actions';
-
 class Channel extends React.Component{
     constructor(props){
         super(props)
         this.state = {messages : []};
-        this.bottom = React.createRef();
     }
 
     componentDidMount(){
+        
         
         App.cable.subscriptions.create(
             {channel: 'ChatChannel'},
             {
                 received: data => {
-                    dispatch(receiveMessage(data));
+                    this.props.receiveMessage(data);
                 },
 
                 speak: function(data) {

@@ -70,7 +70,15 @@ class NewDMForm extends React.Component {
     }
 
     componentDidUpdate(){
-      console.log(this.state.users);
+      document.getElementById("dm-search-input").focus();
+      const searchButton = document.getElementById("search-button");
+      if (this.state.users.length != 0) {
+        searchButton.classList.add("enabled-button")
+        searchButton.classList.remove("disabled-button")
+      } else {
+        searchButton.classList.add("disabled-button")
+        searchButton.classList.remove("enabled-button")
+      }
     }
 
     render() {
@@ -91,7 +99,7 @@ class NewDMForm extends React.Component {
               <div id="fake-search-box">
               <span id="dm-included-users">
                 {this.state.users.map((user, index) => {
-                  return <span key={index} className="user-tag">{user}<button onClick={() => {
+                  return <span key={index} className="user-tag"><img className="avatar" src={avatar}></img><span className="dm-user-name">{user}</span><button className="dm-button" onClick={() => {
                     const usersCopy = [...this.state.users];
                     const toBeDeletedIndex = usersCopy.indexOf(user);
                     usersCopy.splice(toBeDeletedIndex, 1);
@@ -99,7 +107,7 @@ class NewDMForm extends React.Component {
                       {users: usersCopy}
                     )
                   }}>
-                      Button</button></span>
+                      &times;</button></span>
                 })}
               </span>
 
@@ -119,7 +127,7 @@ class NewDMForm extends React.Component {
                 />
 
               </div>
-                <button id="search-button" onClick={this.handleSubmit}>
+                <button id="search-button" className="disabled-button" onClick={this.handleSubmit}>
                   Go
                 </button>
             </div>
