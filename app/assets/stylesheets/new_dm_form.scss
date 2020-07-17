@@ -55,9 +55,12 @@
     justify-content: space-between;
     align-items: center;;
     max-height: 25px;
-    width: fit-content;
+    width: max-content;
     font-weight: 700;
     border: 1px solid #e1ecf0;
+    margin-right: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .user-tag:hover {

@@ -94,6 +94,42 @@ c5 = Channel.create!(
     description: 'We talk about Star Trek here.'
 )
 
+c6 = Channel.create!(
+    title: 'DemoDude, Solid Snake',
+    channel_type: 'private',
+    channel_or_dm: 'dm',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+    description: ''
+)
+
+c7 = Channel.create!(
+    title: 'DemoDude, Tom Nook',
+    channel_type: 'private',
+    channel_or_dm: 'dm',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+    description: ''
+)
+
+c8 = Channel.create!(
+    title: 'DemoDude, Link',
+    channel_type: 'private',
+    channel_or_dm: 'dm',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+    description: ''
+)
+
+c9 = Channel.create!(
+    title: 'DemoDude, Waluigi',
+    channel_type: 'private',
+    channel_or_dm: 'dm',
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020',
+    description: ''
+)
+
 cm1 = ChannelMembership.create!(
     user_id: User.first.id,
     channel_id: Channel.first.id,
@@ -265,6 +301,62 @@ cm24 = ChannelMembership.create!(
 cm25 = ChannelMembership.create!(
     user_id: User.fifth.id,
     channel_id: Channel.fifth.id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm26 = ChannelMembership.create!(
+    user_id: User.first.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Solid Snake').id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm27 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Solid Snake').id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm28 = ChannelMembership.create!(
+    user_id: User.second.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Tom Nook').id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm29 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Tom Nook').id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm30 = ChannelMembership.create!(
+    user_id: User.third.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Link').id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm31 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Link').id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm32 = ChannelMembership.create!(
+    user_id: User.fourth.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Waluigi').id,
+    created_at: '1/1/2020',
+    updated_at: '1/1/2020'
+)
+
+cm33 = ChannelMembership.create!(
+    user_id: User.fifth.id,
+    channel_id: Channel.find_by(title: 'DemoDude, Waluigi').id,
     created_at: '1/1/2020',
     updated_at: '1/1/2020'
 )

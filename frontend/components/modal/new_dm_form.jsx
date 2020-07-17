@@ -17,7 +17,7 @@ class NewDMForm extends React.Component {
         
         this.handleSubmit = this.handleSubmit.bind(this);
 
-        this.formatTitle = this.formatTitle.bind(this);        
+        this.formatTitle = this.formatTitle.bind(this);   
     }
 
     componentDidMount() {
@@ -25,21 +25,22 @@ class NewDMForm extends React.Component {
     }
 
     handleSubmit(event) {
-
         event.preventDefault();
-
-        this.state.users = [...new Set(this.state.users)];
-
         this.state.title = this.formatTitle(this.state.users);
-
-        const channel = Object.assign({}, this.state);
-
-        this.props.createChannel(channel).then(channel => {
-            if (!this.props.errors.channel) {
-                this.props.closeModal();
-                // this.props.history.push(`/api/channels/${channel.channel.id}`)
-            }
-        });
+        const channelsArray = Object.values(this.props.channels);
+        const channelTitlesArray = channelsArray.map(channel => channel.title);
+        if (channelTitlesArray.includes(this.state.title)) {
+          const channelIdx = channelTitlesArray.indexOf(this.state.title);
+          const channel = channelsArray[channelIdx];
+          this.props.history.push(`/channels/${channel.id}`);
+          this.props.closeModal();
+        } else {
+          const channel = Object.assign({}, this.state);
+          this.props.createChannel(channel).then((channel) => {
+               this.props.history.push(`/channels/${channel.channel.id}`)
+               this.props.closeModal();
+             });
+        }
     }
 
     handleInput(type) {
@@ -84,7 +85,12 @@ class NewDMForm extends React.Component {
     render() {
  
         const usersArray = Object.values(this.props.users).filter(user => this.props.currentUser !== user.id);
+        
+        let inputPlaceholder;
 
+        if (this.state.users.length !== 0) {
+          inputPlaceholder = ""
+        } else inputPlaceholder = "Find or start a conversation";
 
         return (
           <div>
@@ -107,24 +113,23 @@ class NewDMForm extends React.Component {
                       {users: usersCopy}
                     )
                   }}>
-                      &times;</button></span>
+                      X</button></span>
                 })}
+                  <input
+                    onFocus={() => {
+                      document.getElementById("fake-search-box").style = "box-shadow: 0 0 0 4px #bee2f1;"
+                    }}
+                    onBlur={() => {
+                      document.getElementById("fake-search-box").style = "box-shadow: none;"
+                    }}
+                    id="dm-search-input"
+                    type="text"
+                    autoComplete="off"
+                    autoFocus
+                    placeholder={inputPlaceholder}
+                    onChange={this.handleInput("searchValue")}
+                  />
               </span>
-
-                <input
-                  onFocus={() => {
-                    document.getElementById("fake-search-box").style = "box-shadow: 0 0 0 4px #bee2f1;"
-                  }}
-                  onBlur={() => {
-                    document.getElementById("fake-search-box").style = "box-shadow: none;"
-                  }}
-                  id="dm-search-input"
-                  type="text"
-                  autoComplete="off"
-                  autoFocus
-                  placeholder="Find or start a conversation"
-                  onChange={this.handleInput("searchValue")}
-                />
 
               </div>
                 <button id="search-button" className="disabled-button" onClick={this.handleSubmit}>
@@ -135,11 +140,10 @@ class NewDMForm extends React.Component {
             <ul id="search-results-ul">
               
               {usersArray.map((user) => {
-
                 if (
                   user.email.toLowerCase().startsWith(this.state.searchValue) &&
-                  !this.state.users.includes(user.email) &&
-                  this.state.searchValue !== ""
+                  !this.state.users.includes(user.email) 
+                  && this.state.searchValue !== ""
                 ) {
                   return (
                     <li

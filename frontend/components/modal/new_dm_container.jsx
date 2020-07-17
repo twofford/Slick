@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import NewDMForm from './new_dm_form';
-import { createChannel, clearErrors } from '../../actions/channel_actions';
+import { createChannel, fetchChannel, clearErrors } from '../../actions/channel_actions';
 import { closeModal } from '../../actions/modal_actions';
 import { fetchUsers } from '../../actions/user_actions';
 import { withRouter } from 'react-router-dom';
@@ -18,6 +18,7 @@ const msp = state => {
 const mdp = dispatch => {
     return {
         createChannel: channel => dispatch(createChannel(channel)),
+        fetchChannel: channel => dispatch(fetchChannel(channel)),
         fetchUsers: () => dispatch(fetchUsers()),
         closeModal: () => dispatch(closeModal()),
         clearErrors: () => dispatch(clearErrors())

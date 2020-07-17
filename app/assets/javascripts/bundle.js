@@ -1848,6 +1848,9 @@ var mdp = function mdp(dispatch) {
     createChannel: function createChannel(channel) {
       return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["createChannel"])(channel));
     },
+    fetchChannel: function fetchChannel(channel) {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["fetchChannel"])(channel));
+    },
     fetchUsers: function fetchUsers() {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUsers"])());
     },
@@ -1877,8 +1880,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1890,6 +1891,8 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.it
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1948,15 +1951,26 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       event.preventDefault();
-      this.state.users = _toConsumableArray(new Set(this.state.users));
       this.state.title = this.formatTitle(this.state.users);
-      var channel = Object.assign({}, this.state);
-      this.props.createChannel(channel).then(function (channel) {
-        if (!_this2.props.errors.channel) {
-          _this2.props.closeModal(); // this.props.history.push(`/api/channels/${channel.channel.id}`)
-
-        }
+      var channelsArray = Object.values(this.props.channels);
+      var channelTitlesArray = channelsArray.map(function (channel) {
+        return channel.title;
       });
+
+      if (channelTitlesArray.includes(this.state.title)) {
+        var channelIdx = channelTitlesArray.indexOf(this.state.title);
+        var channel = channelsArray[channelIdx];
+        this.props.history.push("/channels/".concat(channel.id));
+        this.props.closeModal();
+      } else {
+        var _channel = Object.assign({}, this.state);
+
+        this.props.createChannel(_channel).then(function (channel) {
+          _this2.props.history.push("/channels/".concat(channel.channel.id));
+
+          _this2.props.closeModal();
+        });
+      }
     }
   }, {
     key: "handleInput",
@@ -2007,6 +2021,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       var usersArray = Object.values(this.props.users).filter(function (user) {
         return _this4.props.currentUser !== user.id;
       });
+      var inputPlaceholder;
+
+      if (this.state.users.length !== 0) {
+        inputPlaceholder = "";
+      } else inputPlaceholder = "Find or start a conversation";
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
@@ -2043,8 +2063,8 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
               users: usersCopy
             });
           }
-        }, "\xD7"));
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, "X"));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onFocus: function onFocus() {
           document.getElementById("fake-search-box").style = "box-shadow: 0 0 0 4px #bee2f1;";
         },
@@ -2055,9 +2075,9 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         type: "text",
         autoComplete: "off",
         autoFocus: true,
-        placeholder: "Find or start a conversation",
+        placeholder: inputPlaceholder,
         onChange: this.handleInput("searchValue")
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "search-button",
         className: "disabled-button",
         onClick: this.handleSubmit
