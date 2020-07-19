@@ -20,7 +20,6 @@ class LoginForm extends React.Component {
         event.preventDefault();
         const user = Object.assign({}, this.state);
         this.props.login(user);
-        
     };
 
     renderErrors() {

@@ -87,8 +87,6 @@ export default class Searchbar extends React.Component {
                 <ul>
                     {filteredMessagesArray.map(message => {
 
-                        console.log(message);
-
                         const messageUser = this.props.users[message.user.id]
 
                         const messageChannel = this.props.channels[message.channel_id];

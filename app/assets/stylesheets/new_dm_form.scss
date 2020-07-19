@@ -27,7 +27,7 @@
     font-family: 'Lato', sans-serif;
     font-size: 16px;
     margin-left: 5px;
-    width: inherit;
+    width: 200px;
     border-radius: 4px;
 }
 
@@ -94,4 +94,45 @@
 .dm-button:hover {
     cursor: pointer;
     background-color: #d5e1e4;
+}
+
+#search-results-ul {
+    height: 550px;
+    margin-top: 20px;
+    align-self: center;
+    overflow: auto;
+}
+
+.search-result-li {
+    list-style: none;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    // border-top: 1px solid gray;
+    // width: 400px;
+}
+
+.search-result-li:last-child {
+    // border-bottom: 1px solid gray;
+}
+
+.search-result {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.search-avatar {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+}
+
+.search-result-title {
+    font-weight: 700;
+}
+
+.search-result-last-message-user {
+    font-weight: 700;
+    color: #AEAEAF;
 }

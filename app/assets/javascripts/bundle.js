@@ -1825,7 +1825,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/message_actions */ "./frontend/actions/message_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 
@@ -1839,7 +1841,8 @@ var msp = function msp(state) {
     users: state.entities.users,
     currentUser: state.session.user.id,
     errors: state.errors.channel,
-    currentUserEmail: state.session.user.email
+    currentUserEmail: state.entities.users[state.session.user.id].email,
+    messages: state.entities.messages
   };
 };
 
@@ -1859,11 +1862,14 @@ var mdp = function mdp(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
+    },
+    fetchMessages: function fetchMessages(channelId) {
+      return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_5__["fetchMessages"])(channelId));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_new_dm_form__WEBPACK_IMPORTED_MODULE_1__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_new_dm_form__WEBPACK_IMPORTED_MODULE_1__["default"])));
 
 /***/ }),
 
@@ -1928,15 +1934,17 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      title: '',
-      description: '',
-      channel_or_dm: 'dm',
-      channel_type: 'private',
+      title: "",
+      description: "",
+      channel_or_dm: "dm",
+      channel_type: "private",
       users: [],
-      searchValue: ''
+      searchValue: ""
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.formatTitle = _this.formatTitle.bind(_assertThisInitialized(_this));
+    _this.doesDmExist = _this.doesDmExist.bind(_assertThisInitialized(_this));
+    _this.displayTitle = _this.displayTitle.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2014,13 +2022,39 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "doesDmExist",
+    value: function doesDmExist(user) {
+      var title = [user.email].concat(this.props.users[this.props.currentUser].email);
+      title = title.sort().join(", ");
+      return Object.values(this.props.channels).map(function (channel) {
+        return channel.title;
+      }).includes(title) ? true : false;
+    }
+  }, {
+    key: "displayTitle",
+    value: function displayTitle(title) {
       var _this4 = this;
 
-      var usersArray = Object.values(this.props.users).filter(function (user) {
-        return _this4.props.currentUser !== user.id;
+      var channelDisplayTitleArray = title.split(", ");
+      var currentUserRemoved = channelDisplayTitleArray.filter(function (user) {
+        return user !== _this4.props.currentUserEmail;
       });
+      return currentUserRemoved.join(", ");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      var usersArray = Object.values(this.props.users).filter(function (user) {
+        return _this5.props.currentUser !== user.id;
+      }).filter(function (user) {
+        return !_this5.doesDmExist(user);
+      });
+      var dmsArray = Object.values(this.props.channels).filter(function (channel) {
+        return channel.channel_or_dm === "dm";
+      });
+      var allChannelsArray = usersArray.concat(dmsArray);
       var inputPlaceholder;
 
       if (this.state.users.length !== 0) {
@@ -2034,7 +2068,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }, "Direct Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
-          return _this4.props.closeModal();
+          return _this5.props.closeModal();
         }
       }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "fake-search-box-container"
@@ -2054,12 +2088,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         }, user), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "dm-button",
           onClick: function onClick() {
-            var usersCopy = _toConsumableArray(_this4.state.users);
+            var usersCopy = _toConsumableArray(_this5.state.users);
 
             var toBeDeletedIndex = usersCopy.indexOf(user);
             usersCopy.splice(toBeDeletedIndex, 1);
 
-            _this4.setState({
+            _this5.setState({
               users: usersCopy
             });
           }
@@ -2083,25 +2117,91 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         onClick: this.handleSubmit
       }, "Go")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "search-results-ul"
-      }, usersArray.map(function (user) {
-        if (user.email.toLowerCase().startsWith(_this4.state.searchValue) && !_this4.state.users.includes(user.email) && _this4.state.searchValue !== "") {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            id: user.email,
-            key: user.id,
-            onClick: function onClick() {
-              _this4.setState(function (state) {
-                var newUsers = state.users.concat(user.email);
-                return {
-                  users: newUsers,
-                  searchValue: ''
-                };
-              });
+      }, allChannelsArray.map(function (channel) {
+        var lastMessage;
+        var lastMessageUser;
+        var channelMessages = Object.values(_this5.props.messages).filter(function (message) {
+          return message.channel_id === channel.id;
+        });
 
-              document.getElementById("".concat(user.email)).style = "display: none;";
-              document.getElementById("dm-search-input").value = "";
-            }
-          }, user.email);
-        } else return null;
+        if (channelMessages.length === 0) {
+          lastMessage = null;
+          lastMessageUser = null;
+        } else if (channelMessages.length === 1) {
+          console.log(channelMessages[0]);
+          lastMessage = channelMessages[0].body;
+          lastMessageUser = channelMessages[0].user.email;
+        } else {
+          lastMessage = channelMessages[channelMessages.length - 1].body;
+          lastMessageUser = channelMessages[channelMessages.length - 1].user.email;
+        }
+
+        if (lastMessageUser === _this5.props.currentUserEmail) {
+          lastMessageUser = "You";
+        }
+
+        if (lastMessageUser) {
+          lastMessageUser += ": ";
+        }
+
+        if (channel.channel_or_dm) {
+          //if it is an existing DM
+          if (_this5.displayTitle(channel.title).toLowerCase().startsWith(_this5.state.searchValue)) {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              className: "search-result-li",
+              key: channel.id,
+              id: channel.id,
+              onClick: function onClick() {
+                _this5.setState(function (state) {
+                  var newUsers = state.users.concat(channel.users.filter(function (user) {
+                    return user.email !== _this5.props.currentUserEmail;
+                  }).map(function (user) {
+                    return user.email;
+                  }));
+                  return {
+                    users: newUsers,
+                    searchValue: ""
+                  };
+                });
+
+                document.getElementById("".concat(channel.id)).style = "display: none;";
+                document.getElementById("dm-search-input").value = "";
+              }
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "search-result"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              className: "search-avatar",
+              src: avatar
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              className: "search-result-title"
+            }, _this5.displayTitle(channel.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              className: "search-result-last-message-user"
+            }, lastMessageUser), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              className: "search-result-last-message"
+            }, lastMessage))));
+          }
+        } else {
+          //if the DM doesn't exist yet (i.e., it's just a user)
+          if (channel.email.toLowerCase().startsWith(_this5.state.searchValue) && !_this5.state.users.includes(channel.email)) {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              className: "search-result-li",
+              key: channel.id,
+              id: channel.id,
+              onClick: function onClick() {
+                _this5.setState(function (state) {
+                  var newUsers = state.users.concat(channel.email);
+                  return {
+                    users: newUsers,
+                    searchValue: ""
+                  };
+                });
+
+                document.getElementById("".concat(channel.id)).style = "display: none";
+                document.getElementById("dm-search-input").value = "";
+              }
+            }, channel.email);
+          }
+        }
       })), this.renderErrors());
     }
   }]);
@@ -2409,7 +2509,6 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
           }, prefix, channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
         } else return null;
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filteredMessagesArray.map(function (message) {
-        console.log(message);
         var messageUser = _this3.props.users[message.user.id];
         var messageChannel = _this3.props.channels[message.channel_id];
 
