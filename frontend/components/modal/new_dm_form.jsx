@@ -122,11 +122,18 @@ class NewDMForm extends React.Component {
     const dmsArray = Object.values(this.props.channels).filter(
       (channel) => channel.channel_or_dm === "dm"
     );
-    
-    //this doesn't work since messages aren't immediately shoveled into the messages array
-    const dmsWithMessagesArray = dmsArray.filter(
-      (dm) => dm.messages.length > 0
-    );
+
+    const allMessages = Object.values(this.props.messages);
+
+    const allChannels = Object.values(this.props.channels);
+
+    const allDMs = allChannels.filter(channel => channel.channel_or_dm === 'dm');
+
+    const channelsWithMessages = [...new Set(allMessages.map(message => message.channel_id))];
+
+    const dmsWithMessagesArray = allDMs.filter(dm => 
+      channelsWithMessages.includes(dm.id)
+    )
 
     const allChannelsArray = usersArray.concat(dmsArray);
 
@@ -332,8 +339,6 @@ class NewDMForm extends React.Component {
 
               dmsWithMessagesArray.map((channel) => {
 
-                console.log(dmsWithMessagesArray) //dmsWithMessagesArray doesn't include DMs with brand-new messages
-
                 let lastMessage;
                 let lastMessageUser;
                 let lastMessageTimeSince;
@@ -345,9 +350,6 @@ class NewDMForm extends React.Component {
                 //if there's only one message
                 if (channelMessages.length === 1) {
                   lastMessage = channelMessages[0].body;
-
-                  // lastMessageUser = this.props.users[channelMessages[0].user]
-                  //   .email;
 
                   lastMessageUser = channelMessages[0].user.email;
 

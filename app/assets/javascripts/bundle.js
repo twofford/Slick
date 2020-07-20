@@ -2070,10 +2070,19 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       });
       var dmsArray = Object.values(this.props.channels).filter(function (channel) {
         return channel.channel_or_dm === "dm";
-      }); //this doesn't work since messages aren't immediately shoveled into the messages array
+      });
+      var allMessages = Object.values(this.props.messages);
+      var allChannels = Object.values(this.props.channels);
+      var allDMs = allChannels.filter(function (channel) {
+        return channel.channel_or_dm === 'dm';
+      });
 
-      var dmsWithMessagesArray = dmsArray.filter(function (dm) {
-        return dm.messages.length > 0;
+      var channelsWithMessages = _toConsumableArray(new Set(allMessages.map(function (message) {
+        return message.channel_id;
+      })));
+
+      var dmsWithMessagesArray = allDMs.filter(function (dm) {
+        return channelsWithMessages.includes(dm.id);
       });
       var allChannelsArray = usersArray.concat(dmsArray);
       var inputPlaceholder;
@@ -2235,8 +2244,6 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         }
       }) : //if there is nothing in the search value
       dmsWithMessagesArray.map(function (channel) {
-        console.log(dmsWithMessagesArray); //dmsWithMessagesArray doesn't include DMs with brand-new messages
-
         var lastMessage;
         var lastMessageUser;
         var lastMessageTimeSince;
@@ -2245,9 +2252,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         }); //if there's only one message
 
         if (channelMessages.length === 1) {
-          lastMessage = channelMessages[0].body; // lastMessageUser = this.props.users[channelMessages[0].user]
-          //   .email;
-
+          lastMessage = channelMessages[0].body;
           lastMessageUser = channelMessages[0].user.email;
           lastMessageTimeSince = moment__WEBPACK_IMPORTED_MODULE_1___default()(channelMessages[0].updated_at).fromNow(); //if there's more than one message
         } else {
