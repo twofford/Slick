@@ -91,6 +91,12 @@ class NewDMForm extends React.Component {
       searchButton.classList.add("disabled-button");
       searchButton.classList.remove("enabled-button");
     }
+    if (this.state.searchValue === "") {
+      document.getElementById("recent-dms").style = "display: visible";
+      //get doc by id and say 'recent convos'
+    } else {
+      document.getElementById("recent-dms").style = "display: none";
+    }
   }
 
   doesDmExist(user) {
@@ -206,6 +212,7 @@ class NewDMForm extends React.Component {
         }
 
         <ul id="search-results-ul">
+          <div id="recent-dms">Recent conversations</div>
           {this.state.searchValue // if there's something in the search value
             ? allChannelsArray.map((channel) => {
                 let lastMessage;

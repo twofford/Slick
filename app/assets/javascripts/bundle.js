@@ -2037,6 +2037,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         searchButton.classList.add("disabled-button");
         searchButton.classList.remove("enabled-button");
       }
+
+      if (this.state.searchValue === "") {
+        document.getElementById("recent-dms").style = "display: visible"; //get doc by id and say 'recent convos'
+      } else {
+        document.getElementById("recent-dms").style = "display: none";
+      }
     }
   }, {
     key: "doesDmExist",
@@ -2147,7 +2153,9 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         onClick: this.handleSubmit
       }, "Go")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "search-results-ul"
-      }, this.state.searchValue // if there's something in the search value
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "recent-dms"
+      }, "Recent conversations"), this.state.searchValue // if there's something in the search value
       ? allChannelsArray.map(function (channel) {
         var lastMessage;
         var lastMessageUser;
