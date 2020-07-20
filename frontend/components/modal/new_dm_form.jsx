@@ -1,4 +1,6 @@
 import React from "react";
+import moment from 'moment';
+moment().format();
 
 class NewDMForm extends React.Component {
   constructor(props) {
@@ -107,6 +109,33 @@ class NewDMForm extends React.Component {
     return currentUserRemoved.join(", ");
   }
 
+  // timeSince(date) {
+  //   const seconds = Math.floor((new Date() - date) / 1000);
+
+  //   let interval = Math.floor(seconds / 31536000);
+
+  //   if (interval > 1) {
+  //     return interval + " years";
+  //   }
+  //   interval = Math.floor(seconds / 2592000);
+  //   if (interval > 1) {
+  //     return interval + " months";
+  //   }
+  //   interval = Math.floor(seconds / 86400);
+  //   if (interval > 1) {
+  //     return interval + " days";
+  //   }
+  //   interval = Math.floor(seconds / 3600);
+  //   if (interval > 1) {
+  //     return interval + " hours";
+  //   }
+  //   interval = Math.floor(seconds / 60);
+  //   if (interval > 1) {
+  //     return interval + " minutes";
+  //   }
+  //   return Math.floor(seconds) + " seconds";
+  // }
+
   render() {
     const usersArray = Object.values(this.props.users)
       .filter((user) => this.props.currentUser !== user.id)
@@ -184,22 +213,27 @@ class NewDMForm extends React.Component {
 
         <ul id="search-results-ul">
           {allChannelsArray.map((channel) => {
-
             let lastMessage;
             let lastMessageUser;
+            let lastMessageTimeSince;
 
-            const channelMessages = Object.values(this.props.messages).filter(message => message.channel_id === channel.id);
+            const channelMessages = Object.values(this.props.messages).filter(
+              (message) => message.channel_id === channel.id
+            );
 
             if (channelMessages.length === 0) {
               lastMessage = null;
               lastMessageUser = null;
             } else if (channelMessages.length === 1) {
-              console.log(channelMessages[0])
               lastMessage = channelMessages[0].body;
               lastMessageUser = channelMessages[0].user.email;
+              lastMessageTimeSince = moment(channelMessages[0].updated_at).fromNow();
             } else {
               lastMessage = channelMessages[channelMessages.length - 1].body;
-              lastMessageUser = channelMessages[channelMessages.length - 1].user.email;
+              lastMessageUser =
+                channelMessages[channelMessages.length - 1].user.email;
+              lastMessageTimeSince =
+                moment(channelMessages[channelMessages.length - 1].updated_at).fromNow();
             }
 
             if (lastMessageUser === this.props.currentUserEmail) {
@@ -209,8 +243,6 @@ class NewDMForm extends React.Component {
             if (lastMessageUser) {
               lastMessageUser += ": ";
             }
-
-            
 
             if (channel.channel_or_dm) {
               //if it is an existing DM
@@ -247,11 +279,18 @@ class NewDMForm extends React.Component {
                     <div className="search-result">
                       <img className="search-avatar" src={avatar} />
                       <div>
-                        <span className="search-result-title">{this.displayTitle(channel.title)}</span>
+                        <span className="search-result-title">
+                          {this.displayTitle(channel.title)}
+                        </span>
                         <br />
-                        <span className="search-result-last-message-user">{lastMessageUser}</span>
-                        <span className="search-result-last-message">{lastMessage}</span>
+                        <span className="search-result-last-message-user">
+                          {lastMessageUser}
+                        </span>
+                        
+                          {lastMessage}
+                        
                       </div>
+                      <span className="last-message-time-since-span">{lastMessageTimeSince}</span>
                     </div>
                   </li>
                 );
@@ -282,8 +321,25 @@ class NewDMForm extends React.Component {
                       document.getElementById("dm-search-input").value = "";
                     }}
                   >
-                    {channel.email}
+                    {/* {channel.email} */}
+                    <div className="search-result">
+                      <img className="search-avatar" src={avatar} />
+                      <div>
+                        <span className="search-result-title">
+                          {this.displayTitle(channel.email)}
+                        </span>
+                        <br />
+                        {/* <span className="search-result-last-message-user">
+                          {lastMessageUser}
+                        </span> */}
+                        
+                          {/* {lastMessage} */}
+                        
+                      </div>
+                      {/* <span className="last-message-time-since-span">{lastMessageTimeSince}</span> */}
+                    </div>
                   </li>
+                  
                 );
               }
             }
