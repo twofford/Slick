@@ -83,11 +83,17 @@ class Channel extends React.Component{
             )
             } else {
 
-                let channelDisplayTitleArray = this.props.channel.title.split(",");
+                const channelDisplayTitleArray = this.props.channel.title.split(
+                  ", "
+                );
 
-                channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
+                const channelDisplayTitleArrayFiltered = channelDisplayTitleArray.filter(
+                  (user) => user !== this.props.currentUser.email
+                );
 
-                const channelDisplayTitle = channelDisplayTitleArray.join(", ");
+                const channelDisplayTitle = channelDisplayTitleArrayFiltered.join(
+                  ", "
+                );
 
                 return (
                     <div className='channel-wrapper'>

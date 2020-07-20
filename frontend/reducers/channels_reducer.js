@@ -4,7 +4,9 @@ import {
     REMOVE_CHANNEL
 } from '../actions/channel_actions';
 
+
 const channelsReducer = (defaultState = {}, action) => {
+
 
     Object.freeze(defaultState);
 

@@ -26,6 +26,9 @@ class NewDMForm extends React.Component {
 
   componentDidMount() {
     this.props.clearErrors();
+    Object.values(this.props.channels).forEach((channel) => {
+      this.props.fetchMessages(channel.id);
+    });
   }
 
   handleSubmit(event) {
@@ -33,12 +36,14 @@ class NewDMForm extends React.Component {
     this.state.title = this.formatTitle(this.state.users);
     const channelsArray = Object.values(this.props.channels);
     const channelTitlesArray = channelsArray.map((channel) => channel.title);
+
     if (channelTitlesArray.includes(this.state.title)) {
       const channelIdx = channelTitlesArray.indexOf(this.state.title);
       const channel = channelsArray[channelIdx];
       this.props.history.push(`/channels/${channel.id}`);
       this.props.closeModal();
     } else {
+      
       const channel = Object.assign({}, this.state);
       this.props.createChannel(channel).then((channel) => {
         this.props.history.push(`/channels/${channel.channel.id}`);
@@ -93,7 +98,6 @@ class NewDMForm extends React.Component {
       this.props.users[this.props.currentUser].email
     );
     title = title.sort().join(", ");
-
     return Object.values(this.props.channels)
       .map((channel) => channel.title)
       .includes(title)
@@ -102,6 +106,7 @@ class NewDMForm extends React.Component {
   }
 
   displayTitle(title) {
+    
     const channelDisplayTitleArray = title.split(", ");
     const currentUserRemoved = channelDisplayTitleArray.filter(
       (user) => user !== this.props.currentUserEmail
@@ -116,6 +121,11 @@ class NewDMForm extends React.Component {
 
     const dmsArray = Object.values(this.props.channels).filter(
       (channel) => channel.channel_or_dm === "dm"
+    );
+    
+    //this doesn't work since messages aren't immediately shoveled into the messages array
+    const dmsWithMessagesArray = dmsArray.filter(
+      (dm) => dm.messages.length > 0
     );
 
     const allChannelsArray = usersArray.concat(dmsArray);
@@ -184,49 +194,188 @@ class NewDMForm extends React.Component {
           </button>
         </div>
 
+        {
+          //SEARCH RESULTS//
+        }
+
         <ul id="search-results-ul">
-          {allChannelsArray.map((channel) => {
-            let lastMessage;
-            let lastMessageUser;
-            let lastMessageTimeSince;
+          {this.state.searchValue // if there's something in the search value
+            ? allChannelsArray.map((channel) => {
+                let lastMessage;
+                let lastMessageUser;
+                let lastMessageTimeSince;
 
-            const channelMessages = Object.values(this.props.messages).filter(
-              (message) => message.channel_id === channel.id
-            );
+                const channelMessages = Object.values(
+                  this.props.messages
+                ).filter((message) => message.channel_id === channel.id);
 
-            if (channelMessages.length === 0) {
-              lastMessage = null;
-              lastMessageUser = null;
-            } else if (channelMessages.length === 1) {
-              lastMessage = channelMessages[0].body;
-              lastMessageUser = channelMessages[0].user.email;
-              lastMessageTimeSince = moment(
-                channelMessages[0].updated_at
-              ).fromNow();
-            } else {
-              lastMessage = channelMessages[channelMessages.length - 1].body;
-              lastMessageUser =
-                channelMessages[channelMessages.length - 1].user.email;
-              lastMessageTimeSince = moment(
-                channelMessages[channelMessages.length - 1].updated_at
-              ).fromNow();
-            }
+                if (channelMessages.length === 0) {
+                  lastMessage = null;
+                  lastMessageUser = null;
+                } else if (channelMessages.length === 1) {
+                  lastMessage = channelMessages[0].body;
+                  lastMessageUser = channelMessages[0].user.email;
+                  lastMessageTimeSince = moment(
+                    channelMessages[0].updated_at
+                  ).fromNow();
+                } else {
+                  lastMessage =
+                    channelMessages[channelMessages.length - 1].body;
+                  lastMessageUser =
+                    channelMessages[channelMessages.length - 1].user.email;
+                  lastMessageTimeSince = moment(
+                    channelMessages[channelMessages.length - 1].updated_at
+                  ).fromNow();
+                }
 
-            if (lastMessageUser === this.props.currentUserEmail) {
-              lastMessageUser = "You";
-            }
+                if (lastMessageUser === this.props.currentUserEmail) {
+                  lastMessageUser = "You";
+                }
 
-            if (lastMessageUser) {
-              lastMessageUser += ": ";
-            }
+                if (lastMessageUser) {
+                  lastMessageUser += ": ";
+                }
 
-            if (channel.channel_or_dm) {
-              //if it is an existing DM
-              if (
-                this.displayTitle(channel.title)
-                  .toLowerCase()
-                  .startsWith(this.state.searchValue)
-              ) {
+                if (channel.channel_or_dm) {
+                  //if it is an existing DM
+                  if (
+                    this.displayTitle(channel.title)
+                      .toLowerCase()
+                      .startsWith(this.state.searchValue)
+                  ) {
+                    return (
+                      <li
+                        className="search-result-li"
+                        key={channel.id}
+                        id={channel.id}
+                        onClick={() => {
+                          this.setState((state) => {
+                            const newUsers = state.users.concat(
+                              channel.users
+                                .filter(
+                                  (user) =>
+                                    user.email !== this.props.currentUserEmail
+                                )
+                                .map((user) => user.email)
+                            );
+
+                            return { users: newUsers, searchValue: "" };
+                          });
+
+                          document.getElementById(`${channel.id}`).style =
+                            "display: none;";
+
+                          document.getElementById("dm-search-input").value = "";
+                        }}
+                      >
+                        <div className="search-result">
+                          <img className="search-avatar" src={avatar} />
+                          <div>
+                            <span className="search-result-title">
+                              {this.displayTitle(channel.title)}
+                            </span>
+                            <br />
+                            <span className="search-result-last-message-user">
+                              {lastMessageUser}
+                            </span>
+                            {lastMessage}
+                          </div>
+                          <span className="last-message-time-since-span">
+                            {lastMessageTimeSince}
+                          </span>
+                        </div>
+                      </li>
+                    );
+                  }
+                } else {
+                  //if the DM doesn't exist yet (i.e., it's a single user)
+                  if (
+                    channel.email
+                      .toLowerCase()
+                      .startsWith(this.state.searchValue) &&
+                    !this.state.users.includes(channel.email)
+                  ) {
+                    return (
+                      <li
+                        className="search-result-li"
+                        key={channel.id}
+                        id={channel.id}
+                        onClick={() => {
+                          this.setState((state) => {
+                            const newUsers = state.users.concat(channel.email);
+
+                            return { users: newUsers, searchValue: "" };
+                          });
+
+                          document.getElementById(`${channel.id}`).style =
+                            "display: none";
+
+                          document.getElementById("dm-search-input").value = "";
+                        }}
+                      >
+                        <div className="search-result">
+                          <img className="search-avatar" src={avatar} />
+                          <div>
+                            <span className="search-result-title">
+                              {this.displayTitle(channel.email)}
+                            </span>
+                            <br />
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  }
+                }
+              })
+
+            : //if there is nothing in the search value
+
+              dmsWithMessagesArray.map((channel) => {
+
+                console.log(dmsWithMessagesArray) //dmsWithMessagesArray doesn't include DMs with brand-new messages
+
+                let lastMessage;
+                let lastMessageUser;
+                let lastMessageTimeSince;
+
+                const channelMessages = Object.values(
+                  this.props.messages
+                ).filter((message) => message.channel_id === channel.id);
+
+                //if there's only one message
+                if (channelMessages.length === 1) {
+                  lastMessage = channelMessages[0].body;
+
+                  // lastMessageUser = this.props.users[channelMessages[0].user]
+                  //   .email;
+
+                  lastMessageUser = channelMessages[0].user.email;
+
+                  lastMessageTimeSince = moment(
+                    channelMessages[0].updated_at
+                  ).fromNow();
+
+                  //if there's more than one message
+                } else {
+                  lastMessage =
+                    channelMessages[channelMessages.length - 1].body;
+
+                  lastMessageUser =
+                    channelMessages[channelMessages.length - 1].user.email;
+
+                  lastMessageTimeSince = moment(
+                    channelMessages[channelMessages.length - 1].updated_at
+                  ).fromNow();
+                }
+
+                if (lastMessageUser === this.props.currentUserEmail) {
+                  lastMessageUser = "You";
+                }
+
+                if (lastMessageUser) {
+                  lastMessageUser += ": ";
+                }
+
                 return (
                   <li
                     className="search-result-li"
@@ -271,47 +420,7 @@ class NewDMForm extends React.Component {
                     </div>
                   </li>
                 );
-              }
-            } else {
-              //if the DM doesn't exist yet (i.e., it's a single user)
-              if (
-                channel.email
-                  .toLowerCase()
-                  .startsWith(this.state.searchValue) &&
-                !this.state.users.includes(channel.email)
-              ) {
-                return (
-                  <li
-                    className="search-result-li"
-                    key={channel.id}
-                    id={channel.id}
-                    onClick={() => {
-                      this.setState((state) => {
-                        const newUsers = state.users.concat(channel.email);
-
-                        return { users: newUsers, searchValue: "" };
-                      });
-
-                      document.getElementById(`${channel.id}`).style =
-                        "display: none";
-
-                      document.getElementById("dm-search-input").value = "";
-                    }}
-                  >
-                    <div className="search-result">
-                      <img className="search-avatar" src={avatar} />
-                      <div>
-                        <span className="search-result-title">
-                          {this.displayTitle(channel.email)}
-                        </span>
-                        <br />
-                      </div>
-                    </div>
-                  </li>
-                );
-              }
-            }
-          })}
+              })}
         </ul>
         {this.renderErrors()}
       </div>

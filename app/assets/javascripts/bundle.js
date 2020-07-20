@@ -523,6 +523,8 @@ var Channel = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       if (this.props.channel) {
         if (this.props.channel.channel_or_dm === "channel") {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -543,9 +545,11 @@ var Channel = /*#__PURE__*/function (_React$Component) {
             className: "channel-header-right"
           })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_messages_viewport_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_messages_new_message_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
         } else {
-          var channelDisplayTitleArray = this.props.channel.title.split(",");
-          channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
-          var channelDisplayTitle = channelDisplayTitleArray.join(", ");
+          var channelDisplayTitleArray = this.props.channel.title.split(", ");
+          var channelDisplayTitleArrayFiltered = channelDisplayTitleArray.filter(function (user) {
+            return user !== _this3.props.currentUser.email;
+          });
+          var channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "channel-wrapper"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -964,6 +968,8 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebarItem, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       var prefix;
 
       if (this.props.channel.channel_type === 'public') {
@@ -989,9 +995,11 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
           }, prefix, " ", this.props.channel.title));
         }
       } else {
-        var channelDisplayTitleArray = this.props.channel.title.split(",");
-        channelDisplayTitleArray.splice(channelDisplayTitleArray.indexOf(this.props.currentUser.email), 1);
-        var channelDisplayTitle = channelDisplayTitleArray.join(", ");
+        var channelDisplayTitleArray = this.props.channel.title.split(", ");
+        var channelDisplayTitleArrayFiltered = channelDisplayTitleArray.filter(function (user) {
+          return user !== _this.props.currentUser.email;
+        });
+        var channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
 
         if (this.props.currentChannelId == this.props.channel.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -1955,12 +1963,17 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
   _createClass(NewDMForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       this.props.clearErrors();
+      Object.values(this.props.channels).forEach(function (channel) {
+        _this2.props.fetchMessages(channel.id);
+      });
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       event.preventDefault();
       this.state.title = this.formatTitle(this.state.users);
@@ -1978,19 +1991,19 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         var _channel = Object.assign({}, this.state);
 
         this.props.createChannel(_channel).then(function (channel) {
-          _this2.props.history.push("/channels/".concat(channel.channel.id));
+          _this3.props.history.push("/channels/".concat(channel.channel.id));
 
-          _this2.props.closeModal();
+          _this3.props.closeModal();
         });
       }
     }
   }, {
     key: "handleInput",
     value: function handleInput(type) {
-      var _this3 = this;
+      var _this4 = this;
 
       return function (event) {
-        _this3.setState(_defineProperty({}, type, event.target.value));
+        _this4.setState(_defineProperty({}, type, event.target.value));
       };
     }
   }, {
@@ -2037,26 +2050,30 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "displayTitle",
     value: function displayTitle(title) {
-      var _this4 = this;
+      var _this5 = this;
 
       var channelDisplayTitleArray = title.split(", ");
       var currentUserRemoved = channelDisplayTitleArray.filter(function (user) {
-        return user !== _this4.props.currentUserEmail;
+        return user !== _this5.props.currentUserEmail;
       });
       return currentUserRemoved.join(", ");
     }
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var usersArray = Object.values(this.props.users).filter(function (user) {
-        return _this5.props.currentUser !== user.id;
+        return _this6.props.currentUser !== user.id;
       }).filter(function (user) {
-        return !_this5.doesDmExist(user);
+        return !_this6.doesDmExist(user);
       });
       var dmsArray = Object.values(this.props.channels).filter(function (channel) {
         return channel.channel_or_dm === "dm";
+      }); //this doesn't work since messages aren't immediately shoveled into the messages array
+
+      var dmsWithMessagesArray = dmsArray.filter(function (dm) {
+        return dm.messages.length > 0;
       });
       var allChannelsArray = usersArray.concat(dmsArray);
       var inputPlaceholder;
@@ -2072,7 +2089,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }, "Direct Messages"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
-          return _this5.props.closeModal();
+          return _this6.props.closeModal();
         }
       }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "fake-search-box-container"
@@ -2092,12 +2109,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         }, user), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "dm-button",
           onClick: function onClick() {
-            var usersCopy = _toConsumableArray(_this5.state.users);
+            var usersCopy = _toConsumableArray(_this6.state.users);
 
             var toBeDeletedIndex = usersCopy.indexOf(user);
             usersCopy.splice(toBeDeletedIndex, 1);
 
-            _this5.setState({
+            _this6.setState({
               users: usersCopy
             });
           }
@@ -2121,11 +2138,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         onClick: this.handleSubmit
       }, "Go")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "search-results-ul"
-      }, allChannelsArray.map(function (channel) {
+      }, this.state.searchValue // if there's something in the search value
+      ? allChannelsArray.map(function (channel) {
         var lastMessage;
         var lastMessageUser;
         var lastMessageTimeSince;
-        var channelMessages = Object.values(_this5.props.messages).filter(function (message) {
+        var channelMessages = Object.values(_this6.props.messages).filter(function (message) {
           return message.channel_id === channel.id;
         });
 
@@ -2142,7 +2160,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
           lastMessageTimeSince = moment__WEBPACK_IMPORTED_MODULE_1___default()(channelMessages[channelMessages.length - 1].updated_at).fromNow();
         }
 
-        if (lastMessageUser === _this5.props.currentUserEmail) {
+        if (lastMessageUser === _this6.props.currentUserEmail) {
           lastMessageUser = "You";
         }
 
@@ -2152,15 +2170,15 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
 
         if (channel.channel_or_dm) {
           //if it is an existing DM
-          if (_this5.displayTitle(channel.title).toLowerCase().startsWith(_this5.state.searchValue)) {
+          if (_this6.displayTitle(channel.title).toLowerCase().startsWith(_this6.state.searchValue)) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               className: "search-result-li",
               key: channel.id,
               id: channel.id,
               onClick: function onClick() {
-                _this5.setState(function (state) {
+                _this6.setState(function (state) {
                   var newUsers = state.users.concat(channel.users.filter(function (user) {
-                    return user.email !== _this5.props.currentUserEmail;
+                    return user.email !== _this6.props.currentUserEmail;
                   }).map(function (user) {
                     return user.email;
                   }));
@@ -2180,7 +2198,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
               src: avatar
             }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
               className: "search-result-title"
-            }, _this5.displayTitle(channel.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            }, _this6.displayTitle(channel.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
               className: "search-result-last-message-user"
             }, lastMessageUser), lastMessage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
               className: "last-message-time-since-span"
@@ -2188,13 +2206,13 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
           }
         } else {
           //if the DM doesn't exist yet (i.e., it's a single user)
-          if (channel.email.toLowerCase().startsWith(_this5.state.searchValue) && !_this5.state.users.includes(channel.email)) {
+          if (channel.email.toLowerCase().startsWith(_this6.state.searchValue) && !_this6.state.users.includes(channel.email)) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               className: "search-result-li",
               key: channel.id,
               id: channel.id,
               onClick: function onClick() {
-                _this5.setState(function (state) {
+                _this6.setState(function (state) {
                   var newUsers = state.users.concat(channel.email);
                   return {
                     users: newUsers,
@@ -2212,9 +2230,72 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
               src: avatar
             }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
               className: "search-result-title"
-            }, _this5.displayTitle(channel.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))));
+            }, _this6.displayTitle(channel.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))));
           }
         }
+      }) : //if there is nothing in the search value
+      dmsWithMessagesArray.map(function (channel) {
+        console.log(dmsWithMessagesArray); //dmsWithMessagesArray doesn't include DMs with brand-new messages
+
+        var lastMessage;
+        var lastMessageUser;
+        var lastMessageTimeSince;
+        var channelMessages = Object.values(_this6.props.messages).filter(function (message) {
+          return message.channel_id === channel.id;
+        }); //if there's only one message
+
+        if (channelMessages.length === 1) {
+          lastMessage = channelMessages[0].body; // lastMessageUser = this.props.users[channelMessages[0].user]
+          //   .email;
+
+          lastMessageUser = channelMessages[0].user.email;
+          lastMessageTimeSince = moment__WEBPACK_IMPORTED_MODULE_1___default()(channelMessages[0].updated_at).fromNow(); //if there's more than one message
+        } else {
+          lastMessage = channelMessages[channelMessages.length - 1].body;
+          lastMessageUser = channelMessages[channelMessages.length - 1].user.email;
+          lastMessageTimeSince = moment__WEBPACK_IMPORTED_MODULE_1___default()(channelMessages[channelMessages.length - 1].updated_at).fromNow();
+        }
+
+        if (lastMessageUser === _this6.props.currentUserEmail) {
+          lastMessageUser = "You";
+        }
+
+        if (lastMessageUser) {
+          lastMessageUser += ": ";
+        }
+
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "search-result-li",
+          key: channel.id,
+          id: channel.id,
+          onClick: function onClick() {
+            _this6.setState(function (state) {
+              var newUsers = state.users.concat(channel.users.filter(function (user) {
+                return user.email !== _this6.props.currentUserEmail;
+              }).map(function (user) {
+                return user.email;
+              }));
+              return {
+                users: newUsers,
+                searchValue: ""
+              };
+            });
+
+            document.getElementById("".concat(channel.id)).style = "display: none;";
+            document.getElementById("dm-search-input").value = "";
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "search-result"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "search-avatar",
+          src: avatar
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "search-result-title"
+        }, _this6.displayTitle(channel.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "search-result-last-message-user"
+        }, lastMessageUser), lastMessage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "last-message-time-since-span"
+        }, lastMessageTimeSince)));
       })), this.renderErrors());
     }
   }]);
