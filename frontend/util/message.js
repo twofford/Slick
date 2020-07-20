@@ -20,7 +20,7 @@ export const postMessage = (message) => {
 
 export const patchMessage = (message) => {
     return $.ajax({
-        url: `/api/${message.channelId}/${message.id}`,
+        url: `/api/channels/${message.channelId}/messages/${message.id}`,
         method: 'PATCH',
         data: {message}
     })

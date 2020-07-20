@@ -7,6 +7,15 @@ export default class MessageItem extends React.Component{
 
         this.getDate = this.getTimestamp.bind(this);
 
+        this.state = {
+            id: this.props.message.id,
+            channel_id: this.props.message.channel_id,
+            body: "",
+            user_id: this.props.message.user.id
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     getTimestamp() {
@@ -31,12 +40,46 @@ export default class MessageItem extends React.Component{
 
     }
 
+    handleInput(type) {
+        return (event) => {
+            this.setState({
+                [type]: event.target.value
+            })
+        }
+    }
+
+    handleSubmit(event) {
+
+        console.log(this.props.message);
+
+        console.log(this.state);
+
+        event.preventDefault();
+
+        const newMessage = Object.assign({}, this.state);
+
+        this.props.updateMessage(newMessage).then((res) => {
+          App.cable.subscriptions.subscriptions[0].speak({
+            message: res.message,
+          });
+        });;
+    }
 
     render(){
         return(
             
             <div className='message-wrapper'>
                 <div>
+                    <form>
+                        <input
+                            type="text"
+                            placeholder={this.state.body}
+                            onChange={this.handleInput('body')}
+                        />
+                        <button
+                            onClick={this.handleSubmit}
+                        >Update your message</button>
+                    </form>
                     {/* <i class="fas fa-user"></i> */}
                     <img className='message-avatar' src={avatar}/>
                 </div>

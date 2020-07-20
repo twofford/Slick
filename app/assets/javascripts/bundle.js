@@ -1170,6 +1170,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1204,6 +1206,13 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.getDate = _this.getTimestamp.bind(_assertThisInitialized(_this));
+    _this.state = {
+      id: _this.props.message.id,
+      channel_id: _this.props.message.channel_id,
+      body: "",
+      user_id: _this.props.message.user.id
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1221,11 +1230,40 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
       return timeStr;
     }
   }, {
+    key: "handleInput",
+    value: function handleInput(type) {
+      var _this2 = this;
+
+      return function (event) {
+        _this2.setState(_defineProperty({}, type, event.target.value));
+      };
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      console.log(this.props.message);
+      console.log(this.state);
+      event.preventDefault();
+      var newMessage = Object.assign({}, this.state);
+      this.props.updateMessage(newMessage).then(function (res) {
+        App.cable.subscriptions.subscriptions[0].speak({
+          message: res.message
+        });
+      });
+      ;
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: this.state.body,
+        onChange: this.handleInput('body')
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleSubmit
+      }, "Update your message")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "message-avatar",
         src: avatar
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1249,6 +1287,37 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./frontend/components/messages/message_item_container.jsx":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/messages/message_item_container.jsx ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _message_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./message_item */ "./frontend/components/messages/message_item.jsx");
+/* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/message_actions */ "./frontend/actions/message_actions.js");
+
+
+
+
+var mdp = function mdp(dispatch) {
+  return {
+    updateMessage: function updateMessage(message) {
+      return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_2__["updateMessage"])(message));
+    },
+    fetchMessages: function fetchMessages(channelId) {
+      return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_2__["fetchMessages"])(channelId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, mdp)(_message_item__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/messages/messages_viewport.jsx":
 /*!************************************************************!*\
   !*** ./frontend/components/messages/messages_viewport.jsx ***!
@@ -1262,6 +1331,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _message_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./message_item */ "./frontend/components/messages/message_item.jsx");
+/* harmony import */ var _message_item_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./message_item_container */ "./frontend/components/messages/message_item_container.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1283,6 +1353,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1317,7 +1388,7 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "messages-ul"
         }, this.currentChannelMessages.map(function (message) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_message_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_message_item_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
             key: message.id,
             message: message
           });
@@ -3757,7 +3828,7 @@ var postMessage = function postMessage(message) {
 };
 var patchMessage = function patchMessage(message) {
   return $.ajax({
-    url: "/api/".concat(message.channelId, "/").concat(message.id),
+    url: "/api/channels/".concat(message.channelId, "/messages/").concat(message.id),
     method: 'PATCH',
     data: {
       message: message
