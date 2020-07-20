@@ -2044,31 +2044,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
         return user !== _this4.props.currentUserEmail;
       });
       return currentUserRemoved.join(", ");
-    } // timeSince(date) {
-    //   const seconds = Math.floor((new Date() - date) / 1000);
-    //   let interval = Math.floor(seconds / 31536000);
-    //   if (interval > 1) {
-    //     return interval + " years";
-    //   }
-    //   interval = Math.floor(seconds / 2592000);
-    //   if (interval > 1) {
-    //     return interval + " months";
-    //   }
-    //   interval = Math.floor(seconds / 86400);
-    //   if (interval > 1) {
-    //     return interval + " days";
-    //   }
-    //   interval = Math.floor(seconds / 3600);
-    //   if (interval > 1) {
-    //     return interval + " hours";
-    //   }
-    //   interval = Math.floor(seconds / 60);
-    //   if (interval > 1) {
-    //     return interval + " minutes";
-    //   }
-    //   return Math.floor(seconds) + " seconds";
-    // }
-
+    }
   }, {
     key: "render",
     value: function render() {
@@ -2211,7 +2187,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
             }, lastMessageTimeSince)));
           }
         } else {
-          //if the DM doesn't exist yet (i.e., it's just a user)
+          //if the DM doesn't exist yet (i.e., it's a single user)
           if (channel.email.toLowerCase().startsWith(_this5.state.searchValue) && !_this5.state.users.includes(channel.email)) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               className: "search-result-li",

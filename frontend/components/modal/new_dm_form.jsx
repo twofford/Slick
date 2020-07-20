@@ -1,5 +1,5 @@
 import React from "react";
-import moment from 'moment';
+import moment from "moment";
 moment().format();
 
 class NewDMForm extends React.Component {
@@ -109,33 +109,6 @@ class NewDMForm extends React.Component {
     return currentUserRemoved.join(", ");
   }
 
-  // timeSince(date) {
-  //   const seconds = Math.floor((new Date() - date) / 1000);
-
-  //   let interval = Math.floor(seconds / 31536000);
-
-  //   if (interval > 1) {
-  //     return interval + " years";
-  //   }
-  //   interval = Math.floor(seconds / 2592000);
-  //   if (interval > 1) {
-  //     return interval + " months";
-  //   }
-  //   interval = Math.floor(seconds / 86400);
-  //   if (interval > 1) {
-  //     return interval + " days";
-  //   }
-  //   interval = Math.floor(seconds / 3600);
-  //   if (interval > 1) {
-  //     return interval + " hours";
-  //   }
-  //   interval = Math.floor(seconds / 60);
-  //   if (interval > 1) {
-  //     return interval + " minutes";
-  //   }
-  //   return Math.floor(seconds) + " seconds";
-  // }
-
   render() {
     const usersArray = Object.values(this.props.users)
       .filter((user) => this.props.currentUser !== user.id)
@@ -227,13 +200,16 @@ class NewDMForm extends React.Component {
             } else if (channelMessages.length === 1) {
               lastMessage = channelMessages[0].body;
               lastMessageUser = channelMessages[0].user.email;
-              lastMessageTimeSince = moment(channelMessages[0].updated_at).fromNow();
+              lastMessageTimeSince = moment(
+                channelMessages[0].updated_at
+              ).fromNow();
             } else {
               lastMessage = channelMessages[channelMessages.length - 1].body;
               lastMessageUser =
                 channelMessages[channelMessages.length - 1].user.email;
-              lastMessageTimeSince =
-                moment(channelMessages[channelMessages.length - 1].updated_at).fromNow();
+              lastMessageTimeSince = moment(
+                channelMessages[channelMessages.length - 1].updated_at
+              ).fromNow();
             }
 
             if (lastMessageUser === this.props.currentUserEmail) {
@@ -286,17 +262,18 @@ class NewDMForm extends React.Component {
                         <span className="search-result-last-message-user">
                           {lastMessageUser}
                         </span>
-                        
-                          {lastMessage}
-                        
+
+                        {lastMessage}
                       </div>
-                      <span className="last-message-time-since-span">{lastMessageTimeSince}</span>
+                      <span className="last-message-time-since-span">
+                        {lastMessageTimeSince}
+                      </span>
                     </div>
                   </li>
                 );
               }
             } else {
-              //if the DM doesn't exist yet (i.e., it's just a user)
+              //if the DM doesn't exist yet (i.e., it's a single user)
               if (
                 channel.email
                   .toLowerCase()
@@ -321,7 +298,6 @@ class NewDMForm extends React.Component {
                       document.getElementById("dm-search-input").value = "";
                     }}
                   >
-                    {/* {channel.email} */}
                     <div className="search-result">
                       <img className="search-avatar" src={avatar} />
                       <div>
@@ -329,53 +305,13 @@ class NewDMForm extends React.Component {
                           {this.displayTitle(channel.email)}
                         </span>
                         <br />
-                        {/* <span className="search-result-last-message-user">
-                          {lastMessageUser}
-                        </span> */}
-                        
-                          {/* {lastMessage} */}
-                        
                       </div>
-                      {/* <span className="last-message-time-since-span">{lastMessageTimeSince}</span> */}
                     </div>
                   </li>
-                  
                 );
               }
             }
           })}
-
-          {/* {usersArray.map((user) => {
-                if (
-                  user.email.toLowerCase().startsWith(this.state.searchValue) &&
-                  !this.state.users.includes(user.email) 
-                  // && this.state.searchValue !== ""
-                ) {
-                  return (
-                    <li
-                      className="search-result-li"
-                      id={user.email}
-                      key={user.id}
-                      onClick={() => {
-                        this.setState((state) => {
-                          const newUsers = state.users.concat(user.email);
-                          return { users: newUsers, searchValue: "" };
-                        });
-
-                        document.getElementById(`${user.email}`).style =
-                          "display: none;";
-
-                        document.getElementById("dm-search-input").value = "";
-                      }}
-                    >
-                      <div className="search-result">
-                        <img className="search-avatar" src={avatar}></img>
-                        {user.email}
-                      </div>
-                    </li>
-                  );
-                } else return null;
-              })} */}
         </ul>
         {this.renderErrors()}
       </div>
