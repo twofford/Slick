@@ -25,7 +25,6 @@ class Api::MessagesController < ApplicationController
     def update
         @message = Message.find(params[:id])
         if @message.update(message_params)
-            @message.body += " (Edited)"
             ActionCable.server.broadcast "chat", {"message" => {@message.id => @message}}
             render 'api/messages/show'
         else

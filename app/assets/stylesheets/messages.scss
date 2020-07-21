@@ -3,6 +3,16 @@
     padding: 8px 10px;
 }
 
+.beige {
+    display: flex;
+    padding: 8px 10px;
+    background: #FEFAEE;
+}
+
+.beige:hover {
+    background: #FEFAEE;
+}
+
 .message-wrapper:hover {
     background: #f8f8f8;
 }
@@ -43,4 +53,43 @@
 
 .message {
     margin-top: 5px;
+}
+
+.update-message-container {
+    display: none;
+}
+
+.edit-message-modal {
+    display: none;
+    // position: absolute;
+    // left: 50%;
+    // top: -5px;
+    // float: right;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.editable-message:hover .edit-message-modal {
+    display: block;
+}
+
+.message-edit-button {
+    // position: relative;
+    // left: 200%;
+    // top: -10px;
+}
+
+.update-message-container {
+    margin-left: 20px;
+}
+
+.message-update-input {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
 }

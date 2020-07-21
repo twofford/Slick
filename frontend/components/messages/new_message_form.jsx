@@ -30,15 +30,20 @@ export default class NewMessageForm extends React.Component{
     handleSubmit(event) {
 
         event.preventDefault();
- 
-        const message = Object.assign({}, this.state);
 
-        this.props.createMessage(message).then((res) => {
-            App.cable.subscriptions.subscriptions[0].speak({ message: res.message });
-        });
+        if (this.state.body !== "") {
 
-        $('#message-form')[0].reset();
-        
+            const message = Object.assign({}, this.state);
+
+            this.props.createMessage(message).then((res) => {
+              App.cable.subscriptions.subscriptions[0].speak({
+                message: res.message,
+              });
+            });
+
+            $("#message-form")[0].reset();
+
+        }
     };
 
     render(){

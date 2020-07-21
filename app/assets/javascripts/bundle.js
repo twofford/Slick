@@ -1168,6 +1168,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MessageItem; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1194,6 +1196,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+moment__WEBPACK_IMPORTED_MODULE_1___default()().format();
+
 var MessageItem = /*#__PURE__*/function (_React$Component) {
   _inherits(MessageItem, _React$Component);
 
@@ -1212,21 +1216,27 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
       body: "",
       user_id: _this.props.message.user.id
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this)); // this.edited = this.edited.bind(this);
+
     return _this;
   }
 
   _createClass(MessageItem, [{
     key: "getTimestamp",
     value: function getTimestamp() {
-      var timestamp = new Date(this.props.message.created_at);
-      var hours = timestamp.getHours();
-      var ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      var minutes = timestamp.getMinutes();
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      var timeStr = hours + ':' + minutes + ' ' + ampm;
+      var updatedTimestamp;
+      var createdTimestamp = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date(this.props.message.created_at)).format("h:mm A");
+
+      if (this.props.message.updated_at > this.props.message.created_at) {
+        updatedTimestamp = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date(this.props.message.updated_at)).format("h:mm A");
+      }
+
+      var timeStr;
+
+      if (updatedTimestamp) {
+        timeStr = createdTimestamp + " (edited at " + updatedTimestamp + ")";
+      } else timeStr = createdTimestamp;
+
       return timeStr;
     }
   }, {
@@ -1241,42 +1251,86 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      console.log(this.props.message);
-      console.log(this.state);
       event.preventDefault();
-      var newMessage = Object.assign({}, this.state);
-      this.props.updateMessage(newMessage).then(function (res) {
-        App.cable.subscriptions.subscriptions[0].speak({
-          message: res.message
+
+      if (this.state.body !== "") {
+        var newMessage = Object.assign({}, this.state);
+        this.props.updateMessage(newMessage).then(function (res) {
+          App.cable.subscriptions.subscriptions[0].speak({
+            message: res.message
+          });
         });
-      });
-      ;
-    }
+        document.getElementById("".concat(this.props.message.id, "-update")).style = "display: none";
+        document.getElementById("".concat(this.props.message.id, "-view")).style = "display:block;";
+        document.getElementById("".concat(this.props.message.id, "-wrapper")).classList.toggle("beige");
+      }
+    } // edited() {
+    //   if (this.props.message.updated_at > this.props.message.created_at) {
+    //     return "(Edited)";
+    //   } else return null;
+    // }
+
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message-wrapper"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        placeholder: this.state.body,
-        onChange: this.handleInput('body')
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.handleSubmit
-      }, "Update your message")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "message-avatar",
-        src: avatar
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "username-timestamp"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "username"
-      }, this.props.message.user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "timestamp"
-      }, this.getTimestamp())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "message"
-      }, this.props.message.body)));
+      var _this3 = this;
+
+      if (this.props.message.user.id === this.props.currentUserId) {
+        //it's the current user's message
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "".concat(this.props.message.id, "-wrapper"),
+          className: "message-wrapper editable-message"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "message-avatar",
+          src: avatar
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "".concat(this.props.message.id, "-view"),
+          className: "message-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "username-timestamp"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "username"
+        }, this.props.message.user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "timestamp"
+        }, this.getTimestamp(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "message-edit-button",
+          onClick: function onClick() {
+            document.getElementById("".concat(_this3.props.message.id, "-view")).style = "display:none;";
+            document.getElementById("".concat(_this3.props.message.id, "-update")).style = "display: block";
+            document.getElementById("".concat(_this3.props.message.id, "-wrapper")).classList.toggle("beige");
+          }
+        }, "Edit message"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "message"
+        }, this.props.message.body)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "update-message-container",
+          id: "".concat(this.props.message.id, "-update")
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "message-update-input",
+          type: "text",
+          placeholder: this.props.message.body,
+          onChange: this.handleInput("body")
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.handleSubmit
+        }, "Update your message"))));
+      } else {
+        //it's somebody else's message
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "message-wrapper"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "message-avatar",
+          src: avatar
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "message-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "username-timestamp"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "username"
+        }, this.props.message.user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "timestamp"
+        }, this.getTimestamp())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "message"
+        }, this.props.message.body)));
+      }
     }
   }]);
 
@@ -1303,6 +1357,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var msp = function msp(state) {
+  return {
+    currentUserId: state.entities.users[state.session.user.id].id
+  };
+};
+
 var mdp = function mdp(dispatch) {
   return {
     updateMessage: function updateMessage(message) {
@@ -1314,7 +1374,7 @@ var mdp = function mdp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, mdp)(_message_item__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_message_item__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -1517,13 +1577,16 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
-      var message = Object.assign({}, this.state);
-      this.props.createMessage(message).then(function (res) {
-        App.cable.subscriptions.subscriptions[0].speak({
-          message: res.message
+
+      if (this.state.body !== "") {
+        var message = Object.assign({}, this.state);
+        this.props.createMessage(message).then(function (res) {
+          App.cable.subscriptions.subscriptions[0].speak({
+            message: res.message
+          });
         });
-      });
-      $('#message-form')[0].reset();
+        $("#message-form")[0].reset();
+      }
     }
   }, {
     key: "render",
