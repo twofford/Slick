@@ -16,29 +16,11 @@ export default class MessageItem extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.edited = this.edited.bind(this);
+    this.edited = this.edited.bind(this);
   }
 
   getTimestamp() {
-    let updatedTimestamp;
-
-    const createdTimestamp = moment(
-      new Date(this.props.message.created_at)
-    ).format("h:mm A");
-
-    if (this.props.message.updated_at > this.props.message.created_at) {
-      updatedTimestamp = moment(new Date(this.props.message.updated_at)).format(
-        "h:mm A"
-      );
-    }
-
-    let timeStr;
-
-    if (updatedTimestamp) {
-      timeStr = createdTimestamp + " (edited at " + updatedTimestamp + ")";
-    } else timeStr = createdTimestamp;
-
-    return timeStr;
+    return moment(new Date(this.props.message.created_at)).format("h:mm A");
   }
 
   handleInput(type) {
@@ -67,17 +49,22 @@ export default class MessageItem extends React.Component {
       document.getElementById(`${this.props.message.id}-view`).style =
         "display:block;";
 
-      document
-        .getElementById(`${this.props.message.id}-wrapper`)
-        .classList.toggle("beige");
+      document.getElementById(`${this.props.message.id}-input`).value = "";
+
+      const wrapper = document.getElementById(
+        `${this.props.message.id}-wrapper`
+      );
+
+      wrapper.classList.remove("beige");
+      wrapper.classList.add("message-wrapper");
     }
   }
 
-  // edited() {
-  //   if (this.props.message.updated_at > this.props.message.created_at) {
-  //     return "(Edited)";
-  //   } else return null;
-  // }
+  edited() {
+    if (this.props.message.updated_at > this.props.message.created_at) {
+      return "(Edited)";
+    } else return null;
+  }
 
   render() {
     if (this.props.message.user.id === this.props.currentUserId) {
@@ -96,30 +83,31 @@ export default class MessageItem extends React.Component {
           >
             <div className="username-timestamp">
               <div className="username">{this.props.message.user.email}</div>
-              <div className="timestamp">
-                {this.getTimestamp()}
-                <button
-                  className="message-edit-button"
-                  onClick={() => {
-                    document.getElementById(
-                      `${this.props.message.id}-view`
-                    ).style = "display:none;";
-                    document.getElementById(
-                      `${this.props.message.id}-update`
-                    ).style = "display: block";
-
-                    document
-                      .getElementById(`${this.props.message.id}-wrapper`)
-                      .classList.toggle("beige");
-                  }}
-                >
-                  Edit message
-                </button>
-              </div>
+              <div className="timestamp">{this.getTimestamp()}</div>
             </div>
             <div className="message">
               {this.props.message.body}
-              {/* {this.edited()} */}
+              <span className="edited">{this.edited()}</span>
+              <button
+                className="message-edit-button"
+                onClick={() => {
+                  document.getElementById(
+                    `${this.props.message.id}-view`
+                  ).style = "display:none;";
+                  document.getElementById(
+                    `${this.props.message.id}-update`
+                  ).style = "display: block";
+
+                  const wrapper = document.getElementById(
+                    `${this.props.message.id}-wrapper`
+                  );
+
+                  wrapper.classList.remove("message-wrapper");
+                  wrapper.classList.add("beige");
+                }}
+              >
+                <i className="fas fa-pen"></i>
+              </button>
             </div>
           </div>
 
@@ -128,13 +116,47 @@ export default class MessageItem extends React.Component {
             id={`${this.props.message.id}-update`}
           >
             <form>
+
               <input
                 className="message-update-input"
+                id={`${this.props.message.id}-input`}
                 type="text"
                 placeholder={this.props.message.body}
+                autoComplete="off"
                 onChange={this.handleInput("body")}
               />
-              <button onClick={this.handleSubmit}>Update your message</button>
+
+              <button
+                className="update-cancel-button"
+                onClick={(event) => {
+                  event.preventDefault();
+                  document.getElementById(
+                    `${this.props.message.id}-view`
+                  ).style = "display:block;";
+                  document.getElementById(
+                    `${this.props.message.id}-update`
+                  ).style = "display: none";
+                  document.getElementById(
+                    `${this.props.message.id}-input`
+                  ).value = "";
+
+                  const wrapper = document.getElementById(
+                    `${this.props.message.id}-wrapper`
+                  );
+
+                  wrapper.classList.remove("beige");
+                  wrapper.classList.add("message-wrapper");
+                }}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="update-submit-button"
+                onClick={this.handleSubmit}
+              >
+                <i className="far fa-save"></i> Save Changes
+              </button>
             </form>
           </div>
         </div>

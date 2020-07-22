@@ -507,9 +507,12 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
+          console.log("Received: ", data);
+
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
+          console.log("Spoken: ", data);
           return this.perform('speak', data);
         },
         load: function load() {
@@ -1216,28 +1219,15 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
       body: "",
       user_id: _this.props.message.user.id
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this)); // this.edited = this.edited.bind(this);
-
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.edited = _this.edited.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(MessageItem, [{
     key: "getTimestamp",
     value: function getTimestamp() {
-      var updatedTimestamp;
-      var createdTimestamp = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date(this.props.message.created_at)).format("h:mm A");
-
-      if (this.props.message.updated_at > this.props.message.created_at) {
-        updatedTimestamp = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date(this.props.message.updated_at)).format("h:mm A");
-      }
-
-      var timeStr;
-
-      if (updatedTimestamp) {
-        timeStr = createdTimestamp + " (edited at " + updatedTimestamp + ")";
-      } else timeStr = createdTimestamp;
-
-      return timeStr;
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date(this.props.message.created_at)).format("h:mm A");
     }
   }, {
     key: "handleInput",
@@ -1262,14 +1252,19 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
         });
         document.getElementById("".concat(this.props.message.id, "-update")).style = "display: none";
         document.getElementById("".concat(this.props.message.id, "-view")).style = "display:block;";
-        document.getElementById("".concat(this.props.message.id, "-wrapper")).classList.toggle("beige");
+        document.getElementById("".concat(this.props.message.id, "-input")).value = "";
+        var wrapper = document.getElementById("".concat(this.props.message.id, "-wrapper"));
+        wrapper.classList.remove("beige");
+        wrapper.classList.add("message-wrapper");
       }
-    } // edited() {
-    //   if (this.props.message.updated_at > this.props.message.created_at) {
-    //     return "(Edited)";
-    //   } else return null;
-    // }
-
+    }
+  }, {
+    key: "edited",
+    value: function edited() {
+      if (this.props.message.updated_at > this.props.message.created_at) {
+        return "(Edited)";
+      } else return null;
+    }
   }, {
     key: "render",
     value: function render() {
@@ -1292,26 +1287,48 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
           className: "username"
         }, this.props.message.user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "timestamp"
-        }, this.getTimestamp(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, this.getTimestamp())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "message"
+        }, this.props.message.body, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "edited"
+        }, this.edited()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "message-edit-button",
           onClick: function onClick() {
             document.getElementById("".concat(_this3.props.message.id, "-view")).style = "display:none;";
             document.getElementById("".concat(_this3.props.message.id, "-update")).style = "display: block";
-            document.getElementById("".concat(_this3.props.message.id, "-wrapper")).classList.toggle("beige");
+            var wrapper = document.getElementById("".concat(_this3.props.message.id, "-wrapper"));
+            wrapper.classList.remove("message-wrapper");
+            wrapper.classList.add("beige");
           }
-        }, "Edit message"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "message"
-        }, this.props.message.body)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-pen"
+        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-message-container",
           id: "".concat(this.props.message.id, "-update")
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "message-update-input",
+          id: "".concat(this.props.message.id, "-input"),
           type: "text",
           placeholder: this.props.message.body,
+          autoComplete: "off",
           onChange: this.handleInput("body")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "update-cancel-button",
+          onClick: function onClick(event) {
+            event.preventDefault();
+            document.getElementById("".concat(_this3.props.message.id, "-view")).style = "display:block;";
+            document.getElementById("".concat(_this3.props.message.id, "-update")).style = "display: none";
+            document.getElementById("".concat(_this3.props.message.id, "-input")).value = "";
+            var wrapper = document.getElementById("".concat(_this3.props.message.id, "-wrapper"));
+            wrapper.classList.remove("beige");
+            wrapper.classList.add("message-wrapper");
+          }
+        }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "update-submit-button",
           onClick: this.handleSubmit
-        }, "Update your message"))));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-save"
+        }), " Save Changes"))));
       } else {
         //it's somebody else's message
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

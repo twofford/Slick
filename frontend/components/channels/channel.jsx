@@ -15,10 +15,12 @@ class Channel extends React.Component{
             {channel: 'ChatChannel'},
             {
                 received: data => {
+                    console.log("Received: ",data);
                     this.props.receiveMessage(data);
                 },
 
                 speak: function(data) {
+                    console.log("Spoken: ", data)
                     return this.perform('speak', data);
                 },
 
@@ -32,6 +34,7 @@ class Channel extends React.Component{
             }
         );
     }
+
 
     render(){
         
