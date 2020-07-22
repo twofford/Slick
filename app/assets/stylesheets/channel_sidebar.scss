@@ -144,6 +144,10 @@
     text-overflow: ellipsis;
 }
 
+.channel-li a, .channeli-li-current a, .dm-li a, .dm-li-current a {
+    display: block;
+}
+
 .channel-li-current {
     padding-left: 25px;
     padding-right: 15px;
