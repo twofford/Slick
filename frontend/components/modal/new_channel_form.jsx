@@ -14,10 +14,6 @@ class NewChannelForm extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    // this.handleUserInput = this.handleUserInput.bind(this);
-
-    // this.allowSubmit = this.allowSubmit.bind(this);
-
     this.togglePrivate = this.togglePrivate.bind(this);
   }
 
@@ -27,16 +23,6 @@ class NewChannelForm extends React.Component {
     };
   }
 
-  // handleUserInput() {
-  //     return (event) => {
-  //         this.state.users.push(event.target.value);
-  //     }
-  // }
-
-  // allowSubmit() {
-  //     this.style = { backgroundColor: '#137959', color: 'white', transition: '0.1s', pointerEvents: 'auto', cursor: 'pointer'}
-  // };
-
   handleSubmit(event) {
     event.preventDefault();
     const channel = Object.assign({}, this.state);
@@ -45,9 +31,14 @@ class NewChannelForm extends React.Component {
   }
 
   togglePrivate() {
-    this.state.channel_type === "public"
-      ? this.setState({ channel_type: "private" })
-      : this.setState({ channel_type: "public" });
+      if (this.state.channel_type === 'public') {
+        this.setState({ channel_type: "private" });
+        document.getElementById("new-channel-form-h1").innerHTML = "Create a private channel";
+      } else {
+        this.setState({ channel_type: "public" });
+        document.getElementById("new-channel-form-h1").innerHTML =
+          "Create a channel";
+      }
   }
 
   componentDidUpdate() {

@@ -1865,9 +1865,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       users: [],
       channel_or_dm: "channel"
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this)); // this.handleUserInput = this.handleUserInput.bind(this);
-    // this.allowSubmit = this.allowSubmit.bind(this);
-
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.togglePrivate = _this.togglePrivate.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -1880,15 +1878,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       return function (event) {
         _this2.setState(_defineProperty({}, type, event.target.value));
       };
-    } // handleUserInput() {
-    //     return (event) => {
-    //         this.state.users.push(event.target.value);
-    //     }
-    // }
-    // allowSubmit() {
-    //     this.style = { backgroundColor: '#137959', color: 'white', transition: '0.1s', pointerEvents: 'auto', cursor: 'pointer'}
-    // };
-
+    }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
@@ -1900,11 +1890,17 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "togglePrivate",
     value: function togglePrivate() {
-      this.state.channel_type === "public" ? this.setState({
-        channel_type: "private"
-      }) : this.setState({
-        channel_type: "public"
-      });
+      if (this.state.channel_type === 'public') {
+        this.setState({
+          channel_type: "private"
+        });
+        document.getElementById("new-channel-form-h1").innerHTML = "Create a private channel";
+      } else {
+        this.setState({
+          channel_type: "public"
+        });
+        document.getElementById("new-channel-form-h1").innerHTML = "Create a channel";
+      }
     }
   }, {
     key: "componentDidUpdate",
