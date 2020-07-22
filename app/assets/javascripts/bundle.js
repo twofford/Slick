@@ -1613,10 +1613,10 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
             message: res.message
           });
         });
-        $("#message-form")[0].reset();
         this.setState({
           body: ''
         });
+        document.getElementById("message-form-input").value = "";
       }
     }
   }, {
@@ -1640,6 +1640,7 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
         className: "message-form",
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "message-form-input",
         className: "message-form-input",
         placeholder: placeholder,
         type: "text",

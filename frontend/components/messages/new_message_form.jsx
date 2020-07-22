@@ -40,12 +40,11 @@ export default class NewMessageForm extends React.Component{
                 message: res.message,
               });
             });
-
-            $("#message-form")[0].reset();
-
             this.setState({
                 body: ''
             })
+
+            document.getElementById("message-form-input").value="";
 
         }
     };
@@ -72,6 +71,7 @@ export default class NewMessageForm extends React.Component{
             <form id='message-form' className='message-form'
             onSubmit={this.handleSubmit}>
                 <input
+                id="message-form-input"
                 className='message-form-input'
                 placeholder={placeholder}
                 type="text"
