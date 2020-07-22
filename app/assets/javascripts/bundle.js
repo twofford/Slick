@@ -1784,6 +1784,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _new_channel_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./new_channel_form */ "./frontend/components/modal/new_channel_form.jsx");
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 
@@ -1791,7 +1793,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(state) {
   return {
-    channels: state.entities.channels
+    channels: state.entities.channels,
+    errors: state.errors.channel
   };
 };
 
@@ -1800,13 +1803,16 @@ var mdp = function mdp(dispatch) {
     createChannel: function createChannel(channel) {
       return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["createChannel"])(channel));
     },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_channel_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
+    },
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_new_channel_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_new_channel_form__WEBPACK_IMPORTED_MODULE_1__["default"])));
 
 /***/ }),
 
@@ -1871,6 +1877,11 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(NewChannelForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.clearErrors();
+    }
+  }, {
     key: "handleInput",
     value: function handleInput(type) {
       var _this2 = this;
@@ -1880,17 +1891,34 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "renderErrors",
+    value: function renderErrors() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "error",
+          key: "error-".concat(i)
+        }, error);
+      }));
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      var _this3 = this;
+
       event.preventDefault();
       var channel = Object.assign({}, this.state);
-      this.props.createChannel(channel);
-      this.props.closeModal();
+      this.props.createChannel(channel).then(function (res) {
+        _this3.props.history.push("/channels/".concat(res.channel.id));
+
+        _this3.props.closeModal();
+      }, function (res) {
+        return console.log(res);
+      });
     }
   }, {
     key: "togglePrivate",
     value: function togglePrivate() {
-      if (this.state.channel_type === 'public') {
+      if (this.state.channel_type === "public") {
         this.setState({
           channel_type: "private"
         });
@@ -1918,7 +1946,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
@@ -1927,7 +1955,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       }, "Create a channel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
-          return _this3.props.closeModal();
+          return _this4.props.closeModal();
         }
       }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-body"
@@ -1975,7 +2003,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
         id: "new-channel-submit-button",
         style: this.style,
         onClick: this.handleSubmit
-      }, "Create"));
+      }, "Create"), this.renderErrors());
     }
   }]);
 

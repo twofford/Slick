@@ -17,28 +17,50 @@ class NewChannelForm extends React.Component {
     this.togglePrivate = this.togglePrivate.bind(this);
   }
 
+  componentDidMount() {
+    this.props.clearErrors();
+  }
+
   handleInput(type) {
     return (event) => {
       this.setState({ [type]: event.target.value });
     };
   }
 
+  renderErrors() {
+    return (
+      <ul>
+        {this.props.errors.map((error, i) => (
+          <li className="error" key={`error-${i}`}>
+            {error}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const channel = Object.assign({}, this.state);
-    this.props.createChannel(channel);
-    this.props.closeModal();
+    this.props.createChannel(channel).then(
+      (res) => {
+        this.props.history.push(`/channels/${res.channel.id}`);
+        this.props.closeModal();
+      },
+      (res => console.log(res))
+    );
   }
 
   togglePrivate() {
-      if (this.state.channel_type === 'public') {
-        this.setState({ channel_type: "private" });
-        document.getElementById("new-channel-form-h1").innerHTML = "Create a private channel";
-      } else {
-        this.setState({ channel_type: "public" });
-        document.getElementById("new-channel-form-h1").innerHTML =
-          "Create a channel";
-      }
+    if (this.state.channel_type === "public") {
+      this.setState({ channel_type: "private" });
+      document.getElementById("new-channel-form-h1").innerHTML =
+        "Create a private channel";
+    } else {
+      this.setState({ channel_type: "public" });
+      document.getElementById("new-channel-form-h1").innerHTML =
+        "Create a channel";
+    }
   }
 
   componentDidUpdate() {
@@ -138,6 +160,7 @@ class NewChannelForm extends React.Component {
         >
           Create
         </button>
+        {this.renderErrors()}
       </div>
     );
   }
