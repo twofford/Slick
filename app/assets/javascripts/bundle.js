@@ -1859,15 +1859,15 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      title: '',
-      description: '',
-      channel_type: 'public',
+      title: "",
+      description: "",
+      channel_type: "public",
       users: [],
-      channel_or_dm: 'channel'
+      channel_or_dm: "channel"
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.handleUserInput = _this.handleUserInput.bind(_assertThisInitialized(_this));
-    _this.allowSubmit = _this.allowSubmit.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this)); // this.handleUserInput = this.handleUserInput.bind(this);
+    // this.allowSubmit = this.allowSubmit.bind(this);
+
     _this.togglePrivate = _this.togglePrivate.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -1880,27 +1880,15 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       return function (event) {
         _this2.setState(_defineProperty({}, type, event.target.value));
       };
-    }
-  }, {
-    key: "handleUserInput",
-    value: function handleUserInput() {
-      var _this3 = this;
+    } // handleUserInput() {
+    //     return (event) => {
+    //         this.state.users.push(event.target.value);
+    //     }
+    // }
+    // allowSubmit() {
+    //     this.style = { backgroundColor: '#137959', color: 'white', transition: '0.1s', pointerEvents: 'auto', cursor: 'pointer'}
+    // };
 
-      return function (event) {
-        _this3.state.users.push(event.target.value);
-      };
-    }
-  }, {
-    key: "allowSubmit",
-    value: function allowSubmit() {
-      this.style = {
-        backgroundColor: '#137959',
-        color: 'white',
-        transition: '0.1s',
-        pointerEvents: 'auto',
-        cursor: 'pointer'
-      };
-    }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
@@ -1912,16 +1900,29 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "togglePrivate",
     value: function togglePrivate() {
-      this.state.channel_type === 'public' ? this.setState({
-        channel_type: 'private'
+      this.state.channel_type === "public" ? this.setState({
+        channel_type: "private"
       }) : this.setState({
-        channel_type: 'public'
+        channel_type: "public"
       });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var createButton = document.getElementById("new-channel-submit-button");
+
+      if (this.state.title) {
+        createButton.classList.add("enabled-button");
+        createButton.classList.remove("disabled-button");
+      } else {
+        createButton.classList.add("disabled-button");
+        createButton.classList.remove("enabled-button");
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-header"
@@ -1930,18 +1931,34 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
       }, "Create a channel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "modal-closer",
         onClick: function onClick() {
-          return _this4.props.closeModal();
+          return _this3.props.closeModal();
         }
       }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Channels are where your team communicates. They\u2019re best when organized around a topic \u2014 #marketing, for example."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        autoFocus: "on",
+        id: "new-channel-title",
+        className: "new-channel-input",
         type: "text",
-        onChange: this.handleInput('title'),
-        onInput: this.allowSubmit,
+        onChange: this.handleInput("title"),
+        onFocus: function onFocus() {
+          document.getElementById("new-channel-title").style = "box-shadow: 0 0 0 4px #bee2f1;";
+        },
+        onBlur: function onBlur() {
+          document.getElementById("new-channel-title").style = "box-shadow: none;";
+        },
         placeholder: "# e.g. plan-budget"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Description", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " (optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "new-channel-desc",
+        className: "new-channel-input",
         type: "text",
-        onChange: this.handleInput('description')
+        onChange: this.handleInput("description"),
+        onFocus: function onFocus() {
+          document.getElementById("new-channel-desc").style = "box-shadow: 0 0 0 4px #bee2f1;";
+        },
+        onBlur: function onBlur() {
+          document.getElementById("new-channel-desc").style = "box-shadow: none;";
+        }
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "description-span"
       }, "What's this channel about?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2193,7 +2210,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }
 
       if (this.state.searchValue === "") {
-        document.getElementById("recent-dms").style = "display: visible"; //get doc by id and say 'recent convos'
+        document.getElementById("recent-dms").style = "display: visible";
       } else {
         document.getElementById("recent-dms").style = "display: none";
       }

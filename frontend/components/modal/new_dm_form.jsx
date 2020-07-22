@@ -93,7 +93,6 @@ class NewDMForm extends React.Component {
     }
     if (this.state.searchValue === "") {
       document.getElementById("recent-dms").style = "display: visible";
-      //get doc by id and say 'recent convos'
     } else {
       document.getElementById("recent-dms").style = "display: none";
     }

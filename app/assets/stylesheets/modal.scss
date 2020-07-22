@@ -124,6 +124,10 @@
   
 }
 
+.new-channel-input:focus {
+  outline: none;
+}
+
 #modal-closer {
   position: absolute;
   right: 20px;
@@ -165,7 +169,7 @@
 #modal-body div input {
   padding-left: 20px;
   font-size: 18px;
-  color: lightgray;
+  color: black;
   margin-top: 5px;
   width: 460px;
   height: 40px;
@@ -276,8 +280,6 @@ input:checked + .slider:before {
   transition: 0.3s;
   font-weight: 700;
   letter-spacing: .8px;
-  background-color: #ddd;
-  color: #545454;
   font-size: 14px;
   font-weight: 700;
 }
@@ -294,5 +296,7 @@ input:checked + .slider:before {
 .disabled-button {
   border: none;
   pointer-events: none;
+  background-color: #ddd;
+  color: #545454;
   transition: .1s;
 }
