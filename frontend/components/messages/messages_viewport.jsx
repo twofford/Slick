@@ -1,5 +1,4 @@
 import React from 'react';
-import MessageItem from './message_item'
 import MessageItemContainer from './message_item_container';
 
 export default class MessagesViewport extends React.Component{

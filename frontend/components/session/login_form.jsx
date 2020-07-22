@@ -1,91 +1,102 @@
-import React from 'react';
+import React from "react";
 
 class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: ''
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemoLogin = this.handleDemoLogin.bind(this);
+  }
 
-    handleInput(type) {
-        return (event) => {
-            this.setState({ [type]: event.target.value });
-        };
+  handleInput(type) {
+    return (event) => {
+      this.setState({ [type]: event.target.value });
     };
+  }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        const user = Object.assign({}, this.state);
-        this.props.login(user);
-    };
+  handleSubmit(event) {
+    event.preventDefault();
+    const user = Object.assign({}, this.state);
+    this.props.login(user);
+  }
 
-    renderErrors() {
-        return (
-            <>
-            <ul className='errors-ul'>
-                {this.props.errors.map((error, i) => (
-                    <li className='error' key={`error-${i}`}> 
-                        {error}
-                    </li>
-                ))}
-            </ul>
-            </>
-        );
-    }
+  handleDemoLogin(event) {
+    event.preventDefault();
+    const user = Object.assign({}, { email: "DemoDude", password: "starwars" });
+    this.props.login(user);
+  }
 
-    render() {
+  renderErrors() {
+    return (
+      <>
+        <ul className="errors-ul">
+          {this.props.errors.map((error, i) => (
+            <li className="error" key={`error-${i}`}>
+              {error}
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
 
-        return (
-            <>
-            <div className='navbar-div'>
-                <ul className='navbar-ul'>
-                    <li><img className="navbar-logo" src={slackLogo}></img></li>
-                </ul>
-            </div>
-            
-            <div className='form-div'>
+  render() {
+    return (
+      <>
+        <div className="navbar-div">
+          <ul className="navbar-ul">
+            <li>
+              <img className="navbar-logo" src={slackLogo}></img>
+            </li>
+          </ul>
+        </div>
 
-                <h1 className='login-form-h1'>Sign in to Slick</h1>
+        <div className="form-div">
+          <h1 className="login-form-h1">Sign in to Slick</h1>
 
-                <p className='login-form-description'>Enter your email and password.</p>
+          <p className="login-form-description">
+            Enter your email and password.
+          </p>
 
-                <form>
+          <form>
+            <input
+              className="form-input"
+              type="text"
+              onChange={this.handleInput("email")}
+              placeholder="name@example.com"
+            />
 
-                   
-                    <input
-                    className='form-input'
-                        type="text"
-                        onChange={this.handleInput('email')}
-                        placeholder='name@example.com'
-                    />
-                    
-                    <br></br>
+            <br></br>
 
-                    
-                    <input
-                    className='form-input'
-                        type="password"
-                        onChange={this.handleInput('password')}
-                        placeholder='password'
-                    
-                    />
+            <input
+              className="form-input"
+              type="password"
+              onChange={this.handleInput("password")}
+              placeholder="password"
+            />
 
-                    {this.renderErrors()}
-                    
+            {this.renderErrors()}
 
-                    <button
-                    className='form-button'
-                        onClick={this.handleSubmit}>Continue →</button>
+            <button className="form-button" onClick={this.handleSubmit}>
+              Continue →
+            </button>
+          </form>
+          
+          <br/>
 
-                </form>
-
-            </div>
-            </>
-        );
-    };
-};
+          <div id="demo-login-div">
+            Don't have an account?{" "}
+            <a id="demo-login-button" onClick={this.handleDemoLogin}>
+              Login as a demo user.
+            </a>
+          </div>
+        </div>
+      </>
+    );
+  }
+}
 
 export default LoginForm;
