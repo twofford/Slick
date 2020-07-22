@@ -1895,7 +1895,7 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
     value: function renderErrors() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "error",
+          className: "channel-error",
           key: "error-".concat(i)
         }, error);
       }));
@@ -1911,8 +1911,6 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
         _this3.props.history.push("/channels/".concat(res.channel.id));
 
         _this3.props.closeModal();
-      }, function (res) {
-        return console.log(res);
       });
     }
   }, {
@@ -1959,8 +1957,9 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
         }
       }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "modal-body"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Channels are where your team communicates. They\u2019re best when organized around a topic \u2014 #marketing, for example."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Channels are where your team communicates. They\u2019re best when organized around a topic \u2014 #marketing, for example."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Name", this.renderErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         autoFocus: "on",
+        autoComplete: "off",
         id: "new-channel-title",
         className: "new-channel-input",
         type: "text",
@@ -1998,12 +1997,16 @@ var NewChannelForm = /*#__PURE__*/function (_React$Component) {
         onChange: this.togglePrivate
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "slider round"
-      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "check"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check"
+      }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "disabled-button",
         id: "new-channel-submit-button",
         style: this.style,
         onClick: this.handleSubmit
-      }, "Create"), this.renderErrors());
+      }, "Create"));
     }
   }]);
 

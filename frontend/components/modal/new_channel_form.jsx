@@ -31,7 +31,7 @@ class NewChannelForm extends React.Component {
     return (
       <ul>
         {this.props.errors.map((error, i) => (
-          <li className="error" key={`error-${i}`}>
+          <li className="channel-error" key={`error-${i}`}>
             {error}
           </li>
         ))}
@@ -46,8 +46,7 @@ class NewChannelForm extends React.Component {
       (res) => {
         this.props.history.push(`/channels/${res.channel.id}`);
         this.props.closeModal();
-      },
-      (res => console.log(res))
+      }
     );
   }
 
@@ -92,9 +91,11 @@ class NewChannelForm extends React.Component {
 
           <div>
             Name
+            {this.renderErrors()}
             <br />
             <input
               autoFocus="on"
+              autoComplete="off"
               id="new-channel-title"
               className="new-channel-input"
               type="text"
@@ -146,7 +147,11 @@ class NewChannelForm extends React.Component {
               <label className="switch">
                 <input type="checkbox" onChange={this.togglePrivate} />
 
-                <span className="slider round"></span>
+                <span className="slider round">
+                  <span id="check">
+                    <i className="fas fa-check"></i>
+                  </span>
+                </span>
               </label>
             </div>
           </div>
@@ -160,7 +165,7 @@ class NewChannelForm extends React.Component {
         >
           Create
         </button>
-        {this.renderErrors()}
+        {/* {this.renderErrors()} */}
       </div>
     );
   }
