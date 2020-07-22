@@ -11,6 +11,14 @@ export default class MessagesViewport extends React.Component{
         this.props.fetchMessages(this.props.currentChannelId);
     }
 
+    componentDidUpdate(){
+        let viewport;
+        if (this.props.messages) {
+          viewport = document.getElementById("messages-ul");
+          viewport.scrollTop = viewport.scrollHeight;
+        }
+    }
+
     render(){
 
         this.messagesArray = Object.values(this.props.messages)
@@ -20,7 +28,7 @@ export default class MessagesViewport extends React.Component{
         if (this.props.messages) {
             return (
                 <>
-                <ul className='messages-ul'>
+                <ul id="messages-ul" className='messages-ul'>
 
                     {this.currentChannelMessages.map(message => {
                         return(

@@ -1452,6 +1452,16 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
       this.props.fetchMessages(this.props.currentChannelId);
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var viewport;
+
+      if (this.props.messages) {
+        viewport = document.getElementById("messages-ul");
+        viewport.scrollTop = viewport.scrollHeight;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
@@ -1463,6 +1473,7 @@ var MessagesViewport = /*#__PURE__*/function (_React$Component) {
 
       if (this.props.messages) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          id: "messages-ul",
           className: "messages-ul"
         }, this.currentChannelMessages.map(function (message) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_message_item_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
