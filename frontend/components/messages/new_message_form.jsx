@@ -43,6 +43,10 @@ export default class NewMessageForm extends React.Component{
 
             $("#message-form")[0].reset();
 
+            this.setState({
+                body: ''
+            })
+
         }
     };
 

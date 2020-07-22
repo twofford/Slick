@@ -1603,6 +1603,9 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
           });
         });
         $("#message-form")[0].reset();
+        this.setState({
+          body: ''
+        });
       }
     }
   }, {
