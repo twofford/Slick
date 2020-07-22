@@ -68,7 +68,7 @@
 
 .navbar-form-signup {
     display: inline-block;
-    padding: .75rem 1rem;
+    // padding: .75rem 1rem;
     background-color: #611f69;
     color: #FFFFFF;
     border-radius: 4px;
@@ -85,6 +85,8 @@
 }
 
 .navbar-form-signup a {
+    padding: .75rem 1rem;
+    display: block;
     border-left: 10px;
     border-right: 10px;
     border-top: 15px;
