@@ -73,88 +73,102 @@ class ChannelSidebar extends React.Component{
             } else return 0;
         });
 
-        return(
-            
-            <div className='channels-wrapper'>
+        return (
+          <div className="channels-wrapper">
+            <div className="workspace-box">
+              <p>
+                Your Workspace&nbsp;&nbsp;
+                <i className="fas fa-chevron-down"></i>
+              </p>
 
-                <div className="workspace-box">
-
-                    <p>Your Workspace&nbsp;&nbsp;<i className="fas fa-chevron-down"></i></p>
-                    
-                    <div className="user-name"><i className="fas fa-circle"/>&nbsp;{this.props.currentUser.email}</div>
-
-                </div>
-
-                <div className='channels-toogle'>
-
-                    <div className="channels-header">
-
-                    <i id='channels-caret' className="fas fa-caret-down"></i>
-                    
-                    <button className='channels-toggle-button'
-                    onClick={this.toggleChannels}>Channels</button>
-
-                    <a onClick={() => this.props.openModal("addChannel")}><i className="fas fa-plus channel-fa-plus"></i></a>
-
-                    </div>
-
-                    <ul id='channels-ul' className='channels-ul'>
-
-                        {this.channelsArray.map(channel => {
-
-                            let userIds = channel.users.map(user => user.id);
-
-                            const currentUserIsMember = userIds.includes(this.props.currentUser.id);
-
-                            if (channel.channel_or_dm === 'channel' && currentUserIsMember) {
-                                return <ChannelSidebarItem 
-                                key={channel.id}
-                                channel={channel}
-                                currentChannelId={this.props.currentChannelId}
-                                currentUser={this.props.currentUser}/>
-                        }})}
-
-                    </ul>
-
-                </div>
-
-                <div className='channels-toogle'>
-
-                    <div className="channels-header">
-
-                        <i id='dms-caret' className="fas fa-caret-down"></i>
-
-                        <button className='dms-toggle-button' onClick={this.toggleDms}>Direct messages</button>
-
-                        <a onClick={() => this.props.openModal("addDM")}><i className="fas fa-plus dm-fa-plus"></i></a>
-                    
-                    </div>
-
-
-                    <ul id='dms-ul' className='dms-ul'>
-
-                        {this.channelsArray.map(channel => {
-
-                            let userIds = channel.users.map(user => user.id);
-
-                            const currentUserIsMember = userIds.includes(this.props.currentUser.id);
-                            
-                            if (channel.channel_or_dm === 'dm' && currentUserIsMember) {
-                                return <ChannelSidebarItem
-                                key={channel.id}
-                                channel={channel}
-                                currentChannelId={this.props.currentChannelId}
-                                currentUser={this.props.currentUser}/>
-                            }
-                        })}
-
-                    </ul>
-
-                </div>
-            
+              <div className="user-name">
+                <i className="fas fa-circle" />
+                &nbsp;{this.props.currentUser.email}
+              </div>
             </div>
 
-    )
+            <div className="channels">
+              <div className="channels-toogle">
+                <div className="channels-header">
+                  <i id="channels-caret" className="fas fa-caret-down"></i>
+
+                  <button
+                    className="channels-toggle-button"
+                    onClick={this.toggleChannels}
+                  >
+                    Channels
+                  </button>
+
+                  <a onClick={() => this.props.openModal("addChannel")}>
+                    <i className="fas fa-plus channel-fa-plus"></i>
+                  </a>
+                </div>
+
+                <ul id="channels-ul" className="channels-ul">
+                  {this.channelsArray.map((channel) => {
+                    let userIds = channel.users.map((user) => user.id);
+
+                    const currentUserIsMember = userIds.includes(
+                      this.props.currentUser.id
+                    );
+
+                    if (
+                      channel.channel_or_dm === "channel" &&
+                      currentUserIsMember
+                    ) {
+                      return (
+                        <ChannelSidebarItem
+                          key={channel.id}
+                          channel={channel}
+                          currentChannelId={this.props.currentChannelId}
+                          currentUser={this.props.currentUser}
+                        />
+                      );
+                    }
+                  })}
+                </ul>
+              </div>
+
+              <div className="channels-toogle">
+                <div className="channels-header">
+                  <i id="dms-caret" className="fas fa-caret-down"></i>
+
+                  <button
+                    className="dms-toggle-button"
+                    onClick={this.toggleDms}
+                  >
+                    Direct messages
+                  </button>
+
+                  <a onClick={() => this.props.openModal("addDM")}>
+                    <i className="fas fa-plus dm-fa-plus"></i>
+                  </a>
+                </div>
+
+                <ul id="dms-ul" className="dms-ul">
+                  {this.channelsArray.map((channel) => {
+                    let userIds = channel.users.map((user) => user.id);
+
+                    const currentUserIsMember = userIds.includes(
+                      this.props.currentUser.id
+                    );
+
+                    if (channel.channel_or_dm === "dm" && currentUserIsMember) {
+                      return (
+                        <ChannelSidebarItem
+                          key={channel.id}
+                          channel={channel}
+                          currentChannelId={this.props.currentChannelId}
+                          currentUser={this.props.currentUser}
+                        />
+                      );
+                    }
+                  })}
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
     }
 }
 

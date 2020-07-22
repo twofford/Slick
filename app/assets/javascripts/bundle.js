@@ -503,6 +503,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      //copy this code into the success callback for logging in. create a subscription when a user logs in and immediately call App.cable.subscriptions.subscriptions[1].speak(online: res.)
       App.cable.subscriptions.create({
         channel: 'ChatChannel'
       }, {
@@ -771,6 +772,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-circle"
       }), "\xA0", this.props.currentUser.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "channels"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-toogle"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "channels-header"
@@ -795,7 +798,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         });
         var currentUserIsMember = userIds.includes(_this3.props.currentUser.id);
 
-        if (channel.channel_or_dm === 'channel' && currentUserIsMember) {
+        if (channel.channel_or_dm === "channel" && currentUserIsMember) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: channel.id,
             channel: channel,
@@ -828,7 +831,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
         });
         var currentUserIsMember = userIds.includes(_this3.props.currentUser.id);
 
-        if (channel.channel_or_dm === 'dm' && currentUserIsMember) {
+        if (channel.channel_or_dm === "dm" && currentUserIsMember) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: channel.id,
             channel: channel,
@@ -836,7 +839,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
             currentUser: _this3.props.currentUser
           });
         }
-      }))));
+      })))));
     }
   }]);
 

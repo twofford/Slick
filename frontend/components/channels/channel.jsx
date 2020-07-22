@@ -8,7 +8,7 @@ class Channel extends React.Component{
         this.state = {messages : []};
     }
 
-    componentDidMount(){
+    componentDidMount(){ //copy this code into the success callback for logging in. create a subscription when a user logs in and immediately call App.cable.subscriptions.subscriptions[1].speak(online: res.)
         
         
         App.cable.subscriptions.create(
