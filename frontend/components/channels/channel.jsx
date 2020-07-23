@@ -10,13 +10,13 @@ class Channel extends React.Component{
 
     componentDidMount(){
 
-        console.log('channel mounted:',this.props.channel)
+        // console.log('channel mounted:',this.props.channel)
         
         App.cable.subscriptions.create(
             {channel: 'ChatChannel'},
             {
                 received: data => {
-                    console.log('Received on ChatChannel:',data)
+                    // console.log('Received on ChatChannel:',data)
                     this.props.receiveMessage(data)
                 },
                 speak: function(data){this.perform('speak',data)}
@@ -27,11 +27,11 @@ class Channel extends React.Component{
             {channel: 'AppearanceChannel'},
             {
                received: data => {
-                   console.log('Received on AppearanceChannel:',data)
+                //    console.log('Received on AppearanceChannel:',data)
                    this.props.receiveNewUser(data)
                 },
                speak: function(data){
-                   console.log('Spoken on AppearanceChannel:',data)
+                //    console.log('Spoken on AppearanceChannel:',data)
                    this.perform('speak',data)} 
             }
         )

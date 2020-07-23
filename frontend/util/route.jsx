@@ -5,6 +5,7 @@ import {
     Redirect,
     withRouter
 } from 'react-router-dom';
+import Channel from '../components/channels/channel';
 
 
 const Auth = ({ component: Component, path, loggedIn, channelId, exact }) => {
@@ -28,9 +29,14 @@ const Protected = ({ component: Component, path, loggedIn, exact }) => {
         };
 
 const mapStateToProps = state => {
+
+    console.log(state);
+
     return {
-        loggedIn: Boolean(state.session.user.id),
-        channelId: state.session.user.channel_id
+      loggedIn: Boolean(state.session.user.id),
+      channelId: Boolean(state.session.user.id)
+        ? state.session.user.channel.id
+        : null,
     };
 }
 

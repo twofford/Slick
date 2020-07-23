@@ -47,11 +47,14 @@ class ChannelSidebarItem extends React.Component {
       let channelDisplayTitle;
 
       if (channelDisplayTitleArrayFiltered.length > 1) {
+        channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
       } else {
           if (onlineUserEmails.includes(channelDisplayTitleArrayFiltered[0])) {
-            channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
+            // channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           } else {
-              channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
+              // channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           }
       }
 

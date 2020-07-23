@@ -524,13 +524,12 @@ var Channel = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      console.log('channel mounted:', this.props.channel);
+      // console.log('channel mounted:',this.props.channel)
       App.cable.subscriptions.create({
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          console.log('Received on ChatChannel:', data);
-
+          // console.log('Received on ChatChannel:',data)
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
@@ -541,12 +540,11 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'AppearanceChannel'
       }, {
         received: function received(data) {
-          console.log('Received on AppearanceChannel:', data);
-
+          //    console.log('Received on AppearanceChannel:',data)
           _this2.props.receiveNewUser(data);
         },
         speak: function speak(data) {
-          console.log('Spoken on AppearanceChannel:', data);
+          //    console.log('Spoken on AppearanceChannel:',data)
           this.perform('speak', data);
         }
       });
@@ -1047,11 +1045,13 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
         });
         var channelDisplayTitle;
 
-        if (channelDisplayTitleArrayFiltered.length > 1) {} else {
+        if (channelDisplayTitleArrayFiltered.length > 1) {
+          channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
+        } else {
           if (onlineUserEmails.includes(channelDisplayTitleArrayFiltered[0])) {
-            channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", "); // channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           } else {
-            channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", "); // channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           }
         }
 
@@ -3520,7 +3520,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var preloadedState = {
       session: {
         user: {
-          id: window.currentUser.id
+          id: window.currentUser.id,
+          channel: window.generalChannel
         }
       },
       entities: {
@@ -3529,8 +3530,17 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     store = Object(_store_store__WEBPACK_IMPORTED_MODULE_3__["default"])(preloadedState);
     delete window.currentUser;
+    delete window.currentChannel;
   } else {
-    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_3__["default"])();
+    var _preloadedState = {
+      session: {
+        user: {
+          channel: window.generalChannel
+        }
+      }
+    };
+    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_3__["default"])(_preloadedState);
+    delete window.currentChannel;
   }
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -3835,6 +3845,12 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 var _nullSession = {
   user: {}
@@ -3848,11 +3864,15 @@ var sessionReducer = function sessionReducer() {
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return Object.assign({}, {
-        user: action.user
+        user: _objectSpread({}, defaultState.user, {}, action.user)
       });
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
-      return _nullSession;
+      var nextState = _objectSpread({}, defaultState);
+
+      delete nextState.user.id;
+      delete nextState.user.email;
+      return nextState;
 
     default:
       return defaultState;
@@ -4097,6 +4117,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _components_channels_channel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/channels/channel */ "./frontend/components/channels/channel.jsx");
+
 
 
 
@@ -4135,9 +4157,10 @@ var Protected = function Protected(_ref2) {
 };
 
 var mapStateToProps = function mapStateToProps(state) {
+  console.log(state);
   return {
     loggedIn: Boolean(state.session.user.id),
-    channelId: state.session.user.channel_id
+    channelId: Boolean(state.session.user.id) ? state.session.user.channel.id : null
   };
 };
 
