@@ -86,6 +86,27 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/appearance_actions.js":
+/*!************************************************!*\
+  !*** ./frontend/actions/appearance_actions.js ***!
+  \************************************************/
+/*! exports provided: RECEIVE_NEW_USER, receiveNewUser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NEW_USER", function() { return RECEIVE_NEW_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNewUser", function() { return receiveNewUser; });
+var RECEIVE_NEW_USER = 'RECEIVE_NEW_USER';
+var receiveNewUser = function receiveNewUser(user) {
+  return {
+    type: RECEIVE_NEW_USER,
+    user: user
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/channel_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/channel_actions.js ***!
@@ -503,25 +524,34 @@ var Channel = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      //copy this code into the success callback for logging in. create a subscription when a user logs in and immediately call App.cable.subscriptions.subscriptions[1].speak(online: res.)
+      console.log('channel mounted:', this.props.channel);
       App.cable.subscriptions.create({
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          console.log("Received: ", data);
+          console.log('Received on ChatChannel:', data);
 
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
-          console.log("Spoken: ", data);
-          return this.perform('speak', data);
-        },
-        load: function load() {
-          return this.perform('load');
-        },
-        hear: function hear() {
-          return this.perform('hear');
+          this.perform('speak', data);
         }
+      });
+      App.cable.subscriptions.create({
+        channel: 'AppearanceChannel'
+      }, {
+        received: function received(data) {
+          console.log('Received on AppearanceChannel:', data);
+
+          _this2.props.receiveNewUser(data);
+        },
+        speak: function speak(data) {
+          console.log('Spoken on AppearanceChannel:', data);
+          this.perform('speak', data);
+        }
+      });
+      App.cable.subscriptions.subscriptions[1].speak({
+        user: this.props.currentUser
       });
     }
   }, {
@@ -594,9 +624,11 @@ var Channel = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
 /* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/message_actions */ "./frontend/actions/message_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
+/* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
+
 
 
 
@@ -630,11 +662,14 @@ var mdp = function mdp(dispatch) {
     },
     receiveMessage: function receiveMessage(message) {
       return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_1__["receiveMessage"])(message));
+    },
+    receiveNewUser: function receiveNewUser(user) {
+      return dispatch(Object(_actions_appearance_actions__WEBPACK_IMPORTED_MODULE_2__["receiveNewUser"])(user));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_4__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_5__["default"])));
 
 /***/ }),
 
@@ -836,7 +871,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
             key: channel.id,
             channel: channel,
             currentChannelId: _this3.props.currentChannelId,
-            currentUser: _this3.props.currentUser
+            currentUser: _this3.props.currentUser,
+            appearances: _this3.props.appearances
           });
         }
       })))));
@@ -876,7 +912,8 @@ var msp = function msp(state, ownProps) {
   return {
     currentUser: state.entities.users[state.session.user.id],
     channels: state.entities.channels,
-    currentChannelId: ownProps.match.params.channelId
+    currentChannelId: ownProps.match.params.channelId,
+    appearances: state.entities.appearances
   };
 };
 
@@ -978,7 +1015,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
 
       var prefix;
 
-      if (this.props.channel.channel_type === 'public') {
+      if (this.props.channel.channel_type === "public") {
         prefix = "#";
       } else {
         prefix = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -986,7 +1023,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
         });
       }
 
-      if (this.props.channel.channel_or_dm === 'channel') {
+      if (this.props.channel.channel_or_dm === "channel") {
         if (this.props.currentChannelId == this.props.channel.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "channel-li-current"
@@ -1005,7 +1042,18 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
         var channelDisplayTitleArrayFiltered = channelDisplayTitleArray.filter(function (user) {
           return user !== _this.props.currentUser.email;
         });
-        var channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
+        var onlineUserEmails = Object.values(this.props.appearances).map(function (user) {
+          return user.email;
+        });
+        var channelDisplayTitle;
+
+        if (channelDisplayTitleArrayFiltered.length > 1) {} else {
+          if (onlineUserEmails.includes(channelDisplayTitleArrayFiltered[0])) {
+            channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+          } else {
+            channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+          }
+        }
 
         if (this.props.currentChannelId == this.props.channel.id) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -1014,7 +1062,7 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
             to: "/channels/".concat(this.props.channel.id)
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-circle white"
-          }), "\xA0 ", channelDisplayTitle));
+          }), "\xA0", " ", channelDisplayTitle));
         } else {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "dm-li"
@@ -3492,6 +3540,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ "./frontend/reducers/appearances_reducer.js":
+/*!**************************************************!*\
+  !*** ./frontend/reducers/appearances_reducer.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var appearancesReducer = function appearancesReducer() {
+  var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(defaultState);
+
+  switch (action.type) {
+    case _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_USER"]:
+      return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));
+
+    default:
+      return defaultState;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (appearancesReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/channel_errors_reducer.js":
 /*!*****************************************************!*\
   !*** ./frontend/reducers/channel_errors_reducer.js ***!
@@ -3578,6 +3658,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _channels_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./channels_reducer */ "./frontend/reducers/channels_reducer.js");
 /* harmony import */ var _messages_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./messages_reducer */ "./frontend/reducers/messages_reducer.js");
+/* harmony import */ var _appearances_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./appearances_reducer */ "./frontend/reducers/appearances_reducer.js");
+
 
 
 
@@ -3585,7 +3667,8 @@ __webpack_require__.r(__webpack_exports__);
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   channels: _channels_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  messages: _messages_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
+  messages: _messages_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+  appearances: _appearances_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 

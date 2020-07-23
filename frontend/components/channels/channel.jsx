@@ -8,31 +8,35 @@ class Channel extends React.Component{
         this.state = {messages : []};
     }
 
-    componentDidMount(){ //copy this code into the success callback for logging in. create a subscription when a user logs in and immediately call App.cable.subscriptions.subscriptions[1].speak(online: res.)
-        
+    componentDidMount(){
+
+        console.log('channel mounted:',this.props.channel)
         
         App.cable.subscriptions.create(
             {channel: 'ChatChannel'},
             {
                 received: data => {
-                    console.log("Received: ",data);
-                    this.props.receiveMessage(data);
+                    console.log('Received on ChatChannel:',data)
+                    this.props.receiveMessage(data)
                 },
-
-                speak: function(data) {
-                    console.log("Spoken: ", data)
-                    return this.perform('speak', data);
-                },
-
-                load: function() {
-                    return this.perform('load')
-                },
-
-                hear: function() {
-                    return this.perform('hear')
-                }
+                speak: function(data){this.perform('speak',data)}
             }
         );
+
+        App.cable.subscriptions.create(
+            {channel: 'AppearanceChannel'},
+            {
+               received: data => {
+                   console.log('Received on AppearanceChannel:',data)
+                   this.props.receiveNewUser(data)
+                },
+               speak: function(data){
+                   console.log('Spoken on AppearanceChannel:',data)
+                   this.perform('speak',data)} 
+            }
+        )
+
+        App.cable.subscriptions.subscriptions[1].speak({user: this.props.currentUser});
     }
 
 

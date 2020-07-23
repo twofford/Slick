@@ -8,6 +8,8 @@ import {
 
 import { receiveMessage } from '../../actions/message_actions';
 
+import { receiveNewUser } from '../../actions/appearance_actions';
+
 import {withRouter} from 'react-router-dom';
 
 import {connect} from 'react-redux';
@@ -34,7 +36,9 @@ const mdp = dispatch => (
 
         deleteChannel: channel => dispatch(deleteChannel(channel)),
 
-        receiveMessage: message => dispatch(receiveMessage(message))
+        receiveMessage: message => dispatch(receiveMessage(message)),
+
+        receiveNewUser: user => dispatch(receiveNewUser(user))
 
     }
 )

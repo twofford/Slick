@@ -160,6 +160,7 @@ class ChannelSidebar extends React.Component{
                           channel={channel}
                           currentChannelId={this.props.currentChannelId}
                           currentUser={this.props.currentUser}
+                          appearances={this.props.appearances}
                         />
                       );
                     }
