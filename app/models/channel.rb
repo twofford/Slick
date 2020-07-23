@@ -8,6 +8,8 @@ class Channel < ApplicationRecord
 
     validates :channel_type, inclusion: {in: ['public', 'private']}
 
+    validates :channel_or_dm, inclusion: {in: ['channel', 'dm']}
+
     has_many :channel_memberships
 
     has_many :users,
