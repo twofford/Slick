@@ -4,7 +4,7 @@
     flex-direction: row;
     position: fixed;
     bottom: 2%;
-    // width: 100%;
+    width: calc(100% - 260px);
     background: white;
 }
 
@@ -15,6 +15,7 @@
     justify-content: space-between;
     border: 1px solid #989798;
     border-radius: 4px;
+    width: 98%;
     background: white;
 }
 
