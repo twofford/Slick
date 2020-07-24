@@ -1694,6 +1694,8 @@ var NewMessageForm = /*#__PURE__*/function (_React$Component) {
         className: "message-form-input",
         placeholder: placeholder,
         type: "text",
+        autoFocus: "on",
+        autoComplete: "off",
         onChange: this.handleInput('body')
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-paper-plane"
@@ -3561,7 +3563,9 @@ document.addEventListener('DOMContentLoaded', function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -3573,6 +3577,8 @@ var appearancesReducer = function appearancesReducer() {
   switch (action.type) {
     case _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_USER"]:
       return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["LOGOUT_CURRENT_USER"]: //remove the current user from the appearances slice of state
 
     default:
       return defaultState;

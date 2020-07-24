@@ -75,6 +75,9 @@ export default class NewMessageForm extends React.Component{
                 className='message-form-input'
                 placeholder={placeholder}
                 type="text"
+                autoFocus="on"
+                autoComplete="off"
+                
                 onChange={this.handleInput('body')}/>
                 <i className="fas fa-paper-plane"></i>
             </form>

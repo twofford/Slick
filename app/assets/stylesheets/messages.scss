@@ -4,9 +4,10 @@
 }
 
 .beige {
-    display: inline-flex;
+    display: flex;
     width: 100%;
-    padding: 8px 10px;
+    // padding: 8px 10px;
+    padding-left: 10px;
     background: #FEFAEE;
 }
 

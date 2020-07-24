@@ -6,7 +6,10 @@ class AppearanceChannel < ApplicationCable::Channel
 
     def speak(data)
         user = data['user']
-        AppearanceChannel.broadcast_to('appearance_channel',user)
+        AppearanceChannel.broadcast_to('appearance_channel', user)
+    end
+
+    def unsubscribed
     end
 
 end

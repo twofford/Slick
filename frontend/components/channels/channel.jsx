@@ -32,7 +32,7 @@ class Channel extends React.Component{
                    this.perform('speak',data)} 
             }
         )
-
+        
         App.cable.subscriptions.subscriptions[1].speak({user: this.props.currentUser});
     }
 
