@@ -524,12 +524,10 @@ var Channel = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      // console.log('channel mounted:',this.props.channel)
       App.cable.subscriptions.create({
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          // console.log('Received on ChatChannel:',data)
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
@@ -540,11 +538,12 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'AppearanceChannel'
       }, {
         received: function received(data) {
-          //    console.log('Received on AppearanceChannel:',data)
+          console.log('Received on AppearanceChannel:', data);
+
           _this2.props.receiveNewUser(data);
         },
         speak: function speak(data) {
-          //    console.log('Spoken on AppearanceChannel:',data)
+          console.log('Spoken on AppearanceChannel:', data);
           this.perform('speak', data);
         }
       });
@@ -1326,7 +1325,20 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           id: "".concat(this.props.message.id, "-wrapper"),
           className: "message-wrapper editable-message"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "message-edit-button-wrapper"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "message-edit-button",
+          onClick: function onClick() {
+            document.getElementById("".concat(_this3.props.message.id, "-view")).style = "display:none;";
+            document.getElementById("".concat(_this3.props.message.id, "-update")).style = "display: block";
+            var wrapper = document.getElementById("".concat(_this3.props.message.id, "-wrapper"));
+            wrapper.classList.remove("message-wrapper");
+            wrapper.classList.add("beige");
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-pen"
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "message-avatar",
           src: avatar
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1342,18 +1354,7 @@ var MessageItem = /*#__PURE__*/function (_React$Component) {
           className: "message"
         }, this.props.message.body, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "edited"
-        }, this.edited()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "message-edit-button",
-          onClick: function onClick() {
-            document.getElementById("".concat(_this3.props.message.id, "-view")).style = "display:none;";
-            document.getElementById("".concat(_this3.props.message.id, "-update")).style = "display: block";
-            var wrapper = document.getElementById("".concat(_this3.props.message.id, "-wrapper"));
-            wrapper.classList.remove("message-wrapper");
-            wrapper.classList.add("beige");
-          }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-pen"
-        })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.edited()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "update-message-container",
           id: "".concat(this.props.message.id, "-update")
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -4157,7 +4158,6 @@ var Protected = function Protected(_ref2) {
 };
 
 var mapStateToProps = function mapStateToProps(state) {
-  console.log(state);
   return {
     loggedIn: Boolean(state.session.user.id),
     channelId: Boolean(state.session.user.id) ? state.session.user.channel.id : null

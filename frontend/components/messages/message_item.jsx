@@ -74,6 +74,27 @@ export default class MessageItem extends React.Component {
           id={`${this.props.message.id}-wrapper`}
           className="message-wrapper editable-message"
         >
+          <div className="message-edit-button-wrapper">
+            <button
+              className="message-edit-button"
+              onClick={() => {
+                document.getElementById(`${this.props.message.id}-view`).style =
+                  "display:none;";
+                document.getElementById(
+                  `${this.props.message.id}-update`
+                ).style = "display: block";
+
+                const wrapper = document.getElementById(
+                  `${this.props.message.id}-wrapper`
+                );
+
+                wrapper.classList.remove("message-wrapper");
+                wrapper.classList.add("beige");
+              }}
+            >
+              <i className="fas fa-pen"></i>
+            </button>
+          </div>
           <div>
             <img className="message-avatar" src={avatar} />
           </div>
@@ -88,7 +109,7 @@ export default class MessageItem extends React.Component {
             <div className="message">
               {this.props.message.body}
               <span className="edited">{this.edited()}</span>
-              <button
+              {/* <button
                 className="message-edit-button"
                 onClick={() => {
                   document.getElementById(
@@ -107,7 +128,7 @@ export default class MessageItem extends React.Component {
                 }}
               >
                 <i className="fas fa-pen"></i>
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -116,7 +137,6 @@ export default class MessageItem extends React.Component {
             id={`${this.props.message.id}-update`}
           >
             <form>
-
               <input
                 className="message-update-input"
                 id={`${this.props.message.id}-input`}

@@ -69,6 +69,8 @@
 }
 
 .message-edit-button {
+    position: relative;
+    top: -17px;
     display: none;
     margin-left: 5px;
     color: #7D7C7D;
@@ -77,6 +79,11 @@
     border-radius: 25px;
     cursor: pointer;
     transition: 0.1s;
+}
+
+.message-edit-button-wrapper {
+    position: absolute;
+    left: 50%;
 }
 
 .message-edit-button:hover {
