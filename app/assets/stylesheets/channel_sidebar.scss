@@ -45,6 +45,7 @@
 // }
 
 .channels {
+    max-height: calc(100% - 88.45px);
     overflow: auto;
 }
 
@@ -168,6 +169,7 @@
     line-height: 28px;
     color: #c3b4c4;
     text-decoration: none;
+    display: inline;
 }
 
 .channel-li-current a {
@@ -213,6 +215,7 @@
     line-height: 28px;
     color: #c3b4c4;
     text-decoration: none;
+    display: inline;
 }
 
 .dm-li-current a {
