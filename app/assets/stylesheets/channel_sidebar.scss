@@ -7,12 +7,22 @@
     margin: 0;
 }
 
-.channels-wrapper::-webkit-scrollbar {
+// .channels-wrapper::-webkit-scrollbar {
+//     background: #3F0D40;
+//     width: 10px;
+// }
+
+.channels::-webkit-scrollbar {
     background: #3F0D40;
     width: 10px;
 }
 
-.channels-wrapper::-webkit-scrollbar-thumb {
+// .channels-wrapper::-webkit-scrollbar-thumb {
+//     background: rgba(207, 195, 207, 0.5);
+//     border-radius: 10px;
+// }
+
+.channels::-webkit-scrollbar-thumb {
     background: rgba(207, 195, 207, 0.5);
     border-radius: 10px;
 }
