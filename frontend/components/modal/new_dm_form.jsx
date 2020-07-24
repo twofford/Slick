@@ -26,9 +26,9 @@ class NewDMForm extends React.Component {
 
   componentDidMount() {
     this.props.clearErrors();
-    Object.values(this.props.channels).forEach((channel) => {
-      this.props.fetchMessages(channel.id);
-    });
+    // Object.values(this.props.channels).forEach((channel) => {
+    //   this.props.fetchMessages(channel.id);
+    // });
   }
 
   handleSubmit(event) {
@@ -120,6 +120,7 @@ class NewDMForm extends React.Component {
   }
 
   render() {
+    
     const usersArray = Object.values(this.props.users)
       .filter((user) => this.props.currentUser !== user.id)
       .filter((user) => !this.doesDmExist(user));
@@ -263,15 +264,15 @@ class NewDMForm extends React.Component {
                         id={channel.id}
                         onClick={() => {
                           this.setState((state) => {
-                            const newUsers = state.users.concat(
+                            const newUsers = [...new Set(state.users.concat(
                               channel.users
                                 .filter(
                                   (user) =>
                                     user.email !== this.props.currentUserEmail
                                 )
                                 .map((user) => user.email)
-                            );
-
+                            ))]
+                            ;
                             return { users: newUsers, searchValue: "" };
                           });
 
@@ -315,7 +316,7 @@ class NewDMForm extends React.Component {
                         id={channel.id}
                         onClick={() => {
                           this.setState((state) => {
-                            const newUsers = state.users.concat(channel.email);
+                            const newUsers = [...new Set(state.users.concat(channel.email))];
 
                             return { users: newUsers, searchValue: "" };
                           });
