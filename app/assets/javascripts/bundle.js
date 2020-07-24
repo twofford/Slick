@@ -2542,11 +2542,12 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
           id: channel.id,
           onClick: function onClick() {
             _this5.setState(function (state) {
-              var newUsers = state.users.concat(channel.users.filter(function (user) {
+              var newUsers = _toConsumableArray(new Set(state.users.concat(channel.users.filter(function (user) {
                 return user.email !== _this5.props.currentUserEmail;
               }).map(function (user) {
                 return user.email;
-              }));
+              }))));
+
               return {
                 users: newUsers,
                 searchValue: ""

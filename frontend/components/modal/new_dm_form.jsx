@@ -392,14 +392,14 @@ class NewDMForm extends React.Component {
                     id={channel.id}
                     onClick={() => {
                       this.setState((state) => {
-                        const newUsers = state.users.concat(
+                        const newUsers = [...new Set(state.users.concat(
                           channel.users
                             .filter(
                               (user) =>
                                 user.email !== this.props.currentUserEmail
                             )
                             .map((user) => user.email)
-                        );
+                        ))];
 
                         return { users: newUsers, searchValue: "" };
                       });
