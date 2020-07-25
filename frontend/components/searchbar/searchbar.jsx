@@ -22,7 +22,6 @@ export default class Searchbar extends React.Component {
 
         const currentUserId = this.props.currentUser.id
 
-        //maybe use this for a code snippet
         const filteredChannelsArray = Object.values(this.props.channels).filter(channel => {
             return channel.users.map(user => user.id).includes(currentUserId)
             }).sort((a,b) => {

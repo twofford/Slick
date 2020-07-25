@@ -14,9 +14,13 @@ class Channel extends React.Component{
             {channel: 'ChatChannel'},
             {
                 received: data => {
+                    console.log('Received on ChatChannel:',data)
                     this.props.receiveMessage(data)
                 },
-                speak: function(data){this.perform('speak',data)}
+                speak: function(data){
+                    console.log('Spoken on ChatChannel:',data)
+                    this.perform('speak',data)
+                }
             }
         );
 
@@ -32,7 +36,7 @@ class Channel extends React.Component{
                    this.perform('speak',data)} 
             }
         )
-        
+
         App.cable.subscriptions.subscriptions[1].speak({user: this.props.currentUser});
     }
 

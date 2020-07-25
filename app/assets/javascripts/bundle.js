@@ -90,17 +90,26 @@
 /*!************************************************!*\
   !*** ./frontend/actions/appearance_actions.js ***!
   \************************************************/
-/*! exports provided: RECEIVE_NEW_USER, receiveNewUser */
+/*! exports provided: RECEIVE_NEW_USER, LOGOUT_NEW_USER, receiveNewUser, logoutNewUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NEW_USER", function() { return RECEIVE_NEW_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_NEW_USER", function() { return LOGOUT_NEW_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNewUser", function() { return receiveNewUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutNewUser", function() { return logoutNewUser; });
 var RECEIVE_NEW_USER = 'RECEIVE_NEW_USER';
+var LOGOUT_NEW_USER = 'RECEIVE_NEW_USER';
 var receiveNewUser = function receiveNewUser(user) {
   return {
     type: RECEIVE_NEW_USER,
+    user: user
+  };
+};
+var logoutNewUser = function logoutNewUser(user) {
+  return {
+    type: LOGOUT_NEW_USER,
     user: user
   };
 };
@@ -528,9 +537,12 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
+          console.log('Received on ChatChannel:', data);
+
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
+          console.log('Spoken on ChatChannel:', data);
           this.perform('speak', data);
         }
       });
@@ -1180,7 +1192,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _channel_viewport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./channel_viewport */ "./frontend/components/channels/channel_viewport.jsx");
+/* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
+/* harmony import */ var _channel_viewport__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./channel_viewport */ "./frontend/components/channels/channel_viewport.jsx");
+
 
 
 
@@ -1201,11 +1215,14 @@ var mdp = function mdp(dispatch) {
     },
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logout"])());
+    },
+    disappear: function disappear(user) {
+      return dispatch(Object(_actions_appearance_actions__WEBPACK_IMPORTED_MODULE_3__["logoutNewUser"])(user));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_channel_viewport__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_channel_viewport__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -2812,8 +2829,7 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var currentUserId = this.props.currentUser.id; //maybe use this for a code snippet
-
+      var currentUserId = this.props.currentUser.id;
       var filteredChannelsArray = Object.values(this.props.channels).filter(function (channel) {
         return channel.users.map(function (user) {
           return user.id;
@@ -3566,6 +3582,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+ // import {LOGOUT_NEW_USER} from '../actions/appearance_actions';
 
 
 

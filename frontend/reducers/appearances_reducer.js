@@ -1,4 +1,5 @@
 import {RECEIVE_NEW_USER} from '../actions/appearance_actions';
+// import {LOGOUT_NEW_USER} from '../actions/appearance_actions';
 import {LOGOUT_CURRENT_USER} from '../actions/session_actions';
 
 const appearancesReducer = (defaultState = {}, action) => {
