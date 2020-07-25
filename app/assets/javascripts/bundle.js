@@ -1064,15 +1064,18 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
         var onlineUserEmails = Object.values(this.props.appearances).map(function (user) {
           return user.email;
         });
+        console.log(onlineUserEmails);
         var channelDisplayTitle;
 
         if (channelDisplayTitleArrayFiltered.length > 1) {
           channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
         } else {
           if (onlineUserEmails.includes(channelDisplayTitleArrayFiltered[0])) {
-            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", "); // channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
+            channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           } else {
-            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", "); // channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
+            channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           }
         }
 

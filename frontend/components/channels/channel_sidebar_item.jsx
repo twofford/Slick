@@ -44,6 +44,8 @@ class ChannelSidebarItem extends React.Component {
         (user) => user.email
       );
 
+      console.log(onlineUserEmails)
+
       let channelDisplayTitle;
 
       if (channelDisplayTitleArrayFiltered.length > 1) {
@@ -51,10 +53,10 @@ class ChannelSidebarItem extends React.Component {
       } else {
           if (onlineUserEmails.includes(channelDisplayTitleArrayFiltered[0])) {
             channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-            // channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+            channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           } else {
             channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-              // channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
+              channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
           }
       }
 
