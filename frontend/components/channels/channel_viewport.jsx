@@ -20,7 +20,22 @@ class ChannelViewport extends React.Component{
                     &nbsp;&nbsp;
                     <p>Search Your Workspace</p>
                 </div>
-                    <p className="logout" onClick={this.props.logout}>
+                    <p className="logout" onClick={
+                        
+                        () => {
+
+                            console.log(this.props)
+
+                            App.cable.subscriptions.subscriptions[1].speak({
+                              user: {
+                                user: this.props.currentUser,
+                                online: false,
+                              },
+                            });
+                            this.props.logout();
+                        }
+                        
+                        }>
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp;Sign Out
                     </p>

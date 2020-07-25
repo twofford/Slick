@@ -7,7 +7,7 @@ import ChannelViewport from './channel_viewport';
 const msp = state => {
     return {
     users: state.entities.users,
-    currentUser: state.entities.users[state.session.id],
+    currentUser: state.entities.users[state.session.user.id],
     channels: state.entities.channels
 }}
 

@@ -29,7 +29,11 @@ class Channel extends React.Component{
             {
                received: data => {
                    console.log('Received on AppearanceChannel:',data)
-                   this.props.receiveNewUser(data)
+                   if (data.online) {
+                       this.props.receiveNewUser(data.user)
+                   } else {
+                       this.props.logoutNewUser(data.user)
+                   }
                 },
                speak: function(data){
                    console.log('Spoken on AppearanceChannel:',data)
@@ -37,7 +41,7 @@ class Channel extends React.Component{
             }
         )
 
-        App.cable.subscriptions.subscriptions[1].speak({user: this.props.currentUser});
+        App.cable.subscriptions.subscriptions[1].speak({user: {user: this.props.currentUser, online: true}});
     }
 
 

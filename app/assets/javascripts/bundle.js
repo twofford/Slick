@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNewUser", function() { return receiveNewUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutNewUser", function() { return logoutNewUser; });
 var RECEIVE_NEW_USER = 'RECEIVE_NEW_USER';
-var LOGOUT_NEW_USER = 'RECEIVE_NEW_USER';
+var LOGOUT_NEW_USER = 'LOGOUT_NEW_USER';
 var receiveNewUser = function receiveNewUser(user) {
   return {
     type: RECEIVE_NEW_USER,
@@ -552,7 +552,11 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         received: function received(data) {
           console.log('Received on AppearanceChannel:', data);
 
-          _this2.props.receiveNewUser(data);
+          if (data.online) {
+            _this2.props.receiveNewUser(data.user);
+          } else {
+            _this2.props.logoutNewUser(data.user);
+          }
         },
         speak: function speak(data) {
           console.log('Spoken on AppearanceChannel:', data);
@@ -560,7 +564,10 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         }
       });
       App.cable.subscriptions.subscriptions[1].speak({
-        user: this.props.currentUser
+        user: {
+          user: this.props.currentUser,
+          online: true
+        }
       });
     }
   }, {
@@ -674,6 +681,9 @@ var mdp = function mdp(dispatch) {
     },
     receiveNewUser: function receiveNewUser(user) {
       return dispatch(Object(_actions_appearance_actions__WEBPACK_IMPORTED_MODULE_2__["receiveNewUser"])(user));
+    },
+    logoutNewUser: function logoutNewUser(user) {
+      return dispatch(Object(_actions_appearance_actions__WEBPACK_IMPORTED_MODULE_2__["logoutNewUser"])(user));
     }
   };
 };
@@ -1164,7 +1174,17 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-search"
       }), "\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Search Your Workspace")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "logout",
-        onClick: this.props.logout
+        onClick: function onClick() {
+          console.log(_this.props);
+          App.cable.subscriptions.subscriptions[1].speak({
+            user: {
+              user: _this.props.currentUser,
+              online: false
+            }
+          });
+
+          _this.props.logout();
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-sign-out-alt"
       }), "\xA0Sign Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1203,7 +1223,7 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(state) {
   return {
     users: state.entities.users,
-    currentUser: state.entities.users[state.session.id],
+    currentUser: state.entities.users[state.session.user.id],
     channels: state.entities.channels
   };
 };
@@ -3579,10 +3599,12 @@ document.addEventListener('DOMContentLoaded', function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
- // import {LOGOUT_NEW_USER} from '../actions/appearance_actions';
 
 
 
@@ -3595,7 +3617,12 @@ var appearancesReducer = function appearancesReducer() {
     case _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_USER"]:
       return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));
 
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["LOGOUT_CURRENT_USER"]: //remove the current user from the appearances slice of state
+    case _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_NEW_USER"]:
+      var nextState = _objectSpread({}, defaultState);
+
+      delete nextState[action.user.id];
+      return nextState;
+    //remove the current user from the appearances slice of state
 
     default:
       return defaultState;
