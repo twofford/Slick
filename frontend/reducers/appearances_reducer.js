@@ -12,7 +12,6 @@ const appearancesReducer = (defaultState = {}, action) => {
             const nextState = {...defaultState};
             delete nextState[action.user.id];
             return nextState;
-            //remove the current user from the appearances slice of state
         default:
             return defaultState;
     }
