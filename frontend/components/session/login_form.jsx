@@ -25,7 +25,6 @@ class LoginForm extends React.Component {
       user).then(
       res => {
         this.props.updateUser({email: res.user.email, id:res.user.id, online_status: true})
-        //when you logout, call updateUser but set online_status to false
       }
       )
       .then(
@@ -35,8 +34,17 @@ class LoginForm extends React.Component {
 
   handleDemoLogin(event) {
     event.preventDefault();
-    const user = Object.assign({}, { email: "DemoDude", password: "starwars" });
-    this.props.login(user)
+    const user = Object.assign({}, { email: "DemoDude", password: "starwars", online_status: true });
+    this.props
+      .login(user)
+      .then((res) => {
+        this.props.updateUser({
+          email: res.user.email,
+          id: res.user.id,
+          online_status: true,
+        });
+      })
+      .then(this.props.fetchUsers());
   }
 
   renderErrors() {

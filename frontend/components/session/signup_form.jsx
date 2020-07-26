@@ -5,7 +5,8 @@ class SignupForm extends React.Component{
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            online_status: true
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDemoLogin = this.handleDemoLogin.bind(this);
@@ -21,7 +22,9 @@ class SignupForm extends React.Component{
         
         event.preventDefault();
         const user = Object.assign({}, this.state);
-        this.props.createNewUser(user);
+        this.props.createNewUser(user).then(
+            this.props.fetchUsers()
+        );
         
     }
 
