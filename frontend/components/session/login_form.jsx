@@ -6,6 +6,7 @@ class LoginForm extends React.Component {
     this.state = {
       email: "",
       password: "",
+      online_status: true
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDemoLogin = this.handleDemoLogin.bind(this);
@@ -20,13 +21,22 @@ class LoginForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const user = Object.assign({}, this.state);
-    this.props.login(user);
+    this.props.login(
+      user).then(
+      res => {
+        this.props.updateUser({email: res.user.email, id:res.user.id, online_status: true})
+        //when you logout, call updateUser but set online_status to false
+      }
+      )
+      .then(
+        this.props.fetchUsers()
+      );
   }
 
   handleDemoLogin(event) {
     event.preventDefault();
     const user = Object.assign({}, { email: "DemoDude", password: "starwars" });
-    this.props.login(user);
+    this.props.login(user)
   }
 
   renderErrors() {

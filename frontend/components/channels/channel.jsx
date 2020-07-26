@@ -14,11 +14,11 @@ class Channel extends React.Component{
             {channel: 'ChatChannel'},
             {
                 received: data => {
-                    console.log('Received on ChatChannel:',data)
+                    // console.log('Received on ChatChannel:',data)
                     this.props.receiveMessage(data)
                 },
                 speak: function(data){
-                    console.log('Spoken on ChatChannel:',data)
+                    // console.log('Spoken on ChatChannel:',data)
                     this.perform('speak',data)
                 }
             }
@@ -28,7 +28,7 @@ class Channel extends React.Component{
             {channel: 'AppearanceChannel'},
             {
                received: data => {
-                   console.log('Received on AppearanceChannel:',data)
+                //    console.log('Received on AppearanceChannel:',data)
                    if (data.online) {
                        this.props.receiveNewUser(data.user)
                    } else {
@@ -36,7 +36,7 @@ class Channel extends React.Component{
                    }
                 },
                speak: function(data){
-                   console.log('Spoken on AppearanceChannel:',data)
+                //    console.log('Spoken on AppearanceChannel:',data)
                    this.perform('speak',data)} 
             }
         )

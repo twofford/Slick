@@ -16,112 +16,128 @@ u1 = User.create!(
     email: 'Solid Snake',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u1 = User.create!(
     email: 'Tom Nook',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u3 = User.create!(
     email: 'Link',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u4 = User.create!(
     email: 'Waluigi',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u5 = User.create!(
     email: 'DemoDude',
     password: 'starwars',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u6 = User.create!(
     email: 'Samus Aran',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u7 = User.create!(
     email: 'Princess Peach',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u8 = User.create!(
     email: 'Gordon Freeman',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u9 = User.create!(
     email: 'Chun-Li',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u10 = User.create!(
     email: 'Diddy Kong',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u11 = User.create!(
     email: 'Mega Man',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u12 = User.create!(
     email: 'GladOS',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u13 = User.create!(
     email: 'Master Chief',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u14 = User.create!(
     email: 'Lara Croft',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u15 = User.create!(
     email: 'Kirby',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 u16 = User.create!(
     email: 'Pac-Man',
     password: 'password',
     created_at: '1/1/2020',
-    updated_at: '1/1/2020'
+    updated_at: '1/1/2020',
+    online_status: false
 )
 
 

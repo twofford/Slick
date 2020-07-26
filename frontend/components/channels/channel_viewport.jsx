@@ -7,6 +7,16 @@ import SearchbarContainer from '../searchbar/searchbar_container';
 class ChannelViewport extends React.Component{
     constructor(props){
         super(props)
+
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    handleLogout(event) {
+        event.preventDefault();
+        this.props.updateUser({email: this.props.currentUser.email, id: this.props.currentUser.id, online_status: false})
+        .then(res => {
+            this.props.logout(res);
+        })
     }
 
     render(){
@@ -20,22 +30,7 @@ class ChannelViewport extends React.Component{
                     &nbsp;&nbsp;
                     <p>Search Your Workspace</p>
                 </div>
-                    <p className="logout" onClick={
-                        
-                        () => {
-
-                            console.log(this.props)
-
-                            App.cable.subscriptions.subscriptions[1].speak({
-                              user: {
-                                user: this.props.currentUser,
-                                online: false,
-                              },
-                            });
-                            this.props.logout();
-                        }
-                        
-                        }>
+                    <p className="logout" onClick={this.handleLogout}>
                         <i className="fas fa-sign-out-alt"></i>
                         &nbsp;Sign Out
                     </p>

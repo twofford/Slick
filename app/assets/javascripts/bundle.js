@@ -394,27 +394,44 @@ var logout = function logout() {
 /*!******************************************!*\
   !*** ./frontend/actions/user_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_USERS, receiveUsers, fetchUsers */
+/*! exports provided: RECEIVE_USERS, RECEIVE_USER, receiveUsers, receiveUser, fetchUsers, updateUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USERS", function() { return RECEIVE_USERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USER", function() { return RECEIVE_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUsers", function() { return receiveUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUser", function() { return receiveUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsers", function() { return fetchUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
 /* harmony import */ var _util_user_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/user_util */ "./frontend/util/user_util.js");
 
 var RECEIVE_USERS = 'RECEIVE_USERS';
+var RECEIVE_USER = 'RECEIVE_USER';
 var receiveUsers = function receiveUsers(users) {
   return {
     type: RECEIVE_USERS,
     users: users
   };
 };
+var receiveUser = function receiveUser(user) {
+  return {
+    type: RECEIVE_USER,
+    user: user
+  };
+};
 var fetchUsers = function fetchUsers() {
   return function (dispatch) {
     return Object(_util_user_util__WEBPACK_IMPORTED_MODULE_0__["getUsers"])().then(function (users) {
       return dispatch(receiveUsers(users));
+    });
+  };
+};
+var updateUser = function updateUser(user) {
+  return function (dispatch) {
+    return Object(_util_user_util__WEBPACK_IMPORTED_MODULE_0__["patchUser"])(user).then(function (user) {
+      return dispatch(receiveUser(user));
     });
   };
 };
@@ -537,12 +554,11 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          console.log('Received on ChatChannel:', data);
-
+          // console.log('Received on ChatChannel:',data)
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
-          console.log('Spoken on ChatChannel:', data);
+          // console.log('Spoken on ChatChannel:',data)
           this.perform('speak', data);
         }
       });
@@ -550,8 +566,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'AppearanceChannel'
       }, {
         received: function received(data) {
-          console.log('Received on AppearanceChannel:', data);
-
+          //    console.log('Received on AppearanceChannel:',data)
           if (data.online) {
             _this2.props.receiveNewUser(data.user);
           } else {
@@ -559,7 +574,7 @@ var Channel = /*#__PURE__*/function (_React$Component) {
           }
         },
         speak: function speak(data) {
-          console.log('Spoken on AppearanceChannel:', data);
+          //    console.log('Spoken on AppearanceChannel:',data)
           this.perform('speak', data);
         }
       });
@@ -753,8 +768,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchChannels();
-      this.props.fetchUsers();
+      this.props.fetchChannels(); // this.props.fetchUsers();
     }
   }, {
     key: "handleInput",
@@ -1064,7 +1078,6 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
         var onlineUserEmails = Object.values(this.props.appearances).map(function (user) {
           return user.email;
         });
-        console.log(onlineUserEmails);
         var channelDisplayTitle;
 
         if (channelDisplayTitleArrayFiltered.length > 1) {
@@ -1154,15 +1167,33 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(ChannelViewport);
 
   function ChannelViewport(props) {
+    var _this;
+
     _classCallCheck(this, ChannelViewport);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(ChannelViewport, [{
+    key: "handleLogout",
+    value: function handleLogout(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      this.props.updateUser({
+        email: this.props.currentUser.email,
+        id: this.props.currentUser.id,
+        online_status: false
+      }).then(function (res) {
+        _this2.props.logout(res);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "logged-in-container"
@@ -1170,24 +1201,14 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
         className: "search-bar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: function onClick() {
-          return _this.props.openModal("search");
+          return _this3.props.openModal("search");
         },
         className: "search-inner-div"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-search"
       }), "\xA0\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Search Your Workspace")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "logout",
-        onClick: function onClick() {
-          console.log(_this.props);
-          App.cable.subscriptions.subscriptions[1].speak({
-            user: {
-              user: _this.props.currentUser,
-              online: false
-            }
-          });
-
-          _this.props.logout();
-        }
+        onClick: this.handleLogout
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-sign-out-alt"
       }), "\xA0Sign Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1215,7 +1236,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
 /* harmony import */ var _channel_viewport__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./channel_viewport */ "./frontend/components/channels/channel_viewport.jsx");
 
 
@@ -1239,8 +1260,8 @@ var mdp = function mdp(dispatch) {
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logout"])());
     },
-    disappear: function disappear(user) {
-      return dispatch(Object(_actions_appearance_actions__WEBPACK_IMPORTED_MODULE_3__["logoutNewUser"])(user));
+    updateUser: function updateUser(user) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["updateUser"])(user));
     }
   };
 };
@@ -2988,7 +3009,9 @@ var mdp = function mdp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _login_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login_form */ "./frontend/components/session/login_form.jsx");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _login_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login_form */ "./frontend/components/session/login_form.jsx");
+
 
 
 
@@ -3006,11 +3029,17 @@ var mdp = function mdp(dispatch) {
     },
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logout"])());
+    },
+    updateUser: function updateUser(user) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["updateUser"])(user));
+    },
+    fetchUsers: function fetchUsers() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["fetchUsers"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_login_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_login_form__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -3064,7 +3093,8 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       email: "",
-      password: ""
+      password: "",
+      online_status: true
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleDemoLogin = _this.handleDemoLogin.bind(_assertThisInitialized(_this));
@@ -3083,9 +3113,18 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
+      var _this3 = this;
+
       event.preventDefault();
       var user = Object.assign({}, this.state);
-      this.props.login(user);
+      this.props.login(user).then(function (res) {
+        _this3.props.updateUser({
+          email: res.user.email,
+          id: res.user.id,
+          online_status: true
+        }); //when you logout, call updateUser but set online_status to false
+
+      }).then(this.props.fetchUsers());
     }
   }, {
     key: "handleDemoLogin",
@@ -3548,7 +3587,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/user_actions */ "./frontend/actions/user_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -3585,6 +3626,8 @@ document.addEventListener('DOMContentLoaded', function () {
     delete window.currentChannel;
   }
 
+  window.dispatch = store.dispatch;
+  window.updateUser = _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__["updateUser"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_2__["default"], {
     store: store
   }), root);
@@ -4017,6 +4060,9 @@ var usersReducer = function usersReducer() {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));
 
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_USER"]:
+      return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));
+
     default:
       return defaultState;
   }
@@ -4264,15 +4310,25 @@ var deleteSession = function deleteSession() {
 /*!************************************!*\
   !*** ./frontend/util/user_util.js ***!
   \************************************/
-/*! exports provided: getUsers */
+/*! exports provided: getUsers, patchUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return getUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "patchUser", function() { return patchUser; });
 var getUsers = function getUsers() {
   return $.ajax({
     url: '/api/users'
+  });
+};
+var patchUser = function patchUser(user) {
+  return $.ajax({
+    url: "api/users/".concat(user.id),
+    method: 'PATCH',
+    data: {
+      user: user
+    }
   });
 };
 

@@ -43,9 +43,7 @@ class ChannelSidebarItem extends React.Component {
       const onlineUserEmails = Object.values(this.props.appearances).map(
         (user) => user.email
       );
-
-      console.log(onlineUserEmails)
-
+      
       let channelDisplayTitle;
 
       if (channelDisplayTitleArrayFiltered.length > 1) {

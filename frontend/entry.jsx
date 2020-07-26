@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from "./components/root";
 import configureStore from './store/store';
+import {updateUser} from './actions/user_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -26,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
         store = configureStore(preloadedState);
         delete window.currentChannel
     }
+
+    window.dispatch = store.dispatch;
+    window.updateUser = updateUser;
 
     ReactDOM.render(<Root store={store}/>, root);
 
