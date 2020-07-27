@@ -554,36 +554,31 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          // console.log('Received on ChatChannel:',data)
+          console.log('Received on ChatChannel:', data);
+
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
-          // console.log('Spoken on ChatChannel:',data)
+          console.log('Spoken on ChatChannel:', data);
           this.perform('speak', data);
         }
-      });
-      App.cable.subscriptions.create({
-        channel: 'AppearanceChannel'
-      }, {
-        received: function received(data) {
-          //    console.log('Received on AppearanceChannel:',data)
-          if (data.online) {
-            _this2.props.receiveNewUser(data.user);
-          } else {
-            _this2.props.logoutNewUser(data.user);
-          }
-        },
-        speak: function speak(data) {
-          //    console.log('Spoken on AppearanceChannel:',data)
-          this.perform('speak', data);
-        }
-      });
-      App.cable.subscriptions.subscriptions[1].speak({
-        user: {
-          user: this.props.currentUser,
-          online: true
-        }
-      });
+      }); // App.cable.subscriptions.create(
+      //     {channel: 'AppearanceChannel'},
+      //     {
+      //        received: data => {
+      //         //    console.log('Received on AppearanceChannel:',data)
+      //            if (data.online) {
+      //                this.props.receiveNewUser(data.user)
+      //            } else {
+      //                this.props.logoutNewUser(data.user)
+      //            }
+      //         },
+      //        speak: function(data){
+      //         //    console.log('Spoken on AppearanceChannel:',data)
+      //            this.perform('speak',data)} 
+      //     }
+      // )
+      // App.cable.subscriptions.subscriptions[1].speak({user: {user: this.props.currentUser, online: true}});
     }
   }, {
     key: "render",
@@ -768,7 +763,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchChannels(); // this.props.fetchUsers();
+      this.props.fetchChannels();
+      this.props.fetchUsers();
     }
   }, {
     key: "handleInput",
@@ -1181,11 +1177,21 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
     value: function handleLogout(event) {
       var _this2 = this;
 
+      //gotta make it broadcast
       event.preventDefault();
       this.props.updateUser({
         email: this.props.currentUser.email,
         id: this.props.currentUser.id,
         online_status: false
+      }).then(function (res) {
+        App.cable.subscriptions.subscriptions[1].speak({
+          user: {
+            id: res.user.id,
+            email: res.user.email,
+            online_status: false
+          }
+        });
+        return res;
       }).then(function (res) {
         _this2.props.logout(res);
       });
@@ -3035,6 +3041,9 @@ var mdp = function mdp(dispatch) {
     },
     fetchUsers: function fetchUsers() {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["fetchUsers"])());
+    },
+    receiveUser: function receiveUser(user) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["receiveUser"])(user));
     }
   };
 };
@@ -3119,9 +3128,32 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       var user = Object.assign({}, this.state);
       this.props.login(user).then(function (res) {
         _this3.props.updateUser({
-          email: res.user.email,
           id: res.user.id,
+          email: res.user.email,
           online_status: true
+        }).then(function (res) {
+          App.cable.subscriptions.create({
+            channel: "AppearanceChannel"
+          }, {
+            received: function received(data) {
+              console.log("Received on AppearanceChannel:", data);
+
+              _this3.props.receiveUser(data);
+            },
+            speak: function speak(data) {
+              console.log("Spoken on AppearanceChannel:", data);
+              this.perform("speak", data);
+            }
+          });
+          return res;
+        }).then(function (res) {
+          App.cable.subscriptions.subscriptions[1].speak({
+            user: {
+              id: res.user.id,
+              email: res.user.email,
+              online_status: true
+            }
+          });
         });
       }).then(this.props.fetchUsers());
     }
@@ -3131,16 +3163,39 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       event.preventDefault();
-      var user = Object.assign({}, {
+      var user = {
         email: "DemoDude",
         password: "starwars",
         online_status: true
-      });
+      };
       this.props.login(user).then(function (res) {
         _this4.props.updateUser({
-          email: res.user.email,
           id: res.user.id,
+          email: res.user.email,
           online_status: true
+        }).then(function (res) {
+          App.cable.subscriptions.create({
+            channel: "AppearanceChannel"
+          }, {
+            received: function received(data) {
+              console.log("Received on AppearanceChannel:", data);
+
+              _this4.props.receiveUser(data);
+            },
+            speak: function speak(data) {
+              console.log("Spoken on AppearanceChannel:", data);
+              this.perform("speak", data);
+            }
+          });
+          return res;
+        }).then(function (res) {
+          App.cable.subscriptions.subscriptions[1].speak({
+            user: {
+              id: res.user.id,
+              email: res.user.email,
+              online_status: true
+            }
+          });
         });
       }).then(this.props.fetchUsers());
     }
@@ -4069,7 +4124,7 @@ var usersReducer = function usersReducer() {
 
   switch (action.type) {
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_USERS"]:
-      return action.users;
+      return Object.assign({}, action.users, defaultState);
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));

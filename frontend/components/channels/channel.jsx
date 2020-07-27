@@ -14,34 +14,34 @@ class Channel extends React.Component{
             {channel: 'ChatChannel'},
             {
                 received: data => {
-                    // console.log('Received on ChatChannel:',data)
+                    console.log('Received on ChatChannel:',data)
                     this.props.receiveMessage(data)
                 },
                 speak: function(data){
-                    // console.log('Spoken on ChatChannel:',data)
+                    console.log('Spoken on ChatChannel:',data)
                     this.perform('speak',data)
                 }
             }
         );
 
-        App.cable.subscriptions.create(
-            {channel: 'AppearanceChannel'},
-            {
-               received: data => {
-                //    console.log('Received on AppearanceChannel:',data)
-                   if (data.online) {
-                       this.props.receiveNewUser(data.user)
-                   } else {
-                       this.props.logoutNewUser(data.user)
-                   }
-                },
-               speak: function(data){
-                //    console.log('Spoken on AppearanceChannel:',data)
-                   this.perform('speak',data)} 
-            }
-        )
+        // App.cable.subscriptions.create(
+        //     {channel: 'AppearanceChannel'},
+        //     {
+        //        received: data => {
+        //         //    console.log('Received on AppearanceChannel:',data)
+        //            if (data.online) {
+        //                this.props.receiveNewUser(data.user)
+        //            } else {
+        //                this.props.logoutNewUser(data.user)
+        //            }
+        //         },
+        //        speak: function(data){
+        //         //    console.log('Spoken on AppearanceChannel:',data)
+        //            this.perform('speak',data)} 
+        //     }
+        // )
 
-        App.cable.subscriptions.subscriptions[1].speak({user: {user: this.props.currentUser, online: true}});
+        // App.cable.subscriptions.subscriptions[1].speak({user: {user: this.props.currentUser, online: true}});
     }
 
 

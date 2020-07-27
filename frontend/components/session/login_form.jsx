@@ -6,7 +6,7 @@ class LoginForm extends React.Component {
     this.state = {
       email: "",
       password: "",
-      online_status: true
+      online_status: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDemoLogin = this.handleDemoLogin.bind(this);
@@ -21,28 +21,85 @@ class LoginForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const user = Object.assign({}, this.state);
-    this.props.login(
-      user).then(
-      res => {
-        this.props.updateUser({email: res.user.email, id:res.user.id, online_status: true})
-      }
-      )
-      .then(
-        this.props.fetchUsers()
-      );
+    this.props
+      .login(user)
+      .then((res) => {
+        this.props
+          .updateUser({
+            id: res.user.id,
+            email: res.user.email,
+            online_status: true,
+          })
+          .then((res) => {
+            App.cable.subscriptions.create(
+              { channel: "AppearanceChannel" },
+              {
+                received: (data) => {
+                  console.log("Received on AppearanceChannel:", data);
+                  this.props.receiveUser(data);
+                },
+                speak: function (data) {
+                  console.log("Spoken on AppearanceChannel:", data);
+                  this.perform("speak", data);
+                },
+              }
+            );
+            return res;
+          })
+          .then((res) => {
+            App.cable.subscriptions.subscriptions[1].speak({
+              user: {
+                id: res.user.id,
+                email: res.user.email,
+                online_status: true,
+              },
+            });
+          });
+      })
+      .then(this.props.fetchUsers());
   }
 
   handleDemoLogin(event) {
     event.preventDefault();
-    const user = Object.assign({}, { email: "DemoDude", password: "starwars", online_status: true });
+    const user = {
+      email: "DemoDude",
+      password: "starwars",
+      online_status: true,
+    };
     this.props
       .login(user)
       .then((res) => {
-        this.props.updateUser({
-          email: res.user.email,
-          id: res.user.id,
-          online_status: true,
-        });
+        this.props
+          .updateUser({
+            id: res.user.id,
+            email: res.user.email,
+            online_status: true,
+          })
+          .then((res) => {
+            App.cable.subscriptions.create(
+              { channel: "AppearanceChannel" },
+              {
+                received: (data) => {
+                  console.log("Received on AppearanceChannel:", data);
+                  this.props.receiveUser(data);
+                },
+                speak: function (data) {
+                  console.log("Spoken on AppearanceChannel:", data);
+                  this.perform("speak", data);
+                },
+              }
+            );
+            return res;
+          })
+          .then((res) => {
+            App.cable.subscriptions.subscriptions[1].speak({
+              user: {
+                id: res.user.id,
+                email: res.user.email,
+                online_status: true,
+              },
+            });
+          });
       })
       .then(this.props.fetchUsers());
   }
@@ -102,8 +159,8 @@ class LoginForm extends React.Component {
               Continue →
             </button>
           </form>
-          
-          <br/>
+
+          <br />
 
           <div id="demo-login-div">
             Don't have an account?{" "}

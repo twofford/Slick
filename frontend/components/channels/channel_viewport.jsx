@@ -11,9 +11,19 @@ class ChannelViewport extends React.Component{
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    handleLogout(event) {
+    handleLogout(event) {//gotta make it broadcast
         event.preventDefault();
         this.props.updateUser({email: this.props.currentUser.email, id: this.props.currentUser.id, online_status: false})
+        .then(res => {
+            App.cable.subscriptions.subscriptions[1].speak({
+                user: {
+                id: res.user.id,
+                email: res.user.email,
+                online_status: false,
+                }
+            })
+            return res;
+        })
         .then(res => {
             this.props.logout(res);
         })
