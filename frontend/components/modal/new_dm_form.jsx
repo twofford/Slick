@@ -43,7 +43,6 @@ class NewDMForm extends React.Component {
       this.props.history.push(`/channels/${channel.id}`);
       this.props.closeModal();
     } else {
-      
       const channel = Object.assign({}, this.state);
       this.props.createChannel(channel).then((channel) => {
         this.props.history.push(`/channels/${channel.channel.id}`);
@@ -111,7 +110,6 @@ class NewDMForm extends React.Component {
   }
 
   displayTitle(title) {
-    
     const channelDisplayTitleArray = title.split(", ");
     const currentUserRemoved = channelDisplayTitleArray.filter(
       (user) => user !== this.props.currentUserEmail
@@ -120,26 +118,38 @@ class NewDMForm extends React.Component {
   }
 
   render() {
-    
-    const usersArray = Object.values(this.props.users)
-      .filter((user) => this.props.currentUser !== user.id)
-      .filter((user) => !this.doesDmExist(user));
+    const usersArray = Object.values(this.props.users) //an array of all user objects
+      .filter((user) => this.props.currentUser !== user.id) //excluding the current user
+      .filter((user) => !this.doesDmExist(user)); //excluding users with whom the current user has an existing dm
 
     const dmsArray = Object.values(this.props.channels).filter(
+      //an array of dm channel objects
       (channel) => channel.channel_or_dm === "dm"
     );
 
-    const allMessages = Object.values(this.props.messages);
+    const allMessages = Object.values(this.props.messages); //an array of all message objects
 
-    const allChannels = Object.values(this.props.channels);
+    const allChannels = Object.values(this.props.channels); //an array of all channel objects
 
-    const allDMs = allChannels.filter(channel => channel.channel_or_dm === 'dm');
+    const allDMs = allChannels.filter(
+      (channel) => channel.channel_or_dm === "dm"
+    ); //an array of all dm channel objects
 
-    const channelsWithMessages = [...new Set(allMessages.map(message => message.channel_id))];
+    const channelsWithMessages = [
+      ...new Set(allMessages.map((message) => message.channel_id)),
+    ]; //an array of all channel ids for channels containing messages
 
-    const dmsWithMessagesArray = allDMs.filter(dm => 
-      channelsWithMessages.includes(dm.id)
-    )
+    const dmsWithMessagesArray = allDMs.filter((
+      dm //an array of dms containing messages
+    ) => channelsWithMessages.includes(dm.id));
+
+    const dmsWithMessagesAndCurrentUserTitlesArray = dmsWithMessagesArray.map(dm => dm.users.map(user => user.email)).filter(dm => dm.includes(this.props.currentUserEmail)).map(dm => dm.join(', '));
+
+    const dmsWithMessagesAndCurrentUserArray = dmsWithMessagesArray.filter(
+      (dm) => dmsWithMessagesAndCurrentUserTitlesArray.includes(dm.title)
+    );
+
+    console.log(dmsWithMessagesArray, dmsWithMessagesAndCurrentUserArray);
 
     const allChannelsArray = usersArray.concat(dmsArray);
 
@@ -264,15 +274,19 @@ class NewDMForm extends React.Component {
                         id={channel.id}
                         onClick={() => {
                           this.setState((state) => {
-                            const newUsers = [...new Set(state.users.concat(
-                              channel.users
-                                .filter(
-                                  (user) =>
-                                    user.email !== this.props.currentUserEmail
+                            const newUsers = [
+                              ...new Set(
+                                state.users.concat(
+                                  channel.users
+                                    .filter(
+                                      (user) =>
+                                        user.email !==
+                                        this.props.currentUserEmail
+                                    )
+                                    .map((user) => user.email)
                                 )
-                                .map((user) => user.email)
-                            ))]
-                            ;
+                              ),
+                            ];
                             return { users: newUsers, searchValue: "" };
                           });
 
@@ -316,7 +330,9 @@ class NewDMForm extends React.Component {
                         id={channel.id}
                         onClick={() => {
                           this.setState((state) => {
-                            const newUsers = [...new Set(state.users.concat(channel.email))];
+                            const newUsers = [
+                              ...new Set(state.users.concat(channel.email)),
+                            ];
 
                             return { users: newUsers, searchValue: "" };
                           });
@@ -341,11 +357,9 @@ class NewDMForm extends React.Component {
                   }
                 }
               })
-
             : //if there is nothing in the search value
 
-              dmsWithMessagesArray.map((channel) => {
-
+              dmsWithMessagesAndCurrentUserArray.map((channel) => {
                 let lastMessage;
                 let lastMessageUser;
                 let lastMessageTimeSince;
@@ -392,14 +406,18 @@ class NewDMForm extends React.Component {
                     id={channel.id}
                     onClick={() => {
                       this.setState((state) => {
-                        const newUsers = [...new Set(state.users.concat(
-                          channel.users
-                            .filter(
-                              (user) =>
-                                user.email !== this.props.currentUserEmail
+                        const newUsers = [
+                          ...new Set(
+                            state.users.concat(
+                              channel.users
+                                .filter(
+                                  (user) =>
+                                    user.email !== this.props.currentUserEmail
+                                )
+                                .map((user) => user.email)
                             )
-                            .map((user) => user.email)
-                        ))];
+                          ),
+                        ];
 
                         return { users: newUsers, searchValue: "" };
                       });

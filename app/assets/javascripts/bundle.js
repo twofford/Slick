@@ -2401,27 +2401,48 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this5 = this;
 
-      var usersArray = Object.values(this.props.users).filter(function (user) {
+      var usersArray = Object.values(this.props.users) //an array of all user objects
+      .filter(function (user) {
         return _this5.props.currentUser !== user.id;
-      }).filter(function (user) {
+      }) //excluding the current user
+      .filter(function (user) {
         return !_this5.doesDmExist(user);
-      });
-      var dmsArray = Object.values(this.props.channels).filter(function (channel) {
+      }); //excluding users with whom the current user has an existing dm
+
+      var dmsArray = Object.values(this.props.channels).filter( //an array of dm channel objects
+      function (channel) {
         return channel.channel_or_dm === "dm";
       });
-      var allMessages = Object.values(this.props.messages);
-      var allChannels = Object.values(this.props.channels);
+      var allMessages = Object.values(this.props.messages); //an array of all message objects
+
+      var allChannels = Object.values(this.props.channels); //an array of all channel objects
+
       var allDMs = allChannels.filter(function (channel) {
-        return channel.channel_or_dm === 'dm';
-      });
+        return channel.channel_or_dm === "dm";
+      }); //an array of all dm channel objects
 
       var channelsWithMessages = _toConsumableArray(new Set(allMessages.map(function (message) {
         return message.channel_id;
-      })));
+      }))); //an array of all channel ids for channels containing messages
 
-      var dmsWithMessagesArray = allDMs.filter(function (dm) {
+
+      var dmsWithMessagesArray = allDMs.filter(function (dm //an array of dms containing messages
+      ) {
         return channelsWithMessages.includes(dm.id);
       });
+      var dmsWithMessagesAndCurrentUserTitlesArray = dmsWithMessagesArray.map(function (dm) {
+        return dm.users.map(function (user) {
+          return user.email;
+        });
+      }).filter(function (dm) {
+        return dm.includes(_this5.props.currentUserEmail);
+      }).map(function (dm) {
+        return dm.join(', ');
+      });
+      var dmsWithMessagesAndCurrentUserArray = dmsWithMessagesArray.filter(function (dm) {
+        return dmsWithMessagesAndCurrentUserTitlesArray.includes(dm.title);
+      });
+      console.log(dmsWithMessagesArray, dmsWithMessagesAndCurrentUserArray);
       var allChannelsArray = usersArray.concat(dmsArray);
       var inputPlaceholder;
 
@@ -2585,7 +2606,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
           }
         }
       }) : //if there is nothing in the search value
-      dmsWithMessagesArray.map(function (channel) {
+      dmsWithMessagesAndCurrentUserArray.map(function (channel) {
         var lastMessage;
         var lastMessageUser;
         var lastMessageTimeSince;
