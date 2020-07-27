@@ -35,11 +35,11 @@ class LoginForm extends React.Component {
               { channel: "AppearanceChannel" },
               {
                 received: (data) => {
-                  console.log("Received on AppearanceChannel:", data);
+                  // console.log("Received on AppearanceChannel:", data);
                   this.props.receiveUser(data);
                 },
                 speak: function (data) {
-                  console.log("Spoken on AppearanceChannel:", data);
+                  // console.log("Spoken on AppearanceChannel:", data);
                   this.perform("speak", data);
                 },
               }
@@ -61,11 +61,7 @@ class LoginForm extends React.Component {
 
   handleDemoLogin(event) {
     event.preventDefault();
-    const user = {
-      email: "DemoDude",
-      password: "starwars",
-      online_status: true,
-    };
+    const user = {email: 'DemoDude', password: 'starwars', online_status: true};
     this.props
       .login(user)
       .then((res) => {
@@ -80,11 +76,11 @@ class LoginForm extends React.Component {
               { channel: "AppearanceChannel" },
               {
                 received: (data) => {
-                  console.log("Received on AppearanceChannel:", data);
+                  // console.log("Received on AppearanceChannel:", data);
                   this.props.receiveUser(data);
                 },
                 speak: function (data) {
-                  console.log("Spoken on AppearanceChannel:", data);
+                  // console.log("Spoken on AppearanceChannel:", data);
                   this.perform("speak", data);
                 },
               }

@@ -554,31 +554,14 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          console.log('Received on ChatChannel:', data);
-
+          // console.log('Received on ChatChannel:',data)
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
-          console.log('Spoken on ChatChannel:', data);
+          // console.log('Spoken on ChatChannel:',data)
           this.perform('speak', data);
         }
-      }); // App.cable.subscriptions.create(
-      //     {channel: 'AppearanceChannel'},
-      //     {
-      //        received: data => {
-      //         //    console.log('Received on AppearanceChannel:',data)
-      //            if (data.online) {
-      //                this.props.receiveNewUser(data.user)
-      //            } else {
-      //                this.props.logoutNewUser(data.user)
-      //            }
-      //         },
-      //        speak: function(data){
-      //         //    console.log('Spoken on AppearanceChannel:',data)
-      //            this.perform('speak',data)} 
-      //     }
-      // )
-      // App.cable.subscriptions.subscriptions[1].speak({user: {user: this.props.currentUser, online: true}});
+      });
     }
   }, {
     key: "render",
@@ -763,8 +746,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
   _createClass(ChannelSidebar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchChannels();
       this.props.fetchUsers();
+      this.props.fetchChannels();
     }
   }, {
     key: "handleInput",
@@ -867,7 +850,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
             key: channel.id,
             channel: channel,
             currentChannelId: _this3.props.currentChannelId,
-            currentUser: _this3.props.currentUser
+            currentUser: _this3.props.currentUser,
+            appearances: _this3.props.appearances
           });
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -894,6 +878,15 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
           return user.id;
         });
         var currentUserIsMember = userIds.includes(_this3.props.currentUser.id);
+        var channelDisplayTitle = channel.title.split(', ').filter(function (user) {
+          return user !== _this3.props.currentUser.email;
+        }).join(", ");
+        var onlineUsers = Object.values(_this3.props.users).filter(function (user) {
+          return user.online_status;
+        }).map(function (user) {
+          return user.email;
+        });
+        var onlineStatus = onlineUsers.includes(channelDisplayTitle);
 
         if (channel.channel_or_dm === "dm" && currentUserIsMember) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_channel_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -901,7 +894,8 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
             channel: channel,
             currentChannelId: _this3.props.currentChannelId,
             currentUser: _this3.props.currentUser,
-            appearances: _this3.props.appearances
+            appearances: _this3.props.appearances,
+            onlineStatus: onlineStatus
           });
         }
       })))));
@@ -942,7 +936,8 @@ var msp = function msp(state, ownProps) {
     currentUser: state.entities.users[state.session.user.id],
     channels: state.entities.channels,
     currentChannelId: ownProps.match.params.channelId,
-    appearances: state.entities.appearances
+    appearances: state.entities.appearances,
+    users: state.entities.users
   };
 };
 
@@ -1067,43 +1062,53 @@ var ChannelSidebarItem = /*#__PURE__*/function (_React$Component) {
           }, prefix, " ", this.props.channel.title));
         }
       } else {
-        var channelDisplayTitleArray = this.props.channel.title.split(", ");
-        var channelDisplayTitleArrayFiltered = channelDisplayTitleArray.filter(function (user) {
+        //if it's a dm
+        var channelDisplayTitle = this.props.channel.title.split(", ").filter(function (user) {
           return user !== _this.props.currentUser.email;
-        });
-        var onlineUserEmails = Object.values(this.props.appearances).map(function (user) {
-          return user.email;
-        });
-        var channelDisplayTitle;
-
-        if (channelDisplayTitleArrayFiltered.length > 1) {
-          channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-        } else {
-          if (onlineUserEmails.includes(channelDisplayTitleArrayFiltered[0])) {
-            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-            channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
-          } else {
-            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-            channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
-          }
-        }
+        }).join(", ");
 
         if (this.props.currentChannelId == this.props.channel.id) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            className: "dm-li-current"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            to: "/channels/".concat(this.props.channel.id)
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-circle white"
-          }), "\xA0", " ", channelDisplayTitle));
+          //and it's the currently-selected dm
+          if (this.props.onlineStatus) {
+            //and the person is online
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              className: "dm-li-current"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+              to: "/channels/".concat(this.props.channel.id)
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-circle white"
+            }), "\xA0", " ", channelDisplayTitle));
+          } else {
+            //and the person is not online
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              className: "dm-li-current"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+              to: "/channels/".concat(this.props.channel.id)
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "far fa-circle white"
+            }), "\xA0", " ", channelDisplayTitle));
+          }
         } else {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            className: "dm-li"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            to: "/channels/".concat(this.props.channel.id)
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-circle"
-          }), "\xA0 ", channelDisplayTitle));
+          //if it's not the currently-selected dm
+          if (this.props.onlineStatus) {
+            // and the person is online
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              className: "dm-li"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+              to: "/channels/".concat(this.props.channel.id)
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-circle"
+            }), "\xA0", " ", channelDisplayTitle));
+          } else {
+            //and the person is not online
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+              className: "dm-li"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+              to: "/channels/".concat(this.props.channel.id)
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "far fa-circle gray-dm-li"
+            }), "\xA0 ", channelDisplayTitle));
+          }
         }
       }
     }
@@ -1177,23 +1182,24 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
     value: function handleLogout(event) {
       var _this2 = this;
 
-      //gotta make it broadcast
-      event.preventDefault();
-      this.props.updateUser({
+      var user = {
         email: this.props.currentUser.email,
         id: this.props.currentUser.id,
         online_status: false
-      }).then(function (res) {
-        App.cable.subscriptions.subscriptions[1].speak({
-          user: {
-            id: res.user.id,
-            email: res.user.email,
-            online_status: false
-          }
-        });
+      };
+      event.preventDefault();
+      this.props.updateUser(user).then(function (res) {
+        if (App.cable.subscriptions.subscriptions[1]) {
+          App.cable.subscriptions.subscriptions[1].speak({
+            user: user
+          });
+        }
+
         return res;
       }).then(function (res) {
         _this2.props.logout(res);
+      }).then(function () {
+        App.cable.subscriptions.subscriptions = [];
       });
     }
   }, {
@@ -3136,12 +3142,11 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
             channel: "AppearanceChannel"
           }, {
             received: function received(data) {
-              console.log("Received on AppearanceChannel:", data);
-
+              // console.log("Received on AppearanceChannel:", data);
               _this3.props.receiveUser(data);
             },
             speak: function speak(data) {
-              console.log("Spoken on AppearanceChannel:", data);
+              // console.log("Spoken on AppearanceChannel:", data);
               this.perform("speak", data);
             }
           });
@@ -3164,8 +3169,8 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
 
       event.preventDefault();
       var user = {
-        email: "DemoDude",
-        password: "starwars",
+        email: 'DemoDude',
+        password: 'starwars',
         online_status: true
       };
       this.props.login(user).then(function (res) {
@@ -3178,12 +3183,11 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
             channel: "AppearanceChannel"
           }, {
             received: function received(data) {
-              console.log("Received on AppearanceChannel:", data);
-
+              // console.log("Received on AppearanceChannel:", data);
               _this4.props.receiveUser(data);
             },
             speak: function speak(data) {
-              console.log("Spoken on AppearanceChannel:", data);
+              // console.log("Spoken on AppearanceChannel:", data);
               this.perform("speak", data);
             }
           });

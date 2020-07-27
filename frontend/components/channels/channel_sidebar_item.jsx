@@ -33,48 +33,55 @@ class ChannelSidebarItem extends React.Component {
           </li>
         );
       }
-    } else {
-      const channelDisplayTitleArray = this.props.channel.title.split(", ");
-
-      const channelDisplayTitleArrayFiltered = channelDisplayTitleArray.filter(
-        (user) => user !== this.props.currentUser.email
-      );
-
-      const onlineUserEmails = Object.values(this.props.appearances).map(
-        (user) => user.email
-      );
+    } else { //if it's a dm
       
-      let channelDisplayTitle;
+      const channelDisplayTitle = this.props.channel.title
+        .split(", ")
+        .filter((user) => user !== this.props.currentUser.email)
+        .join(", ");
 
-      if (channelDisplayTitleArrayFiltered.length > 1) {
-        channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-      } else {
-          if (onlineUserEmails.includes(channelDisplayTitleArrayFiltered[0])) {
-            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-            channelDisplayTitle = "green dot".concat(channelDisplayTitleArrayFiltered.join(", "));
-          } else {
-            channelDisplayTitle = channelDisplayTitleArrayFiltered.join(", ");
-              channelDisplayTitle = "gray dot".concat(channelDisplayTitleArrayFiltered.join(", "));
-          }
-      }
-
-      if (this.props.currentChannelId == this.props.channel.id) {
-        return (
-          <li className="dm-li-current">
-            <Link to={`/channels/${this.props.channel.id}`}>
-              <i className="fas fa-circle white"></i>&nbsp;{" "}
-              {channelDisplayTitle}
-            </Link>
-          </li>
-        );
-      } else {
-        return (
-          <li className="dm-li">
-            <Link to={`/channels/${this.props.channel.id}`}>
-              <i className="fas fa-circle"></i>&nbsp; {channelDisplayTitle}
-            </Link>
-          </li>
-        );
+      if (this.props.currentChannelId == this.props.channel.id) { //and it's the currently-selected dm
+        if (this.props.onlineStatus) { //and the person is online
+          return (
+            <li className="dm-li-current">
+              <Link to={`/channels/${this.props.channel.id}`}>
+                <i className="fas fa-circle white"></i>&nbsp;{" "}
+                {channelDisplayTitle}
+              </Link>
+            </li>
+          );
+        } else { //and the person is not online
+          return (
+            <li className="dm-li-current">
+              <Link to={`/channels/${this.props.channel.id}`}>
+                <i className="far fa-circle white"></i>&nbsp;{" "}
+                {channelDisplayTitle}
+              </Link>
+            </li>
+          );
+        }
+        
+      } else { //if it's not the currently-selected dm
+        if (this.props.onlineStatus){ // and the person is online
+          return(
+            <li className="dm-li">
+              <Link to={`/channels/${this.props.channel.id}`}>
+                <i className="fas fa-circle"></i>&nbsp;{" "}
+                {channelDisplayTitle}
+              </Link>
+            </li>
+          );
+        } else { //and the person is not online
+          return (
+            <li className="dm-li">
+              <Link to={`/channels/${this.props.channel.id}`}>
+                <i className="far fa-circle gray-dm-li"></i>&nbsp; {channelDisplayTitle}
+              </Link>
+            </li>
+          );
+        }
+        
+        
       }
     }
   }

@@ -15,9 +15,9 @@ class ChannelSidebar extends React.Component{
     };
 
     componentDidMount(){
-        this.props.fetchChannels();
         this.props.fetchUsers();
-    };
+        this.props.fetchChannels();
+    }
 
     handleInput(type) {
         return (event) => {
@@ -62,6 +62,7 @@ class ChannelSidebar extends React.Component{
     };
 
     render(){
+
         
         this.channelsArray = Object.values(this.props.channels).sort((a,b) => {
             const aTitle = a.title.toUpperCase();
@@ -122,6 +123,7 @@ class ChannelSidebar extends React.Component{
                           channel={channel}
                           currentChannelId={this.props.currentChannelId}
                           currentUser={this.props.currentUser}
+                          appearances={this.props.appearances}
                         />
                       );
                     }
@@ -153,6 +155,12 @@ class ChannelSidebar extends React.Component{
                       this.props.currentUser.id
                     );
 
+                    const channelDisplayTitle = channel.title.split(', ').filter(user => user !== this.props.currentUser.email).join(", ");
+
+                    const onlineUsers = Object.values(this.props.users).filter(user => user.online_status).map(user => user.email);
+
+                    const onlineStatus = onlineUsers.includes(channelDisplayTitle);
+
                     if (channel.channel_or_dm === "dm" && currentUserIsMember) {
                       return (
                         <ChannelSidebarItem
@@ -161,6 +169,7 @@ class ChannelSidebar extends React.Component{
                           currentChannelId={this.props.currentChannelId}
                           currentUser={this.props.currentUser}
                           appearances={this.props.appearances}
+                          onlineStatus={onlineStatus}
                         />
                       );
                     }
