@@ -14,31 +14,23 @@ Slick is a lightweight clone of [Slack](https://www.slack.com), a popular chat a
 
 ### Realtime CRUD With Action Cable
 
-The meat and potatoes of any chat app is...well, chat. Users need to be able to create and update messages, and other users should be able to see those changes in realtime. To achieve that, I used Action Cable, Rails's built-in WebSockets library. Here's how it works:
+The meat and potatoes of any chat app is...well, chat. Users need to be able to create and update messages, and other users should be able to see those changes in realtime. To achieve that, I used Action Cable, Rails's built-in WebSockets library.
 
-When a user posts a new message:
+When a user posts a new message, we POST the message to the backend, a PostgreSQL database, then send the message out over a WebSocket channel to which all logged-in users are subscribed.
 
-```
+```js
+frontend/components/modal/new_dm_form.jsx
+
 handleSubmit(event) {
-
-    //first, we prevent the default behavior
     
     event.preventDefault();
     
-    //then, we check that the user has actually typed a message
-
     if (this.state.body !== "") {
     
-        //if they have, we create an object out of it
-
         const message = Object.assign({}, this.state);
         
-        //then, we POST a message to the backend
-
         this.props.createMessage(message).then((res) => {
-          
-          //and send the message out over a WebSocket
-          
+                    
           App.cable.subscriptions.subscriptions[0].speak({
             
             message: res.message,
@@ -46,17 +38,13 @@ handleSubmit(event) {
           });
         
         });
-        
-        //finally, we reset the React component's state
-        
+                
         this.setState({
             
             body: ''
             
         })
         
-        //and clear out the input field
-
         document.getElementById("message-form-input").value="";
 
     }
