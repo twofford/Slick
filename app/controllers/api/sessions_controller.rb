@@ -9,7 +9,6 @@ class Api::SessionsController < ApplicationController
             params[:user][:password])
         if @user
             login(@user)
-            ActionCable.server.broadcast "appearance", {"user" => {@user.id => @user}}
             render 'api/users/show'
         else
             render json: ["Invalid email or password"], status: 401
