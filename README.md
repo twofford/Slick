@@ -126,20 +126,13 @@ handleSubmit(event) {
       .then(this.props.fetchUsers());
   }
 ```
-
-
-### Chat
-- Users can write and view messages in real time
-- Users only see messages for the channel they're currently in
+![Users logging in and out](https://media.giphy.com/media/jUJfmnjxxgs4s44EJg/giphy.gif)
 
 ## Future Improvements
+
 ### Signup/Login
-- Users should be able to choose a display name in addition to their email
 - Users should be able to choose an avatar or be assigned one randomly
 ### Messages
 - Messages should be able to contain text, images, emoji and files
-- Users should be able to reply to specific messages
-### Workspaces
-- Implement workspaces
 
 For additional information, see the [design docs](https://github.com/twofford/Slick/wiki).
