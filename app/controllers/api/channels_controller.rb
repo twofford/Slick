@@ -19,8 +19,8 @@ class Api::ChannelsController < ApplicationController
             elsif @channel.channel_or_dm == 'dm'
                 params[:channel][:users].each do |user|
                 @channel.users << User.find_by(email: user)
-                @channel.users << current_user
-                end
+            end
+            @channel.users << current_user
             end
             render 'api/channels/show'
         else

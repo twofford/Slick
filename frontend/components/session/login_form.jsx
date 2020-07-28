@@ -35,11 +35,9 @@ class LoginForm extends React.Component {
               { channel: "UsersChannel" },
               {
                 received: (data) => {
-                  // console.log("Received on UsersChannel:", data);
                   this.props.receiveUser(data);
                 },
                 speak: function (data) {
-                  // console.log("Spoken on UsersChannel:", data);
                   this.perform("speak", data);
                 },
               }
@@ -76,11 +74,9 @@ class LoginForm extends React.Component {
               { channel: "UsersChannel" },
               {
                 received: (data) => {
-                  // console.log("Received on UsersChannel:", data);
                   this.props.receiveUser(data);
                 },
                 speak: function (data) {
-                  // console.log("Spoken on UsersChannel:", data);
                   this.perform("speak", data);
                 },
               }

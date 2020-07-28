@@ -2259,9 +2259,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
   _createClass(NewDMForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.clearErrors(); // Object.values(this.props.channels).forEach((channel) => {
-      //   this.props.fetchMessages(channel.id);
-      // });
+      this.props.clearErrors();
     }
   }, {
     key: "handleSubmit",
@@ -2398,12 +2396,11 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }).filter(function (dm) {
         return dm.includes(_this5.props.currentUserEmail);
       }).map(function (dm) {
-        return dm.join(', ');
+        return dm.sort().join(', ');
       });
       var dmsWithMessagesAndCurrentUserArray = dmsWithMessagesArray.filter(function (dm) {
         return dmsWithMessagesAndCurrentUserTitlesArray.includes(dm.title);
       });
-      console.log(dmsWithMessagesArray, dmsWithMessagesAndCurrentUserArray);
       var allChannelsArray = usersArray.concat(dmsArray);
       var inputPlaceholder;
 
@@ -3124,11 +3121,9 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
             channel: "UsersChannel"
           }, {
             received: function received(data) {
-              // console.log("Received on UsersChannel:", data);
               _this3.props.receiveUser(data);
             },
             speak: function speak(data) {
-              // console.log("Spoken on UsersChannel:", data);
               this.perform("speak", data);
             }
           });
@@ -3165,11 +3160,9 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
             channel: "UsersChannel"
           }, {
             received: function received(data) {
-              // console.log("Received on UsersChannel:", data);
               _this4.props.receiveUser(data);
             },
             speak: function speak(data) {
-              // console.log("Spoken on UsersChannel:", data);
               this.perform("speak", data);
             }
           });
