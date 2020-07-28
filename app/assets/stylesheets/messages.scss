@@ -61,10 +61,6 @@
     margin-top: 5px;
 }
 
-.update-message-container {
-    display: none;
-}
-
 .editable-message:hover .edit-message-modal {
     display: block;
 }
@@ -92,11 +88,13 @@
 }
 
 .update-message-container {
+    display: none;
+    width: 100%;
     margin-left: 20px;
 }
 
 .message-update-input {
-    width: 100%;
+    width: calc(100% - 30px);
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 10px;
@@ -104,6 +102,7 @@
     border-radius: 4px;
     font-family: 'Lato', sans-serif;
     font-size: 16px;
+    margin-bottom: 10px;
 }
 
 .message-update-input:focus {
