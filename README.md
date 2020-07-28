@@ -62,7 +62,7 @@ handleSubmit(event) {
     }
 };
 ```
-![Chat in action](https://media.giphy.com/media/ZF8c1SDNqybSUSAvnh/giphy.gif)
+![Chat in action](https://media.giphy.com/media/VgZPqcNWQFHjOucV9P/giphy.gif)
 
 When a user logs in, something similar happens:
 
