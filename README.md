@@ -21,11 +21,11 @@ When a user posts a new message:
 ```
 handleSubmit(event) {
 
-    //first, we prevent the default behavior...
+    //first, we prevent the default behavior
     
     event.preventDefault();
     
-    //then, we check that the user has actually typed a message...
+    //then, we check that the user has actually typed a message
 
     if (this.state.body !== "") {
     
@@ -33,11 +33,11 @@ handleSubmit(event) {
 
         const message = Object.assign({}, this.state);
         
-        //then, we POST a message to the backend...
+        //then, we POST a message to the backend
 
         this.props.createMessage(message).then((res) => {
           
-          //...and send the message out over a WebSocket...
+          //and send the message out over a WebSocket
           
           App.cable.subscriptions.subscriptions[0].speak({
             
@@ -47,7 +47,7 @@ handleSubmit(event) {
         
         });
         
-        //finally,we rest the React component's state...
+        //finally, we reset the React component's state
         
         this.setState({
             
@@ -61,6 +61,71 @@ handleSubmit(event) {
 
     }
 };
+```
+![Chat in action](https://media.giphy.com/media/VgZPqcNWQFHjOucV9P/giphy.gif)
+
+When a user logs in, something similar happens:
+
+```
+handleSubmit(event) {
+
+    //first, we prevent the default behavior
+    
+    event.preventDefault();
+    
+    //then, we create an object out of the user's email and password
+    
+    const user = Object.assign({}, this.state);
+    
+    //we log them in on the frontend and PATCH their online_status to true in the database
+    
+    this.props
+      .login(user)
+      .then((res) => {
+        this.props
+          .updateUser({
+            id: res.user.id,
+            email: res.user.email,
+            online_status: true,
+          })
+          
+          
+          //then, we subscribe the user to the Users channel, which handles logins and logouts
+          
+          .then((res) => {
+            App.cable.subscriptions.create(
+              { channel: "UsersChannel" },
+              {
+                received: (data) => {
+                  this.props.receiveUser(data);
+                },
+                speak: function (data) {
+                  this.perform("speak", data);
+                },
+              }
+            );
+            return res;
+          })
+          
+          //next, we send the user object we created out over the Users channel
+          
+          .then((res) => {
+            App.cable.subscriptions.subscriptions[1].speak({
+              user: {
+                id: res.user.id,
+                email: res.user.email,
+                online_status: true,
+              },
+            });
+          });
+      })
+      
+      
+      //finally, we fetch all user info from the database so we know who's already logged in
+      
+      .then(this.props.fetchUsers());
+  }
+```
 
 
 ### Chat
