@@ -32,14 +32,14 @@ class LoginForm extends React.Component {
           })
           .then((res) => {
             App.cable.subscriptions.create(
-              { channel: "AppearanceChannel" },
+              { channel: "UsersChannel" },
               {
                 received: (data) => {
-                  // console.log("Received on AppearanceChannel:", data);
+                  // console.log("Received on UsersChannel:", data);
                   this.props.receiveUser(data);
                 },
                 speak: function (data) {
-                  // console.log("Spoken on AppearanceChannel:", data);
+                  // console.log("Spoken on UsersChannel:", data);
                   this.perform("speak", data);
                 },
               }
@@ -73,14 +73,14 @@ class LoginForm extends React.Component {
           })
           .then((res) => {
             App.cable.subscriptions.create(
-              { channel: "AppearanceChannel" },
+              { channel: "UsersChannel" },
               {
                 received: (data) => {
-                  // console.log("Received on AppearanceChannel:", data);
+                  // console.log("Received on UsersChannel:", data);
                   this.props.receiveUser(data);
                 },
                 speak: function (data) {
-                  // console.log("Spoken on AppearanceChannel:", data);
+                  // console.log("Spoken on UsersChannel:", data);
                   this.perform("speak", data);
                 },
               }

@@ -86,36 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./frontend/actions/appearance_actions.js":
-/*!************************************************!*\
-  !*** ./frontend/actions/appearance_actions.js ***!
-  \************************************************/
-/*! exports provided: RECEIVE_NEW_USER, LOGOUT_NEW_USER, receiveNewUser, logoutNewUser */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NEW_USER", function() { return RECEIVE_NEW_USER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_NEW_USER", function() { return LOGOUT_NEW_USER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNewUser", function() { return receiveNewUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutNewUser", function() { return logoutNewUser; });
-var RECEIVE_NEW_USER = 'RECEIVE_NEW_USER';
-var LOGOUT_NEW_USER = 'LOGOUT_NEW_USER';
-var receiveNewUser = function receiveNewUser(user) {
-  return {
-    type: RECEIVE_NEW_USER,
-    user: user
-  };
-};
-var logoutNewUser = function logoutNewUser(user) {
-  return {
-    type: LOGOUT_NEW_USER,
-    user: user
-  };
-};
-
-/***/ }),
-
 /***/ "./frontend/actions/channel_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/channel_actions.js ***!
@@ -633,11 +603,9 @@ var Channel = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_channel_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/channel_actions */ "./frontend/actions/channel_actions.js");
 /* harmony import */ var _actions_message_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/message_actions */ "./frontend/actions/message_actions.js");
-/* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
-
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _channel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./channel */ "./frontend/components/channels/channel.jsx");
 
 
 
@@ -671,17 +639,13 @@ var mdp = function mdp(dispatch) {
     },
     receiveMessage: function receiveMessage(message) {
       return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_1__["receiveMessage"])(message));
-    },
-    receiveNewUser: function receiveNewUser(user) {
-      return dispatch(Object(_actions_appearance_actions__WEBPACK_IMPORTED_MODULE_2__["receiveNewUser"])(user));
-    },
-    logoutNewUser: function logoutNewUser(user) {
-      return dispatch(Object(_actions_appearance_actions__WEBPACK_IMPORTED_MODULE_2__["logoutNewUser"])(user));
-    }
+    } // receiveNewUser: user => dispatch(receiveNewUser(user)),
+    // logoutNewUser: user => dispatch(logoutNewUser(user))
+
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_5__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(msp, mdp)(_channel__WEBPACK_IMPORTED_MODULE_4__["default"])));
 
 /***/ }),
 
@@ -850,8 +814,7 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
             key: channel.id,
             channel: channel,
             currentChannelId: _this3.props.currentChannelId,
-            currentUser: _this3.props.currentUser,
-            appearances: _this3.props.appearances
+            currentUser: _this3.props.currentUser
           });
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -894,7 +857,6 @@ var ChannelSidebar = /*#__PURE__*/function (_React$Component) {
             channel: channel,
             currentChannelId: _this3.props.currentChannelId,
             currentUser: _this3.props.currentUser,
-            appearances: _this3.props.appearances,
             onlineStatus: onlineStatus
           });
         }
@@ -936,7 +898,6 @@ var msp = function msp(state, ownProps) {
     currentUser: state.entities.users[state.session.user.id],
     channels: state.entities.channels,
     currentChannelId: ownProps.match.params.channelId,
-    appearances: state.entities.appearances,
     users: state.entities.users
   };
 };
@@ -3160,14 +3121,14 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
           online_status: true
         }).then(function (res) {
           App.cable.subscriptions.create({
-            channel: "AppearanceChannel"
+            channel: "UsersChannel"
           }, {
             received: function received(data) {
-              // console.log("Received on AppearanceChannel:", data);
+              // console.log("Received on UsersChannel:", data);
               _this3.props.receiveUser(data);
             },
             speak: function speak(data) {
-              // console.log("Spoken on AppearanceChannel:", data);
+              // console.log("Spoken on UsersChannel:", data);
               this.perform("speak", data);
             }
           });
@@ -3201,14 +3162,14 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
           online_status: true
         }).then(function (res) {
           App.cable.subscriptions.create({
-            channel: "AppearanceChannel"
+            channel: "UsersChannel"
           }, {
             received: function received(data) {
-              // console.log("Received on AppearanceChannel:", data);
+              // console.log("Received on UsersChannel:", data);
               _this4.props.receiveUser(data);
             },
             speak: function speak(data) {
-              // console.log("Spoken on AppearanceChannel:", data);
+              // console.log("Spoken on UsersChannel:", data);
               this.perform("speak", data);
             }
           });
@@ -3729,49 +3690,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./frontend/reducers/appearances_reducer.js":
-/*!**************************************************!*\
-  !*** ./frontend/reducers/appearances_reducer.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/appearance_actions */ "./frontend/actions/appearance_actions.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-var appearancesReducer = function appearancesReducer() {
-  var defaultState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(defaultState);
-
-  switch (action.type) {
-    case _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_USER"]:
-      return Object.assign({}, defaultState, _defineProperty({}, action.user.id, action.user));
-
-    case _actions_appearance_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_NEW_USER"]:
-      var nextState = _objectSpread({}, defaultState);
-
-      delete nextState[action.user.id];
-      return nextState;
-
-    default:
-      return defaultState;
-  }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (appearancesReducer);
-
-/***/ }),
-
 /***/ "./frontend/reducers/channel_errors_reducer.js":
 /*!*****************************************************!*\
   !*** ./frontend/reducers/channel_errors_reducer.js ***!
@@ -3858,8 +3776,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _channels_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./channels_reducer */ "./frontend/reducers/channels_reducer.js");
 /* harmony import */ var _messages_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./messages_reducer */ "./frontend/reducers/messages_reducer.js");
-/* harmony import */ var _appearances_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./appearances_reducer */ "./frontend/reducers/appearances_reducer.js");
-
 
 
 
@@ -3867,8 +3783,7 @@ __webpack_require__.r(__webpack_exports__);
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   channels: _channels_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  messages: _messages_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  appearances: _appearances_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  messages: _messages_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 

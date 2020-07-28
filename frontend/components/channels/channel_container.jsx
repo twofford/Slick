@@ -8,8 +8,6 @@ import {
 
 import { receiveMessage } from '../../actions/message_actions';
 
-import { receiveNewUser, logoutNewUser } from '../../actions/appearance_actions';
-
 import {withRouter} from 'react-router-dom';
 
 import {connect} from 'react-redux';
@@ -38,9 +36,9 @@ const mdp = dispatch => (
 
         receiveMessage: message => dispatch(receiveMessage(message)),
 
-        receiveNewUser: user => dispatch(receiveNewUser(user)),
+        // receiveNewUser: user => dispatch(receiveNewUser(user)),
 
-        logoutNewUser: user => dispatch(logoutNewUser(user))
+        // logoutNewUser: user => dispatch(logoutNewUser(user))
 
     }
 )
