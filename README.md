@@ -50,7 +50,7 @@ handleSubmit(event) {
     }
 };
 ```
-![Chat in action](https://media.giphy.com/media/VgZPqcNWQFHjOucV9P/giphy.gif)
+![Chat in action](https://media.giphy.com/media/JpvtVFISNPAJKDZt7i/giphy.gif)
 
 When a user logs in, something similar happens. After the user is logged in on the frontend, the React Router will route them to the "#General" chat channel. Then, a PATCH request updates the user's online_status on the backend. Finally, the user's new status is broadcast over a WebSockets channel to which all logged-in users are subscribed.
 
