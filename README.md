@@ -37,7 +37,7 @@ handleSubmit(event) {
 
         this.props.createMessage(message).then((res) => {
           
-          //...and send the messag out over a WebSocket...
+          //...and send the message out over a WebSocket...
           
           App.cable.subscriptions.subscriptions[0].speak({
             
