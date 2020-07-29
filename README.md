@@ -16,7 +16,7 @@ Slick is a lightweight clone of [Slack](https://www.slack.com), a popular chat a
 
 The meat and potatoes of any chat app is...well, chat. Users need to be able to create and update messages, and other users should be able to see those changes in realtime. To achieve that, I used Action Cable, Rails's built-in WebSockets library.
 
-When a user posts a new message, we POST the message to the backend, a PostgreSQL database, then send the message out over a WebSocket channel to which all logged-in users are subscribed.
+When a user creates a new message, a POST request is sent to the backend, a PostgreSQL database. The message is then sent out over a WebSocket channel to which all logged-in users are subscribed.
 
 ```js
 frontend/components/messages/new_message_form.jsx
