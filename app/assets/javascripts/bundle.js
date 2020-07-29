@@ -2396,7 +2396,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
       }).filter(function (dm) {
         return dm.includes(_this5.props.currentUserEmail);
       }).map(function (dm) {
-        return dm.sort().join(', ');
+        return dm.sort().join(", ");
       });
       var dmsWithMessagesAndCurrentUserArray = dmsWithMessagesArray.filter(function (dm) {
         return dmsWithMessagesAndCurrentUserTitlesArray.includes(dm.title);
@@ -2845,8 +2845,29 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      searchValue: ''
+      searchValue: ""
     };
+    _this.filteredChannelsArray = Object.values(_this.props.channels).filter(function (channel) {
+      return channel.users.map(function (user) {
+        return user.id;
+      }).includes(_this.props.currentUser.id);
+    }).sort(function (a, b) {
+      var aTitle = a.title.toUpperCase();
+      var bTitle = b.title.toUpperCase();
+
+      if (aTitle < bTitle) {
+        return -1;
+      } else if (aTitle > bTitle) {
+        return 1;
+      } else return 0;
+    });
+    var placeholderMessages = ["Search for something. Anything. You have the window open now anyway.", "Search the Log of All Conversation and Knowledge", "Search all across Slick", "Surely that's around here somewhere...", "What do you want to search for today?", "Delve into your archives, seize upon the answers. Rejoice.", "Type what you want to search for. Slick will do the rest.", "Input search. Beep boop."];
+
+    var randomNum = function randomNum(max) {
+      return Math.floor(Math.random() * max + 1);
+    };
+
+    _this.placeholderText = placeholderMessages[randomNum(placeholderMessages.length - 1)];
     return _this;
   }
 
@@ -2860,37 +2881,47 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "displayTitle",
+    value: function displayTitle(title) {
       var _this3 = this;
 
-      var currentUserId = this.props.currentUser.id;
-      var filteredChannelsArray = Object.values(this.props.channels).filter(function (channel) {
-        return channel.users.map(function (user) {
-          return user.id;
-        }).includes(currentUserId);
-      }).sort(function (a, b) {
-        var aTitle = a.title.toUpperCase();
-        var bTitle = b.title.toUpperCase();
-
-        if (aTitle < bTitle) {
-          return -1;
-        } else if (aTitle > bTitle) {
-          return 1;
-        } else return 0;
+      var channelDisplayTitleArray = title.split(", ");
+      var currentUserRemoved = channelDisplayTitleArray.filter(function (user) {
+        return user !== _this3.props.currentUserEmail;
       });
-      var filteredMessagesArray = Object.values(this.props.messages).filter(function (message) {
-        return filteredChannelsArray.map(function (channel) {
-          return channel.id;
-        }).includes(message.channel_id);
-      });
-      var placeholderMessages = ["Search for something. Anything. You have the window open now anyway.", "Search the Log of All Conversation and Knowledge", "Search all across Slick", "Surely that's around here somewhere...", "What do you want to search for today?", "Delve into your archives, seize upon the answers. Rejoice.", "Type what you want to search for. Slick will do the rest.", "Input search. Beep boop."];
+      return currentUserRemoved.join(", ");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
 
-      var randomNum = function randomNum(max) {
-        return Math.floor(Math.random() * max + 1);
-      };
+      var searchResults = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "search-filler"
+      }, "Results:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.filteredChannelsArray.map(function (channel) {
+        var prefix;
 
-      var placeholderText = placeholderMessages[randomNum(placeholderMessages.length - 1)];
+        if (channel.channel_or_dm === "channel") {
+          if (channel.channel_type === "public") {
+            prefix = "#";
+          } else prefix = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-lock"
+          });
+        } else prefix = "#";
+
+        if (_this4.displayTitle(channel.title).toLowerCase().startsWith(_this4.state.searchValue.toLowerCase()) && _this4.state.searchValue != "") {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            onClick: function onClick() {
+              return _this4.props.closeModal();
+            },
+            className: "search-li",
+            to: "/channels/".concat(channel.id)
+          }, prefix, _this4.displayTitle(channel.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
+        } else return null;
+      })));
+      var noSearchResults = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "search-filler"
+      }, "Narrow your search");
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         id: "search-form",
         onSubmit: function onSubmit() {
@@ -2900,48 +2931,16 @@ var Searchbar = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-search gray"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "search-input",
-        placeholder: placeholderText,
+        placeholder: this.placeholderText,
         type: "text",
-        onChange: this.handleInput('searchValue')
+        autoComplete: "off",
+        onChange: this.handleInput("searchValue")
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "search-modal-closer",
         onClick: function onClick() {
-          return _this3.props.closeModal();
+          return _this4.props.closeModal();
         }
-      }, "\xD7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filteredChannelsArray.map(function (channel) {
-        var prefix;
-
-        if (channel.channel_or_dm === 'channel') {
-          if (channel.channel_type === 'public') {
-            prefix = '#';
-          } else prefix = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-lock"
-          });
-        } else prefix = '#';
-
-        if (channel.title.toLowerCase().startsWith(_this3.state.searchValue) && _this3.state.searchValue != "") {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            onClick: function onClick() {
-              return _this3.props.closeModal();
-            },
-            className: "search-li",
-            to: "/channels/".concat(channel.id)
-          }, prefix, channel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-        } else return null;
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filteredMessagesArray.map(function (message) {
-        var messageUser = _this3.props.users[message.user.id];
-        var messageChannel = _this3.props.channels[message.channel_id];
-
-        if (message.body.toLowerCase().startsWith(_this3.state.searchValue) && _this3.state.searchValue != "") {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            onClick: function onClick() {
-              return _this3.props.closeModal();
-            },
-            className: "search-li",
-            to: "/channels/".concat(message.channel_id)
-          }, messageUser.email, ": \"", message.body, "\" -- in ", messageChannel.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-        } else return null;
-      })));
+      }, "\xD7")), this.state.searchValue ? searchResults : noSearchResults);
     }
   }]);
 
@@ -2973,7 +2972,8 @@ var msp = function msp(state) {
     users: state.entities.users,
     currentUser: state.session.user,
     channels: state.entities.channels,
-    messages: state.entities.messages
+    messages: state.entities.messages,
+    currentUserEmail: state.entities.users[state.session.user.id].email
   };
 };
 

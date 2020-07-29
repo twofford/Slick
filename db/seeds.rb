@@ -105,7 +105,7 @@ u12 = User.create!(
     password: 'password',
     created_at: '1/1/2020',
     updated_at: '1/1/2020',
-    online_status: false
+    online_status: true
 )
 
 u13 = User.create!(
