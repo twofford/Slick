@@ -1,7 +1,19 @@
 .messages-ul {
     position: fixed;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    // margin-top: 20px;
+    // margin-bottom: 40px;
+    overflow: auto;
     width: calc(100% - 260px);
-    height: 80%;
+    height: calc(100% - 153.44px);
+}
+
+.messages-ul::-webkit-scrollbar {
+    background: transparent;
+    width: 10px;
+    margin-right: 5px;
+}
+
+.messages-ul::-webkit-scrollbar-thumb {
+    background: #939393;
+    border-radius: 50px;
 }
