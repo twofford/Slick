@@ -136,12 +136,14 @@ class NewDMForm extends React.Component {
       ...new Set(allMessages.map((message) => message.channel_id)),
     ]; //an array of all channel ids for channels containing messages
 
-
     const dmsWithMessagesArray = allDMs.filter((
       dm //an array of dms containing messages
     ) => channelsWithMessages.includes(dm.id));
 
-    const dmsWithMessagesAndCurrentUserTitlesArray = dmsWithMessagesArray.map(dm => dm.users.map(user => user.email)).filter(dm => dm.includes(this.props.currentUserEmail)).map(dm => dm.sort().join(', '));
+    const dmsWithMessagesAndCurrentUserTitlesArray = dmsWithMessagesArray
+      .map((dm) => dm.users.map((user) => user.email))
+      .filter((dm) => dm.includes(this.props.currentUserEmail))
+      .map((dm) => dm.sort().join(", "));
 
     const dmsWithMessagesAndCurrentUserArray = dmsWithMessagesArray.filter(
       (dm) => dmsWithMessagesAndCurrentUserTitlesArray.includes(dm.title)
@@ -356,7 +358,6 @@ class NewDMForm extends React.Component {
             : //if there is nothing in the search value
 
               dmsWithMessagesAndCurrentUserArray.map((channel) => {
-
                 let lastMessage;
                 let lastMessageUser;
                 let lastMessageTimeSince;

@@ -17,7 +17,6 @@ export default class Searchbar extends React.Component {
         };
     };
 
-
     render(){
 
         const currentUserId = this.props.currentUser.id
@@ -38,7 +37,6 @@ export default class Searchbar extends React.Component {
             return filteredChannelsArray.map(channel => channel.id).includes(message.channel_id);
         });
 
-
         const placeholderMessages = [
             "Search for something. Anything. You have the window open now anyway.",
             "Search the Log of All Conversation and Knowledge",
@@ -57,6 +55,7 @@ export default class Searchbar extends React.Component {
         const placeholderText = placeholderMessages[randomNum(placeholderMessages.length - 1)]
         
         return(
+            
                 <>
                 <form id="search-form" onSubmit={() => event.preventDefault()}>
                     <i className="fas fa-search gray"></i>
