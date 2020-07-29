@@ -7,20 +7,10 @@
     margin: 0;
 }
 
-// .channels-wrapper::-webkit-scrollbar {
-//     background: #3F0D40;
-//     width: 10px;
-// }
-
 .channels::-webkit-scrollbar {
     background: #3F0D40;
     width: 10px;
 }
-
-// .channels-wrapper::-webkit-scrollbar-thumb {
-//     background: rgba(207, 195, 207, 0.5);
-//     border-radius: 10px;
-// }
 
 .channels::-webkit-scrollbar-thumb {
     background: rgba(207, 195, 207, 0.5);
@@ -44,15 +34,6 @@
     font-weight: normal;
     font-size: 12px;
 }
-
-// .fa-user {
-//     font-size: 30px;
-//     background: pink;
-//     border-radius: 4px;
-//     border: 1px solid pink;
-//     padding: 5px 5px 5px 5px;
-//     color: white;
-// }
 
 .channels {
     max-height: calc(100% - 88.45px);
@@ -224,7 +205,6 @@
     line-height: 28px;
     color: #c3b4c4;
     text-decoration: none;
-    // display: inline;
 }
 
 .dm-li-current a {

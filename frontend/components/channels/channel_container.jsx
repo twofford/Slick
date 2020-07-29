@@ -36,10 +36,6 @@ const mdp = dispatch => (
 
         receiveMessage: message => dispatch(receiveMessage(message)),
 
-        // receiveNewUser: user => dispatch(receiveNewUser(user)),
-
-        // logoutNewUser: user => dispatch(logoutNewUser(user))
-
     }
 )
 

@@ -243,9 +243,7 @@ var fetchMessages = function fetchMessages(channelId) {
       return dispatch(receiveMessages(messages));
     });
   };
-}; // export const fetchMessage = (message) => dispatch => (
-//     MessageApiUtil.getMessage(message).then(message => (dispatch(receiveMessage(message)))));
-
+};
 var createMessage = function createMessage(message) {
   return function (dispatch) {
     return _util_message__WEBPACK_IMPORTED_MODULE_0__["postMessage"](message).then(function (message) {
@@ -524,11 +522,9 @@ var Channel = /*#__PURE__*/function (_React$Component) {
         channel: 'ChatChannel'
       }, {
         received: function received(data) {
-          // console.log('Received on ChatChannel:',data)
           _this2.props.receiveMessage(data);
         },
         speak: function speak(data) {
-          // console.log('Spoken on ChatChannel:',data)
           this.perform('speak', data);
         }
       });
@@ -639,9 +635,7 @@ var mdp = function mdp(dispatch) {
     },
     receiveMessage: function receiveMessage(message) {
       return dispatch(Object(_actions_message_actions__WEBPACK_IMPORTED_MODULE_1__["receiveMessage"])(message));
-    } // receiveNewUser: user => dispatch(receiveNewUser(user)),
-    // logoutNewUser: user => dispatch(logoutNewUser(user))
-
+    }
   };
 };
 
@@ -4170,12 +4164,7 @@ var getMessages = function getMessages(channelId) {
   return $.ajax({
     url: "api/channels/".concat(channelId, "/messages")
   });
-}; // export const getMessage = (channelId, messageId) => {
-//     return $.ajax({
-//         url: `api/channels/${channelId}/messages/${messageId}`
-//     })
-// }
-
+};
 var postMessage = function postMessage(message) {
   return $.ajax({
     url: "/api/channels/".concat(message.channel_id, "/messages"),
