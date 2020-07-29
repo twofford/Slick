@@ -107,6 +107,7 @@ handleSubmit(event) {
 ```
 
 Here it is in action:
+
 ![Users logging in and out](https://media.giphy.com/media/jUJfmnjxxgs4s44EJg/giphy.gif)
 
 ## Future Improvements
