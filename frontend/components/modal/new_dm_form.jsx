@@ -263,7 +263,7 @@ class NewDMForm extends React.Component {
                   if (
                     this.displayTitle(channel.title)
                       .toLowerCase()
-                      .startsWith(this.state.searchValue)
+                      .startsWith(this.state.searchValue.toLowerCase())
                   ) {
                     return (
                       <li
@@ -318,7 +318,7 @@ class NewDMForm extends React.Component {
                   if (
                     channel.email
                       .toLowerCase()
-                      .startsWith(this.state.searchValue) &&
+                      .startsWith(this.state.searchValue.toLowerCase()) &&
                     !this.state.users.includes(channel.email)
                   ) {
                     return (

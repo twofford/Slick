@@ -2492,7 +2492,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
 
         if (channel.channel_or_dm) {
           //if it is an existing DM
-          if (_this5.displayTitle(channel.title).toLowerCase().startsWith(_this5.state.searchValue)) {
+          if (_this5.displayTitle(channel.title).toLowerCase().startsWith(_this5.state.searchValue.toLowerCase())) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               className: "search-result-li",
               key: channel.id,
@@ -2529,7 +2529,7 @@ var NewDMForm = /*#__PURE__*/function (_React$Component) {
           }
         } else {
           //if the DM doesn't exist yet (i.e., it's a single user)
-          if (channel.email.toLowerCase().startsWith(_this5.state.searchValue) && !_this5.state.users.includes(channel.email)) {
+          if (channel.email.toLowerCase().startsWith(_this5.state.searchValue.toLowerCase()) && !_this5.state.users.includes(channel.email)) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
               className: "search-result-li",
               key: channel.id,
@@ -3106,23 +3106,30 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       event.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.login(user).then(function (res) {
+        console.log('user logged in, moving on to patch');
+
         _this3.props.updateUser({
           id: res.user.id,
           email: res.user.email,
           online_status: true
         }).then(function (res) {
+          console.log('user patched, creating sub');
           App.cable.subscriptions.create({
             channel: "UsersChannel"
           }, {
             received: function received(data) {
               _this3.props.receiveUser(data);
+
+              console.log("received on userchannel:", data);
             },
             speak: function speak(data) {
               this.perform("speak", data);
+              console.log('spoken on userchannel:', data);
             }
           });
           return res;
         }).then(function (res) {
+          console.log('sub created, speaking');
           App.cable.subscriptions.subscriptions[1].speak({
             user: {
               id: res.user.id,
@@ -3145,23 +3152,30 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
         online_status: true
       };
       this.props.login(user).then(function (res) {
+        console.log('user logged in, moving on to patch');
+
         _this4.props.updateUser({
           id: res.user.id,
           email: res.user.email,
           online_status: true
         }).then(function (res) {
+          console.log('user patched, creating sub');
           App.cable.subscriptions.create({
             channel: "UsersChannel"
           }, {
             received: function received(data) {
+              console.log('received on userchannel:', data);
+
               _this4.props.receiveUser(data);
             },
             speak: function speak(data) {
+              console.log('spoken on userchannel:', data);
               this.perform("speak", data);
             }
           });
           return res;
         }).then(function (res) {
+          console.log('sub created, speaking');
           App.cable.subscriptions.subscriptions[1].speak({
             user: {
               id: res.user.id,
