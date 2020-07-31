@@ -1144,12 +1144,12 @@ var ChannelViewport = /*#__PURE__*/function (_React$Component) {
       };
       event.preventDefault();
       this.props.updateUser(user).then(function (res) {
-        if (App.cable.subscriptions.subscriptions[1]) {
-          App.cable.subscriptions.subscriptions[1].speak({
-            user: user
-          });
-        }
-
+        var usersChannel = App.cable.subscriptions.subscriptions.map(function (sub) {
+          return sub.identifier;
+        }).indexOf('{"channel":"UsersChannel"}');
+        App.cable.subscriptions.subscriptions[usersChannel].speak({
+          user: user
+        });
         return res;
       }).then(function (res) {
         _this2.props.logout(res);
@@ -3106,31 +3106,27 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       event.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.login(user).then(function (res) {
-        console.log('user logged in, moving on to patch');
-
         _this3.props.updateUser({
           id: res.user.id,
           email: res.user.email,
           online_status: true
         }).then(function (res) {
-          console.log('user patched, creating sub');
           App.cable.subscriptions.create({
             channel: "UsersChannel"
           }, {
             received: function received(data) {
               _this3.props.receiveUser(data);
-
-              console.log("received on userchannel:", data);
             },
             speak: function speak(data) {
               this.perform("speak", data);
-              console.log('spoken on userchannel:', data);
             }
           });
           return res;
         }).then(function (res) {
-          console.log('sub created, speaking');
-          App.cable.subscriptions.subscriptions[1].speak({
+          var usersChannel = App.cable.subscriptions.subscriptions.map(function (sub) {
+            return sub.identifier;
+          }).indexOf('{"channel":"UsersChannel"}');
+          App.cable.subscriptions.subscriptions[usersChannel].speak({
             user: {
               id: res.user.id,
               email: res.user.email,
@@ -3152,31 +3148,27 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
         online_status: true
       };
       this.props.login(user).then(function (res) {
-        console.log('user logged in, moving on to patch');
-
         _this4.props.updateUser({
           id: res.user.id,
           email: res.user.email,
           online_status: true
         }).then(function (res) {
-          console.log('user patched, creating sub');
           App.cable.subscriptions.create({
             channel: "UsersChannel"
           }, {
             received: function received(data) {
-              console.log('received on userchannel:', data);
-
               _this4.props.receiveUser(data);
             },
             speak: function speak(data) {
-              console.log('spoken on userchannel:', data);
               this.perform("speak", data);
             }
           });
           return res;
         }).then(function (res) {
-          console.log('sub created, speaking');
-          App.cable.subscriptions.subscriptions[1].speak({
+          var usersChannel = App.cable.subscriptions.subscriptions.map(function (sub) {
+            return sub.identifier;
+          }).indexOf('{"channel":"UsersChannel"}');
+          App.cable.subscriptions.subscriptions[usersChannel].speak({
             user: {
               id: res.user.id,
               email: res.user.email,

@@ -21,11 +21,15 @@ class ChannelViewport extends React.Component {
     this.props
       .updateUser(user)
       .then((res) => {
-        if (App.cable.subscriptions.subscriptions[1]) {
-          App.cable.subscriptions.subscriptions[1].speak({
+
+        const usersChannel = App.cable.subscriptions.subscriptions
+              .map((sub) => sub.identifier)
+              .indexOf('{"channel":"UsersChannel"}');
+
+          App.cable.subscriptions.subscriptions[usersChannel].speak({
             user: user,
           });
-        }
+        
 
         return res;
       })

@@ -24,7 +24,6 @@ class LoginForm extends React.Component {
     this.props
       .login(user)
       .then((res) => {
-        console.log('user logged in, moving on to patch')
         this.props
           .updateUser({
             id: res.user.id,
@@ -32,25 +31,26 @@ class LoginForm extends React.Component {
             online_status: true,
           })
           .then((res) => {
-            console.log('user patched, creating sub')
             App.cable.subscriptions.create(
               { channel: "UsersChannel" },
               {
                 received: (data) => {
                   this.props.receiveUser(data);
-                  console.log("received on userchannel:", data);
                 },
                 speak: function (data) {
                   this.perform("speak", data);
-                  console.log('spoken on userchannel:',data)
                 },
               }
             );
             return res;
           })
           .then((res) => {
-            console.log('sub created, speaking')
-            App.cable.subscriptions.subscriptions[1].speak({
+
+            const usersChannel = App.cable.subscriptions.subscriptions
+              .map((sub) => sub.identifier)
+              .indexOf('{"channel":"UsersChannel"}');
+            
+            App.cable.subscriptions.subscriptions[usersChannel].speak({
               user: {
                 id: res.user.id,
                 email: res.user.email,
@@ -68,7 +68,6 @@ class LoginForm extends React.Component {
     this.props
       .login(user)
       .then((res) => {
-        console.log('user logged in, moving on to patch')
         this.props
           .updateUser({
             id: res.user.id,
@@ -76,16 +75,13 @@ class LoginForm extends React.Component {
             online_status: true,
           })
           .then((res) => {
-            console.log('user patched, creating sub')
             App.cable.subscriptions.create(
               { channel: "UsersChannel" },
               {
                 received: (data) => {
-                  console.log('received on userchannel:',data)
                   this.props.receiveUser(data);
                 },
                 speak: function (data) {
-                  console.log('spoken on userchannel:',data)
                   this.perform("speak", data);
                 },
               }
@@ -93,8 +89,12 @@ class LoginForm extends React.Component {
             return res;
           })
           .then((res) => {
-            console.log('sub created, speaking')
-            App.cable.subscriptions.subscriptions[1].speak({
+            
+            const usersChannel = App.cable.subscriptions.subscriptions
+              .map((sub) => sub.identifier)
+              .indexOf('{"channel":"UsersChannel"}');
+
+            App.cable.subscriptions.subscriptions[usersChannel].speak({
               user: {
                 id: res.user.id,
                 email: res.user.email,
