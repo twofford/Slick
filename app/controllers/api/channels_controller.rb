@@ -4,7 +4,7 @@ class Api::ChannelsController < ApplicationController
 
     def index
         @channels = Channel.all.includes(:users, :messages)
-        render 'api/channels/index'
+        render 'api/channels/index.json.jbuilder'
     end
 
     def create
@@ -22,7 +22,7 @@ class Api::ChannelsController < ApplicationController
             end
             @channel.users << current_user
             end
-            render 'api/channels/show'
+            render 'api/channels/show.json.jbuilder'
         else
             render json: @channel.errors.full_messages, status: 422
         end
@@ -30,7 +30,7 @@ class Api::ChannelsController < ApplicationController
 
     def show
         @channel = Channel.find(params[:id])
-        render 'api/channels/show'
+        render 'api/channels/show.json.jbuilder'
     end
 
     def update
@@ -47,7 +47,14 @@ class Api::ChannelsController < ApplicationController
     end
 
     def channel_params
-        params.require(:channel).permit(:title, :channel_type, :description, :topic, :user_id, :users, :channel_or_dm)
+        params.require(:channel).permit(
+            :title,
+            :channel_type,
+            :description,
+            :topic,
+            :user_id,
+            :channel_or_dm,
+            :users => [])
     end
 
 end
