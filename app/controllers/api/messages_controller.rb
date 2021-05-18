@@ -4,7 +4,7 @@ class Api::MessagesController < ApplicationController
 
     def index
         @messages = Message.all
-        render 'api/messages/index'
+        render 'api/messages/index.json.jbuilder'
     end
 
     def create
