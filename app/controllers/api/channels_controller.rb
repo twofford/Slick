@@ -34,10 +34,12 @@ class Api::ChannelsController < ApplicationController
     end
 
     def update
+
         @channel = Channel.find(params[:id])
         if @channel.update(channel_params)
+            render 'api/channels/show.json.jbuilder'
         else
-            render json: {errors: @channel.errors.full_messages, status: 422}
+            render json: @channel.errors.full_messages, status: 422
         end
     end
 
@@ -54,7 +56,7 @@ class Api::ChannelsController < ApplicationController
             :topic,
             :user_id,
             :channel_or_dm,
-            :users => [])
+            :users)
     end
 
 end

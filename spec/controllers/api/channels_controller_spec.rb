@@ -17,6 +17,20 @@ module Api
       }
     }}
 
+    let(:valid_updated_params) {{
+      id: channel.id,
+      channel: {
+        title: "My Updated Channel",
+      }
+    }}
+
+    let(:invalid_updated_params) {{
+      id: channel.id,
+      channel: {
+        title: nil,
+      }
+    }}
+
     let(:private_channel_params) {{
       channel: {
         title: "My Private Channel",
@@ -32,7 +46,7 @@ module Api
         channel_type: "private",
         description: "A private DM",
         channel_or_dm: "dm",
-        users: users,
+        users: users.map { |user| user.email },
       }
     }}
 
@@ -49,7 +63,7 @@ module Api
       it "inherits from the ApplicationController" do
         expect(described_class.superclass).to eq(ApplicationController)
       end
-    end
+    end #end class
 
     describe "methods" do
       
@@ -70,7 +84,7 @@ module Api
             expect { post :create, params: public_channel_params }.to change { Channel.count }.by(1)
           end
 
-          it "returns a 200 http status" do
+          it "returns http status 200" do
             post :create, params: public_channel_params
             expect(response).to have_http_status(200)
           end
@@ -89,18 +103,21 @@ module Api
             expect { post :create, params: private_channel_params }.to change { Channel.count }.by(1)
           end
 
-          it "returns a 200 http status" do
+          it "returns http status 200" do
             post :create, params: private_channel_params
             expect(response).to have_http_status(200)
           end
 
-          it "returns the show template" do
+          it "renders the show template" do
             post :create, params: private_channel_params
             expect(response).to render_template("api/channels/show.json.jbuilder")
           end
         end
 
         context "when passed valid dm params" do
+          before do
+            allow_any_instance_of(described_class.superclass).to receive(:current_user).and_return(user)
+          end
           it "creates a new channel" do
             expect { post :create, params: dm_params }.to change { Channel.count }.by(1)
           end
@@ -111,12 +128,82 @@ module Api
             expect { post :create, params: invalid_params}.not_to change { Channel.count }
           end
 
-          it "returns a 422 http status" do
+          it "returns http status 422" do
             post :create, params: invalid_params
             expect(response).to have_http_status(422)
           end
         end
       end
-    end
+
+      describe "show" do
+
+        context "when passed valid params" do
+
+          before(:each) do
+            get :show, params: { id: channel.id }
+          end
+          
+          it "assigns @channel" do
+            expect(assigns(:channel)).to eq(channel)
+          end
+
+          it "renders the show tempalte" do
+            expect(response).to render_template("api/channels/show.json.jbuilder")
+          end
+
+          it "returns http status 200" do
+            expect(response).to have_http_status(200)
+          end
+        end
+
+        context "when passed invalid params" do
+          it "raises an error" do
+            expect {
+              get :show,
+              id: nil
+            }.to raise_error(ArgumentError)
+          end
+        end
+      end
+
+      describe "update" do
+        context "when passed valid params" do
+
+          it "assigns @channel" do
+            patch :update, params: valid_updated_params
+            expect(assigns(:channel)).to eq(channel)
+          end
+
+          it "changes the channel" do
+            old_channel = channel.dup
+            patch :update, params: valid_updated_params
+            channel.reload
+            expect(channel.title).not_to eq(old_channel.title)
+          end
+        end
+
+        context "when passed invalid params" do
+          it "returns http status 422" do
+            patch :update, params: invalid_updated_params
+            expect(response).to have_http_status(422)
+          end
+        end
+      end
+
+      describe "destroy" do
+        context "when passed invalid params" do
+          it "raises an error" do
+            expect { delete :destroy, params: { id: nil } }.to raise_error(ActionController::UrlGenerationError)
+          end
+        end
+
+        context "when passed valid params" do
+          it "destroys one record" do
+            delete :destroy, params: { id: channel.id }
+            expect { channel.reload }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+      end
+    end #end methods
   end
 end
