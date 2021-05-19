@@ -51,6 +51,16 @@ module Api
 
           #TODO: test that ActionCable is being called
         end
+
+        context "when passed invalid params" do
+          before do
+            post :create, params: { message: { user_id: nil, channel_id: nil, body: nil } }
+          end
+
+          it "renders an errors hash" do
+            expect(response).to eq("User must exist")
+          end
+        end
       end
 
       describe "show" do
