@@ -11,7 +11,7 @@ class Api::MessagesController < ApplicationController
         @message = Message.new(message_params)
         if @message.save
             ActionCable.server.broadcast "chat", {"message" => {@message.id => @message}}
-            render 'api/messages/show'
+            render 'api/messages/show.json.jbuilder'
         else
             render @message.errors.full_messages, status: 422
         end
@@ -19,14 +19,14 @@ class Api::MessagesController < ApplicationController
 
     def show
         @message = Message.find(params[:id])
-        render 'api/messages/show'
+        render 'api/messages/show.json.jbuilder'
     end
 
     def update
         @message = Message.find(params[:id])
         if @message.update(message_params)
             ActionCable.server.broadcast "chat", {"message" => {@message.id => @message}}
-            render 'api/messages/show'
+            render 'api/messages/show.json.jbuilder'
         else
             render json: {errors: @message.errors.full_messages, status: 422}
         end
