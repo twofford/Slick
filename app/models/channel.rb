@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: channels
+#
+#  id            :bigint           not null, primary key
+#  title         :string           not null
+#  channel_type  :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  topic         :string
+#  description   :string
+#  channel_or_dm :string
+#
 class Channel < ApplicationRecord
 
     validates :user_id, :title, :channel_type, null: false

@@ -4,10 +4,12 @@ module Api
 
   RSpec.describe MessagesController, type: :controller do
 
-    let(:messages) { FactoryBot.create_list(:message, 3) }
+    render_views
+
+    let(:channel) { FactoryBot.create(:channel) }
+    let!(:messages) { FactoryBot.create_list(:message, 3, channel_id: channel.id) }
     let(:message) { FactoryBot.create(:message) }
     let(:user) { FactoryBot.create(:user) }
-    let(:channel) { FactoryBot.create(:channel) }
 
     describe "class" do
       it "inherits from the ApplicationController" do
@@ -19,87 +21,53 @@ module Api
       
       describe "index" do
 
-        before(:each) do
-          get :index
-        end
-
-        it "assigns @messages" do
-          expect(assigns(:messages)).to eq(messages)
-        end
-
-        it "renders the index template" do
-          expect(response).to render_template("api/messages/index.json.jbuilder")
+        it "returns the correct number of messages" do
+          get :index, params: { channel_id: channel.id }
+          response_to_json = JSON.parse(response.body)
+          expect(response_to_json.length).to eq(3)
         end
       end
 
       describe "create" do
-        context "when passed valid params" do
+        context "when passed valid message_params" do
 
-          it "creates a new message" do
+          it "persists a new message to the database" do
             expect { post :create, params: { message: { user_id: user.id, channel_id: channel.id, body: "This is a message" } } }.to change { Message.count }.by(1)
           end
 
-          it "returns http status 200" do
+          it "has http status 200" do
             post :create, params: { message: { user_id: user.id, channel_id: channel.id, body: "This is a message" } }
             expect(response).to have_http_status(200)
           end
 
-          it "renders the show template" do
-            post :create, params: { message: { user_id: user.id, channel_id: channel.id, body: "This is a message" } }
-            expect(response).to render_template("api/messages/show.json.jbuilder")
-          end
+          it "returns the message" do
+            post :create, params: { message: { user_id: user.id, channel_id: channel.id, body: "This is a new message" } }
+            response_to_json = JSON.parse(response.body).deep_symbolize_keys
+            expect(response_to_json[:body]).to eq("This is a new message")
 
-          #TODO: test that ActionCable is being called
+          end
         end
 
-        context "when passed invalid params" do
+        context "when passed invalid message_params" do
           before do
-            post :create, params: { message: { user_id: nil, channel_id: nil, body: nil } }
+            post :create, params: { message: { user_id: nil, channel_id: nil, body: "This is an invalid message" } }
           end
 
-          it "renders an errors hash" do
-            expect(response).to eq("User must exist")
-          end
-        end
-      end
-
-      describe "show" do
-        context "when passed a valid message id" do
-          before(:each) do
-            get :show, params: { id: message.id }
+          it "has http status 400" do
+            expect(response).to have_http_status(400)
           end
 
-          it "assigns @message" do
-            expect(assigns(:message)).to eq(message)
-          end
-
-          it "returns http status 200" do
-            expect(response).to have_http_status(200)
-          end
-
-          it "renders the show template" do
-            expect(response).to render_template("api/messages/show.json.jbuilder")
-          end
-        end
-
-        context "when passed an invalid message id" do
-          it "raises an error" do
-            expect {
-              get :show,
-              id: nil
-            }.to raise_error(ArgumentError)
+          it "renders errors" do
+            expect(response.body).to include("User must exist")
+            expect(response.body).to include("Channel must exist")
           end
         end
       end
 
       describe "update" do
-        context "when passed a valid channel id" do
+        context "when passed valid message_params" do
           before(:each) do
-            patch :update, params: { id: message.id, message: { user_id: user.id, channel_id: channel.id, body: "Updated message" } }
-          end
-
-          it "assigns @message" do
-            expect(assigns(:message)).to eq(message)
+            patch :update, params: { id: message.id, message: { user_id: user.id, channel_id: channel.id, body: "This is an updated message" } }
           end
 
           it "updates the message" do
@@ -109,9 +77,18 @@ module Api
           end
         end
 
-        context "when passed an invalid channel id" do
-          it "raises an error" do
-            expect { patch :update, params: { id: nil } }.to raise_error(ActionController::UrlGenerationError)
+        context "when passed invalid message_params" do
+          before do
+            patch :update, params: { id: message.id, message: { user_id: nil, channel_id: nil, body: "This is an invalid message" } }
+          end
+
+          it "has http status 400" do
+            expect(response).to have_http_status(400)
+          end
+
+          it "renders errors" do
+            expect(response.body).to include("User must exist")
+            expect(response.body).to include("Channel must exist")
           end
         end
       end
