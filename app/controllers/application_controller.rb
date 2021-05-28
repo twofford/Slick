@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
     protect_from_forgery with: :exception
 
-    helper_method :current_user, :logged_in?, :general_channel
+    helper_method :general_channel, :current_user, :ensure_logged_in, :login, :logout!, :logged_in?
 
     def general_channel
         @general_channel = Channel.find_by(title: 'General')

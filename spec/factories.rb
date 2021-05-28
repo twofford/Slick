@@ -2,9 +2,9 @@ require "faker"
 
 FactoryBot.define do
   factory :channel do
-    title { Faker::GreekPhilosophers.name }
+    title { "Channel" }
     channel_type { "public" }
-    description { Faker::GreekPhilosophers.name }
+    description { "Description" }
     channel_or_dm { "channel" }
   end
 
@@ -18,5 +18,10 @@ FactoryBot.define do
     association :user, factory: :user
     association :channel, factory: :channel
     body { "This is a message" }
+  end
+
+  factory :channel_membership do
+    association :user, factory: :user
+    association :channel, factory: :channel
   end
 end

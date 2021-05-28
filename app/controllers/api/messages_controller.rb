@@ -4,7 +4,7 @@ module Api
     skip_before_action :verify_authenticity_token
 
     def index
-        messages = Message.all.where(channel_id: params[:channel_id])
+        messages = Message.all.includes(:user).where(channel_id: params[:channel_id])
         blueprint = MessageBlueprint.render(messages)
         render json: blueprint
     end

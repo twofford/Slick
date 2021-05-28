@@ -30,3 +30,6 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 spec/controllers/api/messages_controller_spec.rb
+coverage/.last_run.json
+coverage/.resultset.json
+coverage/index.html

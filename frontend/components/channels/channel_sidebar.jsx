@@ -62,8 +62,6 @@ class ChannelSidebar extends React.Component{
     };
 
     render(){
-
-        
         this.channelsArray = Object.values(this.props.channels).sort((a,b) => {
             const aTitle = a.title.toUpperCase();
             const bTitle = b.title.toUpperCase();

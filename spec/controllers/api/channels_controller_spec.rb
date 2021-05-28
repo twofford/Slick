@@ -4,9 +4,10 @@ module Api
 
   RSpec.describe ChannelsController, type: :controller do
 
-    let(:channel) { FactoryBot.create(:channel) }
+    let!(:channel) { FactoryBot.create(:channel) }
     let!(:user) { FactoryBot.create(:user) }
     let!(:users) { FactoryBot.create_list(:user, 3) }
+    let!(:channel_memberships) { FactoryBot.create(:channel_membership, user_id: user.id, channel_id: channel.id) }
 
     let(:public_channel_params) {{
       channel: {
@@ -63,20 +64,23 @@ module Api
       it "inherits from the ApplicationController" do
         expect(described_class.superclass).to eq(ApplicationController)
       end
-    end #end class
+    end
 
     describe "methods" do
       
       describe "index" do
-        it "assigns @channels" do
-          get :index
-          expect(assigns(:channels)).to eq([channel])
+
+        before do
+          allow(controller).to receive(:current_user).and_return(user)
         end
-        it "renders the index template" do
+
+        it "returns the correct number of channels" do
           get :index
-          expect(response).to render_template("api/channels/index.json.jbuilder")
+          response_to_json = JSON.parse(response.body)
+          expect(response_to_json.length).to eq(1)
         end
-      end
+
+      end #index
 
       describe "create" do
         context "when passed valid public channel params" do
