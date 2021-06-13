@@ -33,3 +33,5 @@ spec/controllers/api/messages_controller_spec.rb
 coverage/.last_run.json
 coverage/.resultset.json
 coverage/index.html
+coverage/.last_run.json
+coverage/.resultset.json

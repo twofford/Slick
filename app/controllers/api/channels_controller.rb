@@ -5,39 +5,20 @@ module Api
 
         def index
             channels = Channel.joins(:channel_memberships).includes(:users, :messages).where(channel_memberships: { user_id: current_user.id })
+
             blueprint = ChannelBlueprint.render(channels)
-            debugger
+
             render json: blueprint
         end
 
-        #def create
-            #@channel = Channel.new(channel_params)
-            #if @channel.save
-                #if @channel.channel_or_dm == 'channel'
-                    #if @channel.channel_type == 'public'
-                        #@channel.users << User.all
-                    #elsif @channel.channel_type == 'private'
-                        #@channel.users << current_user
-                    #end
-                #elsif @channel.channel_or_dm == 'dm'
-                    #params[:channel][:users].each do |user|
-                    #@channel.users << User.find_by(email: user)
-                #end
-                #@channel.users << current_user
-                #end
-                #render 'api/channels/show.json.jbuilder'
-            #else
-                #render json: @channel.errors.full_messages, status: 422
-            #end
-        #end
-
         def create
             channel = Channel.new(channel_params)
-            #Call channel create service here
-            #Service should check if it's public of private. If it's public it should create a new channel_membership for each existing user
-            #If it's private, it should create channel_memberships only for the passed users.
+
             if channel.save
+                ChannelCreateService.new({ channel: channel, params: params }).call
+
                 blueprint = ChannelBlueprint.render(channel)
+
                 render json: blueprint
             else
                 render json: channel.errors.full_messages, status: 400

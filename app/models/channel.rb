@@ -2,14 +2,13 @@
 #
 # Table name: channels
 #
-#  id            :bigint           not null, primary key
-#  title         :string           not null
-#  channel_type  :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  topic         :string
-#  description   :string
-#  channel_or_dm :string
+#  id           :bigint           not null, primary key
+#  title        :string           not null
+#  channel_type :string           not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  topic        :string
+#  description  :string
 #
 class Channel < ApplicationRecord
 
@@ -19,9 +18,7 @@ class Channel < ApplicationRecord
 
     validates :title, uniqueness: true
 
-    validates :channel_type, inclusion: {in: ['public', 'private']}
-
-    validates :channel_or_dm, inclusion: {in: ['channel', 'dm']}
+    validates :channel_type, inclusion: {in: ['public', 'private', 'dm']}
 
     has_many :channel_memberships
 

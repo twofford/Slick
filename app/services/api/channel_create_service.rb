@@ -1,12 +1,11 @@
 module Api
   class ChannelCreateService
 
-    attr_reader :channel, :params, :channel_or_dm, :channel_type
+    attr_reader :channel, :params, :channel_type
 
     def initialize(args = {})
       @channel = args[:channel]
       @params = args[:params]
-      @channel_or_dm = @channel.channel_or_dm
       @channel_type = @channel.channel_type
     end
 
@@ -17,12 +16,11 @@ module Api
     private
 
     def add_users
-      if channel_or_dm == "channel"
-        if channel_type == "public"
-          create_channel_memberships(User.all)
-        else
-          create_channel_memberships(current_user)
-        end
+      case @channel_type
+      when "public"
+        create_channel_memberships(User.all)
+      when "private"
+        create_channel_memberships(current_user)
       else
         create_channel_memberships(params[:users])
       end

@@ -5,7 +5,6 @@ FactoryBot.define do
     title { "Channel" }
     channel_type { "public" }
     description { "Description" }
-    channel_or_dm { "channel" }
   end
 
   factory :user do
