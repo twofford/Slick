@@ -2,7 +2,15 @@
 require 'spec_helper'
 require 'factory_bot'
 require 'simplecov'
-SimpleCov.start
+# SimpleCov.start
+SimpleCov.start "rails" do
+  add_filter "/bin/"
+  add_filter "/db/" 
+  add_filter "/spec/"
+  add_filter "/helpers/"
+  add_filter "/lib/tasks/auto_annotate_models.rake"
+  add_group "Policies", "app/policies"
+end
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
