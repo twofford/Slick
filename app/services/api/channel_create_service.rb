@@ -18,17 +18,17 @@ module Api
     def add_users
       case @channel_type
       when "public"
-        create_channel_memberships(User.all)
+        create_channel_memberships(User.all.pluck(:id))
       when "private"
-        create_channel_memberships(current_user)
+        create_channel_memberships([current_user.id])
       else
-        create_channel_memberships(params[:users])
+        create_channel_memberships(params[:channel][:user_ids])
       end
     end
 
-    def create_channel_memberships users
-      users.each do |user|
-        ChannelMembership.create(user_id: user.id, channel_id: channel.id)
+    def create_channel_memberships user_ids
+      user_ids.each do |user_id|
+        ChannelMembership.create(user_id: user_id, channel_id: channel.id)
       end
     end
 

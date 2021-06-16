@@ -27,17 +27,18 @@ module Api
 
         def update
 
-            @channel = Channel.find(params[:id])
-            if @channel.update(channel_params)
-                render 'api/channels/show.json.jbuilder'
+            channel = Channel.find(params[:id])
+            if channel.update(channel_params)
+                blueprint = ChannelBlueprint.render(channel)
+                render json: blueprint
             else
-                render json: @channel.errors.full_messages, status: 422
+                render json: channel.errors.full_messages, status: 400
             end
         end
 
         def destroy
-            @channel = Channel.find(params[:id])
-            @channel.destroy
+            channel = Channel.find(params[:id])
+            channel.destroy
         end
 
         def channel_params
@@ -48,7 +49,7 @@ module Api
                 :topic,
                 :user_id,
                 :channel_or_dm,
-                :users => [])
+                :user_ids => [])
         end
 
     end
