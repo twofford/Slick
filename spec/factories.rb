@@ -2,7 +2,7 @@ require "faker"
 
 FactoryBot.define do
   factory :channel do
-    title { "Channel" }
+    title { Faker::Fantasy::Tolkien.character }
     channel_type { "public" }
     description { "Description" }
   end
