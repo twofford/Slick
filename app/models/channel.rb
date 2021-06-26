@@ -12,7 +12,7 @@
 #
 class Channel < ApplicationRecord
 
-    validates :user_id, :title, :channel_type, null: false
+    validates :title, :channel_type, null: false
 
     validates :title, length: { minimum: 1 }
 
