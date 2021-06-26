@@ -13,7 +13,9 @@ class Message < ApplicationRecord
 
     after_commit :broadcast, on: [:create, :update]
 
-    validates :user_id, :channel_id, :body, null: false
+    validates :user_id, :channel_id, null: false
+
+    validates_presence_of :body
 
     belongs_to :user
 

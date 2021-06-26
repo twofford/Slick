@@ -10,7 +10,6 @@ ChannelMembership.delete_all
 User.delete_all
 Channel.delete_all
 Message.delete_all
-UserMessage.delete_all
 
 u1 = User.create!(
     email: 'Solid Snake',

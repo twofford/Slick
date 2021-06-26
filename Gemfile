@@ -61,6 +61,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'guard-livereload', '~> 2.5', require: false
+  gem 'rails-controller-testing'
 end
 
 group :test do
@@ -70,6 +71,7 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'simplecov'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
