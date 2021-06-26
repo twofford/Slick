@@ -17,7 +17,7 @@
     "redux-thunk": "^2.3.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "ws": "^7.2.3"
+    "ws": "^7.4.6"
   },
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
   "version": "1.0.0",
