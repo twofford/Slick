@@ -9,8 +9,9 @@ FactoryBot.define do
 
   factory :user do
     email { Faker::Internet.email }
-    password_digest { Faker::Internet.password(min_length: 20, special_characters: true) }
-    session_token { Faker::Internet.password(min_length: 20, special_characters: true) }
+    password { Faker::Internet.password(min_length: 20, special_characters: true) }
+    password_digest { BCrypt::Password.create(password) }
+    session_token { SecureRandom::urlsafe_base64 }
   end
 
   factory :message do
